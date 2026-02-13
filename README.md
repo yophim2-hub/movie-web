@@ -18,7 +18,19 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Design system — macOS style
+
+- **Ít màu**: Nền xám nhạt, chữ đen/xám, một accent (blue).
+- **Nhiều khoảng trắng**: Spacing scale 4–96px, layout rộng rãi.
+- **Blur + layer**: Class `.glass`, component `Card` variant `glass` / `elevated`.
+- **Animation chậm & mượt**: `transition-macos` (0.35s), `transition-macos-slow` (0.5s), easing `ease-out-quart` / `ease-out-expo`.
+- **Typography**: System font `-apple-system` (SF Pro trên Mac), biến trong `globals.css`.
+
+UI components: `@/components/ui` — `Button`, `Card`, `ImageWebP`.
+
+## Ảnh WebP
+
+Mọi ảnh nên dùng component `ImageWebP` từ `@/components/ui`. Next.js (với `next.config.ts` `images.formats: ['image/webp']`) tự tối ưu và phục vụ WebP cho ảnh qua `<Image>`.
 
 ## Learn More
 

@@ -1,26 +1,321 @@
 @import "tailwindcss";
 
+/* Dark mode: dùng class .theme-dark trên <html> (toggle theme) */
+@custom-variant dark (&:where(.theme-dark, .theme-dark *));
+
+/* ============================================
+   macOS Design System — Ít màu, nhiều khoảng trắng, blur, animation chậm
+   ============================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Chủ đạo: Vàng đậm (kim loại) + Đen */
+  --background: #fafaf8;
+  --gradient-bg: linear-gradient(165deg, #fefefe 0%, #f8f6f2 35%, #f0ede8 70%, #e8e4de 100%);
+  --foreground: #0a0a0a;
+  --foreground-muted: #404040;
+  --foreground-subtle: #525252;
+
+  /* Accent — vàng đậm / kim loại vàng */
+  --accent: #b8860b;
+  --accent-hover: #c9a227;
+  --gradient-accent: linear-gradient(135deg, #8b6914 0%, #b8860b 40%, #d4af37 100%);
+  --gradient-accent-hover: linear-gradient(135deg, #9a7210 0%, #c9a227 50%, #daa520 100%);
+  --gradient-accent-soft: linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(212, 175, 55, 0.08) 100%);
+  --accent-soft: rgba(184, 134, 11, 0.15);
+  --accent-yellow: #d4af37;
+
+  /* Border — đen nhạt */
+  --border: rgba(0, 0, 0, 0.1);
+  --border-strong: rgba(0, 0, 0, 0.16);
+  --secondary-bg: linear-gradient(180deg, #e8e6e2 0%, #ddd9d4 100%);
+  --secondary-bg-solid: #e0dcd6;
+  --secondary-hover: #d0ccc6;
+
+  /* Glass */
+  --blur-amount: 40px;
+  --blur-amount-strong: 64px;
+  --glass-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.82) 0%, rgba(248, 246, 242, 0.72) 100%);
+  --glass-bg-solid: rgba(252, 250, 246, 0.85);
+  --glass-bg-heavy: rgba(245, 242, 236, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-highlight: rgba(255, 255, 255, 0.5);
+  /* Shadow — đen tạo bóng */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.12);
+  /* Card — pha đen với sáng */
+  --card-bg: linear-gradient(180deg, rgba(252, 250, 246, 0.98) 0%, rgba(242, 238, 232, 0.99) 50%, rgba(232, 226, 218, 1) 100%);
+  --card-border: rgba(0, 0, 0, 0.1);
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.1);
+  --card-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.1), 0 12px 32px rgba(0, 0, 0, 0.14);
+  --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  --radius-button: 6px;
+  --radius-panel: 10px;
+  --radius-sheet: 12px;
+
+  /* Animation — chậm & mượt */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --duration-slow: 0.5s;
+  --duration-normal: 0.35s;
+  --duration-fast: 0.2s;
+
+  /* Spacing scale (8px base) */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.25rem;  /* 20px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+  --space-10: 2.5rem;  /* 40px */
+  --space-12: 3rem;    /* 48px */
+  --space-16: 4rem;    /* 64px */
+  --space-20: 5rem;    /* 80px */
+  --space-24: 6rem;    /* 96px */
+
+  /* Typography — Montserrat được inject từ layout (--font-montserrat trên body) */
+  --font-sans-apple: -apple-system, BlinkMacSystemFont, sans-serif;
+  --text-xs: 0.6875rem;
+  --text-sm: 0.8125rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --leading-tight: 1.2;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+}
+
+/* Theme tối — đen là chính + vàng kim loại */
+html.theme-dark {
+  --background: #0a0a0a;
+  --gradient-bg: linear-gradient(165deg, #0d0d0d 0%, #0a0a0a 40%, #111 70%, #080808 100%);
+  --foreground: #f5f5f0;
+  --foreground-muted: #a0a0a0;
+  --foreground-subtle: #707070;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --glass-bg: linear-gradient(145deg, rgba(22, 22, 22, 0.9) 0%, rgba(15, 15, 15, 0.85) 100%);
+  --glass-bg-solid: rgba(18, 18, 18, 0.92);
+  --glass-bg-heavy: rgba(12, 12, 12, 0.88);
+  --glass-border: rgba(212, 175, 55, 0.15);
+  --glass-highlight: rgba(212, 175, 55, 0.08);
+  --secondary-bg: linear-gradient(180deg, #1a1a1a 0%, #141414 100%);
+  --secondary-bg-solid: #1a1a1a;
+  --secondary-hover: #252525;
+  /* Vàng kim loại trên nền đen */
+  --accent: #d4af37;
+  --accent-hover: #e8c547;
+  --gradient-accent: linear-gradient(135deg, #b8860b 0%, #d4af37 50%, #daa520 100%);
+  --gradient-accent-hover: linear-gradient(135deg, #c9a227 0%, #e8c547 100%);
+  --gradient-accent-soft: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(184, 134, 11, 0.08) 100%);
+  --accent-soft: rgba(212, 175, 55, 0.2);
+  --accent-yellow: #e8c547;
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.6);
+  /* Card — đen + viền vàng nhạt */
+  --card-bg: linear-gradient(180deg, rgba(28, 28, 28, 0.98) 0%, rgba(20, 20, 20, 0.99) 50%, rgba(14, 14, 14, 1) 100%);
+  --card-border: rgba(212, 175, 55, 0.2);
+  --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 0, 0, 0.2);
+  --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(212, 175, 55, 0.25);
+  --card-highlight: inset 0 1px 0 rgba(212, 175, 55, 0.12);
+}
+
+html.theme-dark .glass-subtle {
+  background: rgba(20, 20, 20, 0.5);
+}
+
+/* Theme sáng — vàng đậm + đen */
+html.theme-light {
+  --background: #fafaf8;
+  --gradient-bg: linear-gradient(165deg, #fefefe 0%, #f8f6f2 35%, #f0ede8 70%, #e8e4de 100%);
+  --foreground: #0a0a0a;
+  --foreground-muted: #404040;
+  --foreground-subtle: #525252;
+  --border: rgba(0, 0, 0, 0.1);
+  --border-strong: rgba(0, 0, 0, 0.16);
+  --secondary-bg: linear-gradient(180deg, #e8e6e2 0%, #ddd9d4 100%);
+  --secondary-bg-solid: #e0dcd6;
+  --secondary-hover: #d0ccc6;
+  --accent: #b8860b;
+  --accent-hover: #c9a227;
+  --gradient-accent: linear-gradient(135deg, #8b6914 0%, #b8860b 40%, #d4af37 100%);
+  --gradient-accent-hover: linear-gradient(135deg, #9a7210 0%, #c9a227 50%, #daa520 100%);
+  --accent-soft: rgba(184, 134, 11, 0.15);
+  --accent-yellow: #d4af37;
+  --glass-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.82) 0%, rgba(248, 246, 242, 0.72) 100%);
+  --glass-bg-solid: rgba(252, 250, 246, 0.85);
+  --glass-bg-heavy: rgba(245, 242, 236, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-highlight: rgba(255, 255, 255, 0.5);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.12);
+  --card-bg: linear-gradient(180deg, rgba(252, 250, 246, 0.98) 0%, rgba(242, 238, 232, 0.99) 50%, rgba(232, 226, 218, 1) 100%);
+  --card-border: rgba(0, 0, 0, 0.1);
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.1);
+  --card-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.1), 0 12px 32px rgba(0, 0, 0, 0.14);
+  --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-subtle: var(--foreground-subtle);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-glass: var(--glass-bg);
+  --font-sans: var(--font-montserrat), var(--font-sans-apple);
   --font-mono: var(--font-geist-mono);
+
+  /* Animation utilities */
+  --animate-duration-slow: 0.5s;
+  --animate-duration-normal: 0.35s;
+  --animate-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Chặn overscroll (bounce) đầu/cuối và scroll ngang 2 bên */
+html { 
+  overscroll-behavior: none;
 }
-
 body {
-  background: var(--background);
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  background: var(--gradient-bg);
+  background-attachment: fixed;
+  min-height: 100vh;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-montserrat), var(--font-sans-apple);
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Gradient accent — nút primary, badge accent */
+.gradient-accent {
+  background: var(--gradient-accent);
+  color: #fff;
+  transition: background 0.3s ease, box-shadow 0.2s ease;
+}
+.gradient-accent:hover {
+  background: var(--gradient-accent-hover);
+  color: #fff;
+}
+
+/* Blur / vibrancy — glass dùng gradient nhẹ */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: saturate(180%) blur(var(--blur-amount));
+  -webkit-backdrop-filter: saturate(180%) blur(var(--blur-amount));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-highlight);
+}
+
+.glass-strong {
+  background: var(--glass-bg);
+  backdrop-filter: saturate(200%) blur(var(--blur-amount-strong));
+  -webkit-backdrop-filter: saturate(200%) blur(var(--blur-amount-strong));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-highlight);
+}
+
+/* Card — nền pha đen/sáng + bóng rõ */
+.card-surface {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow), var(--card-highlight);
+  transition: box-shadow 0.35s ease;
+}
+.card-surface:hover {
+  box-shadow: var(--card-shadow-hover), var(--card-highlight);
+}
+.glass.card-shadow {
+  box-shadow: var(--card-shadow), var(--card-highlight);
+}
+.glass.card-shadow:hover {
+  box-shadow: var(--card-shadow-hover), var(--card-highlight);
+}
+
+.glass-subtle {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: saturate(150%) blur(20px);
+  -webkit-backdrop-filter: saturate(150%) blur(20px);
+}
+
+/* Transition mặc định — chậm & mượt */
+.transition-macos {
+  transition-duration: var(--duration-normal);
+  transition-timing-function: var(--ease-out-quart);
+}
+
+.transition-macos-slow {
+  transition-duration: var(--duration-slow);
+  transition-timing-function: var(--ease-out-expo);
+}
+
+/* Focus ring kiểu macOS (ít màu) */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Selection — vàng đậm */
+::selection {
+  background: var(--accent-soft);
+  color: var(--foreground);
+}
+
+/* Toast (react-hot-toast) — glass, font dự án */
+.toast-movie {
+  font-family: var(--font-montserrat), var(--font-sans-apple) !important;
+  font-size: 13px !important;
+  padding: 12px 16px !important;
+}
+
+/* Skeleton shimmer — tránh giật, mượt hơn pulse */
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--secondary-bg-solid) 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    var(--secondary-bg-solid) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.6s ease-in-out infinite;
+}
+
+.theme-dark .skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* Fade-in khi chuyển từ skeleton sang nội dung */
+@keyframes content-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.content-fade-in {
+  animation: content-fade-in var(--duration-normal) var(--ease-out-quart) forwards;
 }
