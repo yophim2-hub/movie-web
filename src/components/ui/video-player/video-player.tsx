@@ -61,15 +61,18 @@ export function VideoPlayer({
   const artRef = useRef<{ destroy: (v: boolean) => void; video?: HTMLVideoElement } | null>(null);
   const destroyRef = useRef<(() => void) | null>(null);
   const onTimeUpdateRef = useRef(onTimeUpdate);
+  const onErrorRef = useRef(onError);
   const lastSaveRef = useRef(0);
   const [adRemovalOn, setAdRemovalOn] = useState(useAdRemoval);
   const [fallbackToDirect, setFallbackToDirect] = useState(false);
   const [isReady, setIsReady] = useState(false);
 
   onTimeUpdateRef.current = onTimeUpdate;
+  onErrorRef.current = onError;
   const useProxy = adRemovalOn && !fallbackToDirect;
   const streamUrl = useProxy ? getStreamProxyUrl(m3u8Url) : m3u8Url;
 
+  // Chỉ re-mount player khi đổi stream (đổi tập) hoặc poster, KHÔNG khi initialTime/onError thay đổi (tránh destroy/recreate mỗi lần lưu tiến độ).
   useEffect(() => {
     if (!containerRef.current || !m3u8Url) return;
 
@@ -91,7 +94,7 @@ export function VideoPlayer({
         poster,
         lang: "vi",
         customType: {
-          m3u8: createM3u8Handler(Hls, onError, () => {
+          m3u8: createM3u8Handler(Hls, (e) => onErrorRef.current?.(e), () => {
             if (isProxyUrl) setFallbackToDirect(true);
           }),
         },
@@ -152,7 +155,7 @@ export function VideoPlayer({
       destroyed = true;
       destroyRef.current?.();
     };
-  }, [streamUrl, m3u8Url, poster, onError, initialTime]);
+  }, [streamUrl, m3u8Url, poster]);
 
   const handleToggleAdRemoval = () => {
     setAdRemovalOn((prev) => !prev);
