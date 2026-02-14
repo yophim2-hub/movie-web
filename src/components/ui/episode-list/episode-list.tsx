@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
-import type { EpisodeServer } from "@/types/movie-detail";
+import type { EpisodeItem, EpisodeServer } from "@/types/movie-detail";
 import { EpisodeCard, SingleMovieCard, TvMonitorIcon } from "./episode-list-items";
 
 const tabContentTransition = {
@@ -13,13 +13,13 @@ const tabContentTransition = {
   transition: { duration: 0.2, ease: "easeOut" as const },
 };
 
-export type EpisodeListVariant = "simple" | "grid";
+export type EpisodeListVariant = "simple" | "grid" | "watch";
 
 export interface EpisodeListProps {
   readonly episodes: EpisodeServer[];
   readonly title?: string;
   readonly className?: string;
-  /** "simple" = danh sách link, "grid" = lưới thẻ compact (icon + tên tập) */
+  /** "simple" = danh sách link, "grid" = lưới thẻ, "watch" = ngang (tập) + dọc (bản phim lẻ) */
   readonly variant?: EpisodeListVariant;
   /** Số tập hiển thị khi rút gọn (grid). Mặc định 12. */
   readonly defaultVisibleCount?: number;
@@ -43,6 +43,124 @@ export interface EpisodeListProps {
 
 const RANGE_THRESHOLD_DEFAULT = 100;
 const RANGE_SIZE_DEFAULT = 100;
+
+interface EpisodeListWatchProps {
+  readonly episodes: EpisodeServer[];
+  readonly activeIndex: number;
+  readonly setServerIndex: (i: number) => void;
+  readonly hasMultipleServers: boolean;
+  readonly useRanges: boolean;
+  readonly rangeCount: number;
+  readonly rangeSize: number;
+  readonly baseItems: EpisodeItem[];
+  readonly items: EpisodeItem[];
+  readonly activeRangeIndex: number;
+  readonly setActiveRangeIndex: (i: number) => void;
+  readonly posterUrl?: string;
+  readonly movieName?: string;
+  readonly movieSlug?: string;
+  readonly fullOnly: boolean;
+  readonly activeEpisodeSlug?: string;
+  readonly title: string;
+  readonly className: string;
+}
+
+function EpisodeListWatch({
+  episodes,
+  activeIndex,
+  setServerIndex,
+  hasMultipleServers,
+  useRanges,
+  rangeCount,
+  rangeSize,
+  baseItems,
+  items,
+  activeRangeIndex,
+  setActiveRangeIndex,
+  posterUrl,
+  movieName,
+  movieSlug,
+  fullOnly,
+  activeEpisodeSlug,
+  title,
+  className,
+}: EpisodeListWatchProps) {
+  const horizontalItems = useRanges ? baseItems : items;
+  return (
+    <div className={`flex min-h-0 min-w-0 flex-col gap-4 ${className}`.trim()}>
+      <div className="min-w-0 shrink-0">
+        <h3 className="mb-2 text-sm font-semibold text-[var(--foreground)]">{title}</h3>
+        {hasMultipleServers && (
+          <div className="mb-2 flex flex-wrap gap-1">
+            {episodes.map((s, i) => (
+              <button
+                key={`${s.server_name}-${i}`}
+                type="button"
+                onClick={() => setServerIndex(i)}
+                className={`flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs transition ${
+                  i === activeIndex
+                    ? "border-[var(--accent)] bg-[var(--secondary-bg-solid)] text-[var(--accent)]"
+                    : "border-[var(--border)] bg-[var(--secondary-bg-solid)] text-[var(--foreground-muted)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                }`}
+              >
+                <TvMonitorIcon className="h-3.5 w-3.5" />
+                {s.server_name}
+              </button>
+            ))}
+          </div>
+        )}
+        {useRanges && rangeCount > 0 && (
+          <div className="mb-2 overflow-x-auto overflow-y-hidden">
+            <div className="flex gap-2 py-0.5">
+              {Array.from({ length: rangeCount }, (_, i) => (
+                <button
+                  key={`range-${i}`}
+                  type="button"
+                  onClick={() => setActiveRangeIndex(i)}
+                  className={`shrink-0 rounded-[var(--radius-button)] border px-2.5 py-1.5 text-xs transition ${
+                    i === activeRangeIndex
+                      ? "border-[var(--accent)] bg-[var(--secondary-bg-solid)] text-[var(--accent)]"
+                      : "border-[var(--border)] bg-[var(--secondary-bg-solid)] text-[var(--foreground)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                  }`}
+                >
+                  Tập {i * rangeSize + 1}-{Math.min((i + 1) * rangeSize, items.length)}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        <div className="overflow-x-auto overflow-y-hidden pb-1">
+          <div className="flex min-w-0 gap-2">
+            {horizontalItems.map((ep) => (
+              <EpisodeCard
+                key={ep.slug}
+                ep={ep}
+                movieSlug={movieSlug}
+                fullOnly={fullOnly}
+                isActive={activeEpisodeSlug != null && activeEpisodeSlug === ep.slug}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="min-w-0 flex-1 overflow-y-auto overscroll-contain rounded-[var(--radius-panel)] bg-[var(--secondary-bg-solid)] p-3">
+        <h3 className="mb-2 text-sm font-semibold text-[var(--foreground)]">Chọn bản xem</h3>
+        <div className="flex flex-col gap-2">
+          {episodes.map((s, i) => (
+            <SingleMovieCard
+              key={`${s.server_name}-${i}`}
+              server={s}
+              posterUrl={posterUrl}
+              movieName={movieName}
+              movieSlug={movieSlug}
+              fullOnly={fullOnly}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function EpisodeList({
   episodes,
@@ -87,6 +205,31 @@ export function EpisodeList({
   const visibleCount = collapsed ? defaultVisibleCount : baseItems.length;
   const visibleItems = useRanges ? baseItems : baseItems.slice(0, visibleCount);
   const hasMore = !useRanges && baseItems.length > defaultVisibleCount;
+
+  if (variant === "watch") {
+    return (
+      <EpisodeListWatch
+        episodes={episodes}
+        activeIndex={activeIndex}
+        setServerIndex={setServerIndex}
+        hasMultipleServers={hasMultipleServers}
+        useRanges={useRanges}
+        rangeCount={rangeCount}
+        rangeSize={rangeSize}
+        baseItems={baseItems}
+        items={items}
+        activeRangeIndex={activeRangeIndex}
+        setActiveRangeIndex={setActiveRangeIndex}
+        posterUrl={posterUrl}
+        movieName={movieName}
+        movieSlug={movieSlug}
+        fullOnly={fullOnly}
+        activeEpisodeSlug={activeEpisodeSlug}
+        title={title}
+        className={className}
+      />
+    );
+  }
 
   if (variant === "grid" && isSingleMovie) {
     return (

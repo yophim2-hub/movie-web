@@ -11,11 +11,11 @@ import Link from "next/link";
  */
 export default function HomeSectionsPage() {
   const mounted = useHasMounted();
-  const { configs } = useAdminPageConfigs();
+  const { configs, isLoading } = useAdminPageConfigs();
   const sections = configs?.home?.sections ?? [];
   const hasSections = sections.length > 0;
 
-  if (!mounted) {
+  if (!mounted || isLoading) {
     return <PageSectionsLoading />;
   }
 

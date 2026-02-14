@@ -27,14 +27,14 @@ export function PageSectionsView({
   className = "",
 }: Readonly<PageSectionsViewProps>) {
   const mounted = useHasMounted();
-  const { configs } = useAdminPageConfigs();
+  const { configs, isLoading } = useAdminPageConfigs();
   const config = configs[pageId];
   const sections = config?.sections ?? [];
   const sortedSections = [...sections].sort((a, b) => a.order - b.order);
   const slug = seeMoreHref ?? (typeof pageId === "string" && pageId in ADMIN_PAGE_SLUGS ? ADMIN_PAGE_SLUGS[pageId as keyof typeof ADMIN_PAGE_SLUGS] : "/");
 
-  // Chỉ render theo config sau khi mount để tránh hydration mismatch (config từ localStorage).
-  if (!mounted || sortedSections.length === 0) {
+  // Chỉ render theo config sau khi mount và load xong để tránh hydration mismatch.
+  if (!mounted || isLoading || sortedSections.length === 0) {
     return null;
   }
 

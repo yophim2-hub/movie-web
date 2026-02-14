@@ -287,11 +287,10 @@ export function WatchContent({
 
   const episodeListBlock = episodes.length > 0 && (
     <div className="mt-8">
-      <h2 className="mb-3 text-[14px] font-semibold text-[var(--foreground)]">Danh sách tập</h2>
       <EpisodeList
         episodes={episodes}
-        variant="grid"
-        defaultVisibleCount={12}
+        variant="watch"
+        title="Danh sách tập"
         posterUrl={movie.poster_url}
         movieName={movie.name}
         movieSlug={slug}
@@ -337,8 +336,8 @@ export function WatchContent({
                     {episodes.length > 0 ? (
                       <EpisodeList
                         episodes={episodes}
-                        variant="grid"
-                        defaultVisibleCount={12}
+                        variant="watch"
+                        title="Tập"
                         posterUrl={movie.poster_url}
                         movieName={movie.name}
                         movieSlug={slug}

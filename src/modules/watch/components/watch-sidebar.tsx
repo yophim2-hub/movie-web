@@ -44,13 +44,12 @@ export function WatchSidebar({
           {episodes.length > 0 ? (
             <EpisodeList
               episodes={episodes}
-              variant="grid"
-              defaultVisibleCount={12}
+              variant="watch"
+              title="Tập"
               posterUrl={posterUrl}
               movieName={name}
               movieSlug={movieSlug}
               fullOnly={fullOnly}
-              maxGridCols={4}
               activeEpisodeSlug={activeEpisodeSlug}
             />
           ) : (

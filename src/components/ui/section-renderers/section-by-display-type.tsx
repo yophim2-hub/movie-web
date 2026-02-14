@@ -98,13 +98,7 @@ export function SectionByDisplayType({
     case "poster-thumb":
       return <SectionPosterThumb {...common} {...headerProps} navId="section-poster-thumb" />;
     case "top-list":
-      return (
-        <SectionTopList
-          {...common}
-          seeMoreHref={seeMoreHref ?? basePath}
-          seeMoreLabel={seeMoreLabel}
-        />
-      );
+      return <SectionTopList {...common} />;
     default:
       return <SectionPosterList {...common} {...headerProps} navId="section-poster-list" />;
   }

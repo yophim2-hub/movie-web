@@ -1,0 +1,409 @@
+{
+  "pageConfigs": {
+    "home": {
+      "pageId": "home",
+      "label": "Trang chủ",
+      "filter": {
+        "page": 1,
+        "limit": 24
+      },
+      "savedMovieIds": [],
+      "sections": [
+        {
+          "id": "160ef1e6-eaa7-4996-bd85-0dc1bd589f56",
+          "order": 0,
+          "title": "Banner trang chủ",
+          "type": "movie-list",
+          "filter": {
+            "page": 1,
+            "limit": 8
+          },
+          "savedMovieIds": [],
+          "displayType": "banner"
+        },
+        {
+          "id": "f9342ee0-a625-4bb8-9b26-81b5751a8814",
+          "order": 1,
+          "title": "Đây Rồi Top Phim Xem Nhiều Nhất",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-le",
+            "page": 1,
+            "limit": 24,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "poster-list"
+        },
+        {
+          "id": "e6f2fa4a-c572-41ae-88ec-7b2e5d9cea27",
+          "order": 2,
+          "title": "Phim Điện Ảnh Mới Cóng",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-le",
+            "page": 1,
+            "limit": 24,
+            "country": "viet-nam",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "poster-list"
+        },
+        {
+          "id": "864047de-db7c-49f3-9b21-274bdd5d3323",
+          "order": 3,
+          "title": "Mãn Nhãn với Phim Chiếu Rạp",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-chieu-rap",
+            "page": 1,
+            "limit": 24,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "thumb-list"
+        },
+        {
+          "id": "fc0de575-3279-4f9e-a1e7-9251fd7c52b5",
+          "order": 4,
+          "title": "Top 10 phim lẻ hôm nay",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-le",
+            "page": 1,
+            "limit": 10,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "top-list"
+        },
+        {
+          "id": "8323c78c-14a9-4c64-bd4f-b1e28d0f0fee",
+          "order": 5,
+          "title": "Kho tàng anime",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "hoat-hinh",
+            "page": 1,
+            "limit": 24,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "poster-list"
+        },
+        {
+          "id": "cd40b7e6-7c1a-4249-b299-fb75ed789c3f",
+          "order": 6,
+          "title": "Phim Hành động việt",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-le",
+            "page": 1,
+            "limit": 24,
+            "country": "viet-nam",
+            "category": "hanh-dong",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "poster-list"
+        },
+        {
+          "id": "ac29c1dd-4f64-4e19-a87b-3fd070d6e6a0",
+          "order": 7,
+          "title": "Thế giới quyến rũ",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-le",
+            "page": 1,
+            "limit": 24,
+            "category": "phim-18",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "thumb-list"
+        }
+      ]
+    },
+    "phim-le": {
+      "pageId": "phim-le",
+      "label": "Phim lẻ",
+      "filter": {
+        "typeList": "phim-le",
+        "page": 1,
+        "limit": 24
+      },
+      "savedMovieIds": [],
+      "sections": [
+        {
+          "id": "f45464e1-ff24-416c-a1e5-2a0913a153b4",
+          "order": 0,
+          "title": "Phim lẻ mới nhất",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-le",
+            "page": 1,
+            "limit": 8,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "banner"
+        },
+        {
+          "id": "4506faa8-3625-4bae-9e6d-cb6bb1138474",
+          "order": 1,
+          "title": "Lẻ xem nhiều nhất",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-le",
+            "page": 1,
+            "limit": 16,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "thumb-list"
+        },
+        {
+          "id": "82b49821-408a-4c46-8584-1920add8f537",
+          "order": 2,
+          "title": "Kho phim lẻ",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-le",
+            "page": 1,
+            "limit": 24,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "grid-list"
+        }
+      ]
+    },
+    "phim-bo": {
+      "pageId": "phim-bo",
+      "label": "Phim bộ",
+      "filter": {
+        "typeList": "phim-bo",
+        "page": 1,
+        "limit": 24
+      },
+      "savedMovieIds": [],
+      "sections": [
+        {
+          "id": "60f74cd7-8031-436d-91d9-e816b459ee21",
+          "order": 0,
+          "title": "Phim bộ mới nhất",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-bo",
+            "page": 1,
+            "limit": 8,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "banner"
+        },
+        {
+          "id": "643bdd96-4045-476c-b3fa-f7737516b97b",
+          "order": 1,
+          "title": "Bộ xem nhiều nhất",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-bo",
+            "page": 1,
+            "limit": 16,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "thumb-list"
+        },
+        {
+          "id": "dd37b943-f4de-42c4-b415-5987924191b4",
+          "order": 2,
+          "title": "Kho phim bộ",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-bo",
+            "page": 1,
+            "limit": 24,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "grid-list"
+        }
+      ]
+    },
+    "phim-chieu-rap": {
+      "pageId": "phim-chieu-rap",
+      "label": "Phim chiếu rạp",
+      "filter": {
+        "typeList": "phim-chieu-rap",
+        "page": 1,
+        "limit": 24
+      },
+      "savedMovieIds": [],
+      "sections": [
+        {
+          "id": "aa7ace6f-9097-402c-a593-ad8f8729f248",
+          "order": 0,
+          "title": "Phim chiếu rạp mới nhất",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-chieu-rap",
+            "page": 1,
+            "limit": 8,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "banner"
+        },
+        {
+          "id": "259b695b-3306-4e08-9a50-035f99ee1ca3",
+          "order": 1,
+          "title": "Chiếu rạp xem nhiều nhất",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-chieu-rap",
+            "page": 1,
+            "limit": 16,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "thumb-list"
+        },
+        {
+          "id": "468802f3-ee81-4b2b-9aad-3a96b50c4912",
+          "order": 2,
+          "title": "Kho phim chiếu rạp",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-chieu-rap",
+            "page": 1,
+            "limit": 24,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "grid-list"
+        }
+      ]
+    },
+    "hoat-hinh": {
+      "pageId": "hoat-hinh",
+      "label": "Hoạt hình",
+      "filter": {
+        "typeList": "hoat-hinh",
+        "page": 1,
+        "limit": 24
+      },
+      "savedMovieIds": [],
+      "sections": [
+        {
+          "id": "91d7cb28-5c3c-4661-90c0-c5ffdead8245",
+          "order": 0,
+          "title": "Anime mới nhất",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "hoat-hinh",
+            "page": 1,
+            "limit": 8,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "banner"
+        },
+        {
+          "id": "f65c6739-dde3-4172-bef3-baad28169c38",
+          "order": 1,
+          "title": "Anime xem nhiều nhất",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "hoat-hinh",
+            "page": 1,
+            "limit": 16,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "thumb-list"
+        },
+        {
+          "id": "007bd3ab-0f04-44e4-ba6c-18604019fd46",
+          "order": 2,
+          "title": "Kho anime",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "hoat-hinh",
+            "page": 1,
+            "limit": 24,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "grid-list"
+        }
+      ]
+    },
+    "phim-vietsub": {
+      "pageId": "phim-vietsub",
+      "label": "Phim Vietsub",
+      "filter": {
+        "typeList": "phim-vietsub",
+        "page": 1,
+        "limit": 24
+      },
+      "savedMovieIds": [],
+      "sections": []
+    },
+    "phim-thuyet-minh": {
+      "pageId": "phim-thuyet-minh",
+      "label": "Phim thuyết minh",
+      "filter": {
+        "typeList": "phim-thuyet-minh",
+        "page": 1,
+        "limit": 24
+      },
+      "savedMovieIds": [],
+      "sections": []
+    },
+    "phim-long-tieng": {
+      "pageId": "phim-long-tieng",
+      "label": "Phim lồng tiếng",
+      "filter": {
+        "typeList": "phim-long-tieng",
+        "page": 1,
+        "limit": 24
+      },
+      "savedMovieIds": [],
+      "sections": []
+    },
+    "tv-shows": {
+      "pageId": "tv-shows",
+      "label": "TV Shows",
+      "filter": {
+        "typeList": "tv-shows",
+        "page": 1,
+        "limit": 24
+      },
+      "savedMovieIds": [],
+      "sections": []
+    }
+  },
+  "customPages": []
+}

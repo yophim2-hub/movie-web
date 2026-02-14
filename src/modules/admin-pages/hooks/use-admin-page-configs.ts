@@ -6,140 +6,180 @@ import type {
   AdminFilterSetting,
   AdminPageConfig,
   AdminSection,
+  AdminCustomPageMeta,
 } from "../interfaces";
 import {
-  getAdminPageConfigs,
-  getPageList as persistGetPageList,
-  addCustomPage as persistAddCustomPage,
-  updateCustomPage as persistUpdateCustomPage,
-  removeCustomPage as persistRemoveCustomPage,
-  setAdminPageFilter as persistFilter,
-  addSavedMovie as persistAddSaved,
-  removeSavedMovie as persistRemoveSaved,
-  addSection as persistAddSection,
-  updateSection as persistUpdateSection,
-  removeSection as persistRemoveSection,
-  moveSection as persistMoveSection,
-  addSavedMovieToSection as persistAddSavedToSection,
-  removeSavedMovieFromSection as persistRemoveSavedFromSection,
-} from "../store/admin-page-store";
+  mergeFromApiPayload,
+  toApiPayload,
+  getPageListFromCustomPages,
+  applyAddCustomPage,
+  applyUpdateCustomPage,
+  applyRemoveCustomPage,
+  applySetAdminPageFilter,
+  applyAddSavedMovie,
+  applyRemoveSavedMovie,
+  applyAddSection,
+  applyUpdateSection,
+  applyRemoveSection,
+  applyMoveSection,
+  applyAddSavedMovieToSection,
+  applyRemoveSavedMovieFromSection,
+} from "../store/admin-page-api-store";
+import { fetchAdminConfig, saveAdminConfig } from "@/lib/admin-config-api";
 
 export function useAdminPageConfigs() {
-  const [configs, setConfigs] = useState<Record<string, AdminPageConfig>>(
-    getAdminPageConfigs
+  const [configs, setConfigs] = useState<Record<string, AdminPageConfig>>({});
+  const [customPages, setCustomPages] = useState<AdminCustomPageMeta[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const pageList = getPageListFromCustomPages(customPages);
+
+  const persist = useCallback(
+    async (newConfigs: Record<string, AdminPageConfig>, newCustomPages: AdminCustomPageMeta[]) => {
+      try {
+        const payload = toApiPayload(newConfigs);
+        await saveAdminConfig(payload);
+        setConfigs(newConfigs);
+        setCustomPages(newCustomPages);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Lưu thất bại");
+        throw err;
+      }
+    },
+    []
   );
 
-  const reload = useCallback(() => {
-    setConfigs(getAdminPageConfigs());
+  const reload = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const payload = await fetchAdminConfig();
+      const merged = mergeFromApiPayload(
+        payload.pageConfigs as Record<string, AdminPageConfig>,
+        payload.customPages
+      );
+      setConfigs(merged);
+      setCustomPages(payload.customPages);
+      if (Object.keys(payload.pageConfigs).length === 0 && payload.customPages.length === 0) {
+        const savePayload = toApiPayload(merged);
+        await saveAdminConfig(savePayload);
+        setCustomPages(savePayload.customPages);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Tải thất bại");
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
   useEffect(() => {
-    const handleStorage = (e: StorageEvent) => {
-      if (e.key === "admin-page-configs" || e.key === "admin-custom-pages")
-        reload();
-    };
-    globalThis.window.addEventListener("storage", handleStorage);
-    return () => globalThis.window.removeEventListener("storage", handleStorage);
+    reload();
   }, [reload]);
 
-  const pageList = persistGetPageList();
-
   const addCustomPage = useCallback(
-    (params: { slug: string; label: string; seoTitle?: string; seoDescription?: string }) => {
-      const id = persistAddCustomPage(params);
-      setConfigs(getAdminPageConfigs());
-      return id;
+    async (params: { slug: string; label: string; seoTitle?: string; seoDescription?: string }) => {
+      const { configs: next, customPages: nextCustom, newId } = applyAddCustomPage(configs, customPages, params);
+      await persist(next, nextCustom);
+      return newId;
     },
-    []
+    [configs, customPages, persist]
   );
 
   const updateCustomPage = useCallback(
-    (
-      id: string,
-      patch: { slug?: string; label?: string; seoTitle?: string; seoDescription?: string }
-    ) => {
-      persistUpdateCustomPage(id, patch);
-      setConfigs(getAdminPageConfigs());
+    async (id: string, patch: { slug?: string; label?: string; seoTitle?: string; seoDescription?: string }) => {
+      const { configs: next, customPages: nextCustom } = applyUpdateCustomPage(configs, customPages, id, patch);
+      await persist(next, nextCustom);
     },
-    []
+    [configs, customPages, persist]
   );
 
-  const removeCustomPage = useCallback((id: string) => {
-    persistRemoveCustomPage(id);
-    setConfigs(getAdminPageConfigs());
-  }, []);
+  const removeCustomPage = useCallback(
+    async (id: string) => {
+      const { configs: next, customPages: nextCustom } = applyRemoveCustomPage(configs, customPages, id);
+      await persist(next, nextCustom);
+    },
+    [configs, customPages, persist]
+  );
 
   const setFilter = useCallback(
-    (pageId: AdminPageIdAny, filter: Partial<AdminFilterSetting>) => {
-      persistFilter(pageId, filter);
-      setConfigs(getAdminPageConfigs());
+    async (pageId: AdminPageIdAny, filter: Partial<AdminFilterSetting>) => {
+      const { configs: next } = applySetAdminPageFilter(configs, customPages, pageId, filter);
+      await persist(next, customPages);
     },
-    []
+    [configs, customPages, persist]
   );
 
-  const addSavedMovie = useCallback((pageId: AdminPageIdAny, movieId: string) => {
-    persistAddSaved(pageId, movieId);
-    setConfigs(getAdminPageConfigs());
-  }, []);
+  const addSavedMovie = useCallback(
+    async (pageId: AdminPageIdAny, movieId: string) => {
+      const { configs: next } = applyAddSavedMovie(configs, customPages, pageId, movieId);
+      await persist(next, customPages);
+    },
+    [configs, customPages, persist]
+  );
 
-  const removeSavedMovie = useCallback((pageId: AdminPageIdAny, movieId: string) => {
-    persistRemoveSaved(pageId, movieId);
-    setConfigs(getAdminPageConfigs());
-  }, []);
+  const removeSavedMovie = useCallback(
+    async (pageId: AdminPageIdAny, movieId: string) => {
+      const { configs: next } = applyRemoveSavedMovie(configs, customPages, pageId, movieId);
+      await persist(next, customPages);
+    },
+    [configs, customPages, persist]
+  );
 
   const addSection = useCallback(
-    (pageId: AdminPageIdAny, section: Omit<AdminSection, "id" | "order">): string => {
-      const id = persistAddSection(pageId, section);
-      setConfigs(getAdminPageConfigs());
-      return id;
+    async (pageId: AdminPageIdAny, section: Omit<AdminSection, "id" | "order">): Promise<string> => {
+      const { configs: next, customPages: nextCustom, newSectionId } = applyAddSection(configs, customPages, pageId, section);
+      await persist(next, nextCustom);
+      return newSectionId;
     },
-    []
+    [configs, customPages, persist]
   );
 
   const updateSection = useCallback(
-    (
-      pageId: AdminPageIdAny,
-      sectionId: string,
-      patch: Partial<Omit<AdminSection, "id">>
-    ) => {
-      persistUpdateSection(pageId, sectionId, patch);
-      setConfigs(getAdminPageConfigs());
+    async (pageId: AdminPageIdAny, sectionId: string, patch: Partial<Omit<AdminSection, "id">>) => {
+      const { configs: next } = applyUpdateSection(configs, customPages, pageId, sectionId, patch);
+      await persist(next, customPages);
     },
-    []
+    [configs, customPages, persist]
   );
 
-  const removeSection = useCallback((pageId: AdminPageIdAny, sectionId: string) => {
-    persistRemoveSection(pageId, sectionId);
-    setConfigs(getAdminPageConfigs());
-  }, []);
+  const removeSection = useCallback(
+    async (pageId: AdminPageIdAny, sectionId: string) => {
+      const { configs: next } = applyRemoveSection(configs, customPages, pageId, sectionId);
+      await persist(next, customPages);
+    },
+    [configs, customPages, persist]
+  );
 
   const moveSection = useCallback(
-    (pageId: AdminPageIdAny, sectionId: string, direction: "up" | "down") => {
-      persistMoveSection(pageId, sectionId, direction);
-      setConfigs(getAdminPageConfigs());
+    async (pageId: AdminPageIdAny, sectionId: string, direction: "up" | "down") => {
+      const { configs: next } = applyMoveSection(configs, customPages, pageId, sectionId, direction);
+      await persist(next, customPages);
     },
-    []
+    [configs, customPages, persist]
   );
 
   const addSavedMovieToSection = useCallback(
-    (pageId: AdminPageIdAny, sectionId: string, movieId: string) => {
-      persistAddSavedToSection(pageId, sectionId, movieId);
-      setConfigs(getAdminPageConfigs());
+    async (pageId: AdminPageIdAny, sectionId: string, movieId: string) => {
+      const { configs: next } = applyAddSavedMovieToSection(configs, customPages, pageId, sectionId, movieId);
+      await persist(next, customPages);
     },
-    []
+    [configs, customPages, persist]
   );
 
   const removeSavedMovieFromSection = useCallback(
-    (pageId: AdminPageIdAny, sectionId: string, movieId: string) => {
-      persistRemoveSavedFromSection(pageId, sectionId, movieId);
-      setConfigs(getAdminPageConfigs());
+    async (pageId: AdminPageIdAny, sectionId: string, movieId: string) => {
+      const { configs: next } = applyRemoveSavedMovieFromSection(configs, customPages, pageId, sectionId, movieId);
+      await persist(next, customPages);
     },
-    []
+    [configs, customPages, persist]
   );
 
   return {
     configs,
     pageList,
+    isLoading,
+    error,
     addCustomPage,
     updateCustomPage,
     removeCustomPage,

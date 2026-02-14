@@ -1,6 +1,7 @@
 "use client";
 
 import { useCategoryDetail } from "@/hooks";
+import { formatOriginName } from "@/components/ui/movie-poster-card";
 import { MovieThumbCard } from "@/components/ui/movie-thumb-card";
 import Link from "next/link";
 import type { MovieListItem } from "@/types/movie-list";
@@ -33,6 +34,7 @@ function RelatedListRow({
     imgSrc = rawUrl.startsWith("http") ? rawUrl : `${POSTER_BASE}/${rawUrl}`;
   }
   const meta = [item.year, item.episode_current, item.time, item.quality, item.lang].filter(Boolean).join(" · ");
+  const originDisplay = formatOriginName(item.origin_name);
 
   return (
     <Link
@@ -53,8 +55,8 @@ function RelatedListRow({
       </div>
       <div className="min-w-0 flex-1">
         <p className="truncate text-[13px] font-medium text-[var(--foreground)]">{item.name}</p>
-        {item.origin_name ? (
-          <p className="mt-0.5 truncate text-[12px] text-[var(--foreground-muted)]">{item.origin_name}</p>
+        {originDisplay ? (
+          <p className="mt-0.5 truncate text-[12px] text-[var(--foreground-muted)]">{originDisplay}</p>
         ) : null}
         {meta ? (
           <p className="mt-1 text-[11px] text-[var(--foreground-muted)]">{meta}</p>

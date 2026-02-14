@@ -7,6 +7,14 @@ import type { MovieListItem } from "@/types/movie-list";
 
 const POSTER_BASE = "https://phimimg.com";
 
+/** Bỏ phần trong ngoặc ở cuối (vd. " (Season 1)", " (Part 2)") để tên gốc gọn hơn. */
+export function formatOriginName(originName: string | undefined): string {
+  if (!originName?.trim()) return "";
+  return originName
+    .replaceAll(/\s*(?:\([^)]*\)\s*)+$/g, "")
+    .trim();
+}
+
 function buildImageUrl(url: string): string {
   return url.startsWith("http") ? url : `${POSTER_BASE}/${url}`;
 }
@@ -31,7 +39,7 @@ export function MoviePosterCard({
     ? buildImageUrl(item.poster_url)
     : buildImageUrl(item.thumb_url);
   const title = item.name;
-  const alias = item.origin_name || "";
+  const alias = formatOriginName(item.origin_name);
   const episode = item.episode_current || "";
 
   return (

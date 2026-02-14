@@ -13,13 +13,4 @@ export type {
   AdminCustomPageMeta,
 } from "./interfaces";
 export { ADMIN_PAGE_IDS, ADMIN_PAGE_LABELS, ADMIN_PAGE_SLUGS } from "./interfaces";
-export {
-  getAdminPageConfigs,
-  getPageList,
-  addCustomPage,
-  updateCustomPage,
-  removeCustomPage,
-  setAdminPageFilter,
-  addSavedMovie,
-  removeSavedMovie,
-} from "./store";
+export { mergeFromApiPayload, toApiPayload, getPageListFromCustomPages } from "./store";

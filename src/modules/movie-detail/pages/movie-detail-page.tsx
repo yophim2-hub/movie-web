@@ -1,6 +1,7 @@
 "use client";
 
 import { PageLayout } from "@/components/layout";
+import { formatOriginName } from "@/components/ui/movie-poster-card";
 import { useMovieDetail } from "@/hooks";
 import { useParams } from "next/navigation";
 import type { EpisodeServer } from "@/types/movie-detail";
@@ -50,6 +51,7 @@ export default function MovieDetailPage() {
   const firstCategorySlug = movie.category?.[0]?.slug ?? "";
 
   const timeDisplay = formatTimeToHoursMinutes(movie.time);
+  const originNameDisplay = formatOriginName(movie.origin_name);
 
   const hasMetaTags =
     movie.imdb?.id ||
@@ -65,9 +67,9 @@ export default function MovieDetailPage() {
       <h1 className="break-words text-xl font-semibold tracking-tight text-[var(--foreground)] sm:text-2xl">
         {movie.name}
       </h1>
-      {movie.origin_name ? (
+      {originNameDisplay ? (
         <p className="mt-1 text-[13px] text-[var(--foreground-muted)]">
-          {movie.origin_name}
+          {originNameDisplay}
         </p>
       ) : null}
       <div className="mt-2 flex flex-col items-center gap-2 lg:items-start">

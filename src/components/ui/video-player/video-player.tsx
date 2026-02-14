@@ -31,8 +31,6 @@ export interface VideoPlayerProps {
   m3u8Url: string;
   /** true: phát qua proxy (cắt quảng cáo), false: phát trực tiếp */
   useAdRemoval?: boolean;
-  /** Hiển thị nút bật/tắt cắt quảng cáo trên player */
-  showAdRemovalToggle?: boolean;
   /** Poster image URL */
   poster?: string;
   /** Css class cho container */
@@ -50,7 +48,6 @@ const TIME_UPDATE_THROTTLE_MS = 3000;
 export function VideoPlayer({
   m3u8Url,
   useAdRemoval = true,
-  showAdRemovalToggle = true,
   poster,
   className = "",
   onError,
@@ -63,13 +60,11 @@ export function VideoPlayer({
   const onTimeUpdateRef = useRef(onTimeUpdate);
   const onErrorRef = useRef(onError);
   const lastSaveRef = useRef(0);
-  const [adRemovalOn, setAdRemovalOn] = useState(useAdRemoval);
   const [fallbackToDirect, setFallbackToDirect] = useState(false);
-  const [isReady, setIsReady] = useState(false);
 
   onTimeUpdateRef.current = onTimeUpdate;
   onErrorRef.current = onError;
-  const useProxy = adRemovalOn && !fallbackToDirect;
+  const useProxy = useAdRemoval && !fallbackToDirect;
   const streamUrl = useProxy ? getStreamProxyUrl(m3u8Url) : m3u8Url;
 
   // Chỉ re-mount player khi đổi stream (đổi tập) hoặc poster, KHÔNG khi initialTime/onError thay đổi (tránh destroy/recreate mỗi lần lưu tiến độ).
@@ -115,7 +110,6 @@ export function VideoPlayer({
           const seek = (art as unknown as { seek?: ((t: number) => void) }).seek;
           if (typeof seek === "function") seek(startTime);
         }
-        setIsReady(true);
       });
 
       if (onTimeUpdateRef.current && art.video) {
@@ -147,7 +141,6 @@ export function VideoPlayer({
         art.destroy(false);
         artRef.current = null;
         destroyRef.current = null;
-        setIsReady(false);
       };
     })();
 
@@ -157,36 +150,9 @@ export function VideoPlayer({
     };
   }, [streamUrl, m3u8Url, poster]);
 
-  const handleToggleAdRemoval = () => {
-    setAdRemovalOn((prev) => !prev);
-  };
-
   return (
     <div className={`relative z-0 isolate ${className}`}>
       <div ref={containerRef} className="aspect-video w-full bg-black rounded-[var(--radius-card)] overflow-hidden" />
-
-      {showAdRemovalToggle && isReady && (
-        <div className="absolute top-2 right-2 z-[1] flex items-center gap-2 rounded-[var(--radius-button)] bg-black/60 px-2.5 py-1.5 backdrop-blur-sm">
-          <span className="text-[12px] text-white/90">Cắt quảng cáo</span>
-          <button
-            type="button"
-            onClick={handleToggleAdRemoval}
-            role="switch"
-            aria-checked={adRemovalOn}
-            aria-label={adRemovalOn ? "Tắt cắt quảng cáo" : "Bật cắt quảng cáo"}
-            className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border border-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50 ${
-              adRemovalOn ? "bg-[var(--accent)]" : "bg-[var(--secondary-bg-solid)]"
-            }`}
-          >
-            <span
-              className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${
-                adRemovalOn ? "translate-x-4" : "translate-x-0.5"
-              }`}
-              aria-hidden
-            />
-          </button>
-        </div>
-      )}
     </div>
   );
 }

@@ -75,6 +75,8 @@ export function PageConfigEditor() {
   const {
     configs,
     pageList,
+    isLoading,
+    error,
     addCustomPage,
     updateCustomPage,
     removeCustomPage,
@@ -84,6 +86,7 @@ export function PageConfigEditor() {
     moveSection,
     addSavedMovieToSection,
     removeSavedMovieFromSection,
+    reload,
   } = useAdminPageConfigs();
   const { data: categoriesData } = useCategories();
   const categories = categoriesData ?? [];
@@ -103,9 +106,9 @@ export function PageConfigEditor() {
     : null;
   const selectedPageMeta = pageList.find((p) => p.id === selectedPageId);
 
-  const handleAddSection = useCallback(() => {
+  const handleAddSection = useCallback(async () => {
     if (!selectedPageId) return;
-    const id = addSection(selectedPageId, {
+    const id = await addSection(selectedPageId, {
       title: "Section mới",
       type: "movie-list",
       filter: {},
@@ -115,13 +118,32 @@ export function PageConfigEditor() {
   }, [selectedPageId, addSection]);
 
   const handleRemoveSection = useCallback(
-    (sectionId: string) => {
+    async (sectionId: string) => {
       if (!selectedPageId || !confirm("Xóa section này?")) return;
-      removeSection(selectedPageId, sectionId);
+      await removeSection(selectedPageId, sectionId);
       if (editingSectionId === sectionId) setEditingSectionId(null);
     },
     [selectedPageId, removeSection, editingSectionId]
   );
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-12 text-[13px] text-[var(--foreground-muted)]">
+        Đang tải cấu hình…
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-2 py-4">
+        <p className="text-[13px] text-red-600">{error}</p>
+        <Button variant="secondary" size="sm" onClick={reload}>
+          Thử lại
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -197,9 +219,9 @@ export function PageConfigEditor() {
                         </button>
                         <button
                           type="button"
-                          onClick={() => {
+                          onClick={async () => {
                             if (confirm(`Xóa trang "${page.label}"?`)) {
-                              removeCustomPage(page.id);
+                              await removeCustomPage(page.id);
                               if (selectedPageId === page.id) setSelectedPageId(null);
                               setEditingPageId(null);
                             }
@@ -227,8 +249,8 @@ export function PageConfigEditor() {
               slug={pg.slug}
               seoTitle={cfg?.seoTitle}
               seoDescription={cfg?.seoDescription}
-              onSave={(label, slug, seoTitle, seoDescription) => {
-                updateCustomPage(editingPageId, { label, slug, seoTitle, seoDescription });
+              onSave={async (label, slug, seoTitle, seoDescription) => {
+                await updateCustomPage(editingPageId, { label, slug, seoTitle, seoDescription });
                 setEditingPageId(null);
               }}
               onCancel={() => setEditingPageId(null)}
@@ -246,8 +268,8 @@ export function PageConfigEditor() {
           panelClassName="!max-w-2xl !min-w-[28rem]"
         >
           <AddPageForm
-            onSubmit={(label, slug, seoTitle, seoDescription) => {
-              const id = addCustomPage({ label, slug, seoTitle, seoDescription }) as AdminPageIdAny;
+            onSubmit={async (label, slug, seoTitle, seoDescription) => {
+              const id = (await addCustomPage({ label, slug, seoTitle, seoDescription })) as AdminPageIdAny;
               setAddPageFormOpen(false);
               setSelectedPageId(id);
               setEditingSectionId(null);
@@ -327,7 +349,7 @@ export function PageConfigEditor() {
                         </button>
                         <button
                           type="button"
-                          onClick={() => selectedPageId && moveSection(selectedPageId, sec.id, "up")}
+                          onClick={() => selectedPageId && moveSection(selectedPageId, sec.id, "up").catch(console.error)}
                           disabled={idx === 0}
                           className="mr-2 text-[13px] text-[var(--foreground-muted)] underline hover:text-[var(--accent)] disabled:opacity-40"
                           title="Lên"
@@ -336,7 +358,7 @@ export function PageConfigEditor() {
                         </button>
                         <button
                           type="button"
-                          onClick={() => selectedPageId && moveSection(selectedPageId, sec.id, "down")}
+                          onClick={() => selectedPageId && moveSection(selectedPageId, sec.id, "down").catch(console.error)}
                           disabled={idx === sortedSections.length - 1}
                           className="mr-2 text-[13px] text-[var(--foreground-muted)] underline hover:text-[var(--accent)] disabled:opacity-40"
                           title="Xuống"
@@ -373,17 +395,17 @@ export function PageConfigEditor() {
                 categories={categories}
                 countries={countries}
                 onUpdate={(patch) =>
-                  updateSection(selectedPageId, editingSection.id, patch)
+                  updateSection(selectedPageId, editingSection.id, patch).catch(console.error)
                 }
                 onAddMovie={(movieId) =>
-                  addSavedMovieToSection(selectedPageId, editingSection.id, movieId)
+                  addSavedMovieToSection(selectedPageId, editingSection.id, movieId).catch(console.error)
                 }
                 onRemoveMovie={(movieId) =>
                   removeSavedMovieFromSection(
                     selectedPageId,
                     editingSection.id,
                     movieId
-                  )
+                  ).catch(console.error)
                 }
                 onClose={() => setEditingSectionId(null)}
               />

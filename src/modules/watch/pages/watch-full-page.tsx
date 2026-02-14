@@ -71,7 +71,7 @@ export default function WatchFullPage() {
   }
 
   if (isLoading) {
-    return <WatchSkeleton layout="stack" />;
+    return <WatchSkeleton layout="split" />;
   }
 
   if (isError || !movie) {
@@ -105,7 +105,6 @@ export default function WatchFullPage() {
         slug={slug}
         streamUrl={streamUrl}
         isEmbed={isEmbed}
-        layout="stack"
         movieInfo={<WatchMovieInfo movie={movie} slug={slug} />}
       />
     </div>

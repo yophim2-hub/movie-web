@@ -12,11 +12,11 @@ import Link from "next/link";
  */
 export default function PhimBoPage() {
   const mounted = useHasMounted();
-  const { configs } = useAdminPageConfigs();
+  const { configs, isLoading } = useAdminPageConfigs();
   const sections = configs?.["phim-bo"]?.sections ?? [];
   const hasSections = sections.length > 0;
 
-  if (!mounted) {
+  if (!mounted || isLoading) {
     return (
       <PageLayout className="pb-24">
         <PageSectionsLoading />
