@@ -42,15 +42,29 @@ export async function GET(request: NextRequest) {
     );
   }
 
+  // Nhiều CDN (kkphimplayer6, v.v.) trả 404 nếu thiếu Referer hoặc Referer không phải domain của họ (đặc biệt khi request từ server Vercel). Gửi Referer = origin upstream để CDN chấp nhận.
+  const userAgent =
+    request.headers.get("user-agent") ||
+    "Mozilla/5.0 (Windows NT 10.0; rv:109.0) Gecko/20100101 Firefox/115.0";
+  let referer: string | null = null;
+  try {
+    const upstreamOrigin = new URL(decodedUrl).origin;
+    referer = `${upstreamOrigin}/`;
+  } catch {
+    referer = request.headers.get("referer");
+  }
+  const fetchHeaders: Record<string, string> = {
+    Accept: "*/*",
+    "User-Agent": userAgent,
+  };
+  if (referer) fetchHeaders.Referer = referer;
+
   let res: Response;
   try {
     res = await fetch(decodedUrl, {
-      headers: {
-        Accept: "*/*",
-        "User-Agent":
-          request.headers.get("user-agent") ||
-          "Mozilla/5.0 (Windows NT 10.0; rv:109.0) Gecko/20100101 Firefox/115.0",
-      },
+      headers: fetchHeaders,
+      // Vercel serverless có thể bị upstream cắt kết nối; tăng timeout.
+      signal: AbortSignal.timeout(25000),
     });
   } catch (e) {
     console.error("[stream] fetch error:", e);
