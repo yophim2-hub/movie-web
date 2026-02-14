@@ -55,12 +55,38 @@ function isWatermarkSegment(uri: string): string | null {
   return null;
 }
 
+const DEFAULT_UA =
+  "Mozilla/5.0 (Windows NT 10.0; rv:109.0) Gecko/20100101 Firefox/115.0";
+
+function getFetchHeaders(originUrl: string): Record<string, string> {
+  const headers: Record<string, string> = {
+    Accept: "*/*",
+    "User-Agent": DEFAULT_UA,
+  };
+  try {
+    const origin = new URL(originUrl).origin;
+    headers.Referer = `${origin}/`;
+  } catch {
+    /* ignore */
+  }
+  return headers;
+}
+
 /**
  * HEAD request để kiểm tra file gốc (cùng tên ở root) có tồn tại không.
+ * Dùng Referer + User-Agent để CDN không chặn (đặc biệt trên prod/Vercel).
  */
-async function headOriginalExists(segmentUrl: string): Promise<boolean> {
+async function headOriginalExists(
+  segmentUrl: string,
+  refererOrigin: string
+): Promise<boolean> {
   try {
-    const res = await fetch(segmentUrl, { method: "HEAD" });
+    const headers = getFetchHeaders(refererOrigin);
+    const res = await fetch(segmentUrl, {
+      method: "HEAD",
+      headers,
+      signal: AbortSignal.timeout(8000),
+    });
     return res.ok;
   } catch {
     return false;
@@ -91,7 +117,8 @@ const seenSegmentNames = new Set<string>();
 
 async function processSegmentUri(
   absoluteUri: string,
-  baseDirectory: string | null
+  baseDirectory: string | null,
+  refererOrigin: string
 ): Promise<{ action: "skip" } | { action: "push"; url: string }> {
   if (isAdSegment(absoluteUri)) return { action: "skip" };
   const segDir = getBaseDirectory(absoluteUri);
@@ -100,7 +127,7 @@ async function processSegmentUri(
 
   if (isWatermarkSegment(absoluteUri)) {
     const originalUrl = getOriginalSegmentUrl(absoluteUri);
-    const exists = await headOriginalExists(originalUrl);
+    const exists = await headOriginalExists(originalUrl, refererOrigin);
     const fileName = absoluteUri.split("/").pop() ?? "";
     if (exists && !seenSegmentNames.has(fileName)) {
       seenSegmentNames.add(fileName);
@@ -134,7 +161,18 @@ export async function cleanMediaPlaylist(
 
     const absoluteUri = resolveUrl(trimmed, baseUrl);
     baseDirectory ??= getBaseDirectory(absoluteUri);
-    const result = await processSegmentUri(absoluteUri, baseDirectory);
+    const refererOrigin = (() => {
+      try {
+        return new URL(baseUrl).origin;
+      } catch {
+        return baseUrl;
+      }
+    })();
+    const result = await processSegmentUri(
+      absoluteUri,
+      baseDirectory,
+      refererOrigin
+    );
     if (result.action === "push") out.push(result.url);
   }
 
