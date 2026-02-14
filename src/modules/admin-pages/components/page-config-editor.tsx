@@ -1,17 +1,25 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useAdminPageConfigs } from "../hooks";
 import { useCategories, useCountries } from "@/hooks";
 import { useSearchMovies } from "@/hooks/use-search-movies";
+import { useLatestMovieList } from "@/hooks/use-latest-movie-list";
 import type {
   AdminPageIdAny,
   AdminFilterSetting,
   AdminSection,
   AdminSectionType,
+  SectionDisplayType,
+  SectionHeaderVariant,
 } from "../interfaces";
-import type { SortField, SortType } from "@/types/movie-list";
-import { SORT_FIELDS, SORT_TYPES } from "@/types/movie-list";
+import {
+  ADMIN_PAGE_LABELS,
+  SECTION_DISPLAY_TYPES,
+  SECTION_HEADER_VARIANTS,
+} from "../interfaces";
+import type { MovieListType, SortField, SortType } from "@/types/movie-list";
+import { MOVIE_LIST_TYPES, SORT_FIELDS, SORT_TYPES } from "@/types/movie-list";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,6 +30,8 @@ import {
   TableHead,
   TableCell,
 } from "@/components/ui/table";
+import { Modal } from "@/components/ui/modal";
+import { SectionPreview } from "./section-renderers";
 
 const SORT_LABELS: Record<string, string> = {
   "modified.time": "Mới cập nhật",
@@ -39,10 +49,27 @@ const SECTION_TYPE_LABELS: Record<AdminSectionType, string> = {
   pinned: "Phim ghim",
 };
 
-const YEARS = (() => {
-  const y = new Date().getFullYear();
-  return Array.from({ length: 12 }, (_, i) => y - i);
-})();
+const DISPLAY_TYPE_LABELS: Record<SectionDisplayType, string> = {
+  banner: "Banner (lớn)",
+  "banner-small": "Banner (nhỏ)",
+  "poster-list": "Danh sách poster",
+  "thumb-list": "Danh sách thumb",
+  "grid-list": "Danh sách grid",
+  "poster-thumb": "Danh sách poster + thumb",
+  "top-list": "Top / bảng xếp hạng",
+};
+
+const HEADER_VARIANT_LABELS: Record<SectionHeaderVariant, string> = {
+  "see-more": "Xem thêm",
+  navigation: "Nút điều hướng (< >)",
+};
+
+/** Loại hiển thị có chọn Loại header (Xem thêm / Nút điều hướng). grid-list không có. */
+const DISPLAY_TYPES_WITH_HEADER: SectionDisplayType[] = [
+  "poster-list",
+  "thumb-list",
+  "poster-thumb",
+];
 
 export function PageConfigEditor() {
   const {
@@ -107,104 +134,101 @@ export function PageConfigEditor() {
           <Button
             variant="primary"
             size="sm"
-            onClick={() => setAddPageFormOpen((o) => !o)}
+            onClick={() => setAddPageFormOpen(true)}
           >
             Thêm trang
           </Button>
         </div>
-
-        {addPageFormOpen && (
-          <AddPageForm
-            onSubmit={(label, slug) => {
-              const id = addCustomPage({ label, slug }) as AdminPageIdAny;
-              setAddPageFormOpen(false);
-              setSelectedPageId(id);
-              setEditingSectionId(null);
-            }}
-            onCancel={() => setAddPageFormOpen(false)}
-          />
-        )}
 
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead className="w-12">#</TableHead>
               <TableHead>Tên trang</TableHead>
-              <TableHead>Slug</TableHead>
               <TableHead className="w-24">Loại</TableHead>
               <TableHead className="w-[220px] text-right">Thao tác</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {pageList.map((page, idx) => (
-              <TableRow key={page.id}>
-                <TableCell>{idx + 1}</TableCell>
-                <TableCell className="font-medium">{page.label}</TableCell>
-                <TableCell className="font-mono text-[12px]">{page.slug}</TableCell>
-                <TableCell>
-                  {page.isBuiltIn ? (
-                    <span className="text-[12px] text-[var(--foreground-muted)]">Cố định</span>
-                  ) : (
-                    <span className="text-[12px] text-amber-600">Tùy chỉnh</span>
-                  )}
-                </TableCell>
-                <TableCell className="text-right">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedPageId(page.id);
-                      setEditingSectionId(null);
-                      setEditingPageId(null);
-                    }}
-                    className={`mr-2 text-[13px] underline hover:text-[var(--accent)] ${
-                      selectedPageId === page.id
-                        ? "font-medium text-[var(--accent)]"
-                        : "text-[var(--foreground-muted)]"
-                    }`}
-                  >
-                    Quản lý
-                  </button>
-                  {!page.isBuiltIn && (
-                    <>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setEditingPageId(editingPageId === page.id ? null : page.id)
-                        }
-                        className="mr-2 text-[13px] text-[var(--foreground-muted)] underline hover:text-[var(--accent)]"
-                      >
-                        Sửa
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          if (confirm(`Xóa trang "${page.label}"?`)) {
-                            removeCustomPage(page.id);
-                            if (selectedPageId === page.id) setSelectedPageId(null);
-                            setEditingPageId(null);
-                          }
-                        }}
-                        className="text-[13px] text-[var(--foreground-muted)] underline hover:text-red-600"
-                      >
-                        Xóa
-                      </button>
-                    </>
-                  )}
+            {pageList.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={4} className="py-8 text-center text-[13px] text-[var(--foreground-muted)]">
+                  Chưa có trang. Bấm &quot;Thêm trang&quot; để tạo trang và quản lý section.
                 </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              pageList.map((page, idx) => (
+                <TableRow key={page.id}>
+                  <TableCell>{idx + 1}</TableCell>
+                  <TableCell className="font-medium">{page.label}</TableCell>
+                  <TableCell>
+                    {page.isBuiltIn ? (
+                      <span className="text-[12px] text-[var(--foreground-muted)]">Cố định</span>
+                    ) : (
+                      <span className="text-[12px] text-amber-600">Tùy chỉnh</span>
+                    )}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedPageId(page.id);
+                        setEditingSectionId(null);
+                        setEditingPageId(null);
+                      }}
+                      className={`mr-2 text-[13px] underline hover:text-[var(--accent)] ${
+                        selectedPageId === page.id
+                          ? "font-medium text-[var(--accent)]"
+                          : "text-[var(--foreground-muted)]"
+                      }`}
+                    >
+                      Quản lý
+                    </button>
+                    {!page.isBuiltIn && (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setEditingPageId(editingPageId === page.id ? null : page.id)
+                          }
+                          className="mr-2 text-[13px] text-[var(--foreground-muted)] underline hover:text-[var(--accent)]"
+                        >
+                          Sửa
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (confirm(`Xóa trang "${page.label}"?`)) {
+                              removeCustomPage(page.id);
+                              if (selectedPageId === page.id) setSelectedPageId(null);
+                              setEditingPageId(null);
+                            }
+                          }}
+                          className="text-[13px] text-[var(--foreground-muted)] underline hover:text-red-600"
+                        >
+                          Xóa
+                        </button>
+                      </>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
 
         {editingPageId && (() => {
           const pg = pageList.find((p) => p.id === editingPageId);
+          const cfg = editingPageId ? configs[editingPageId] : null;
           if (!pg || pg.isBuiltIn) return null;
           return (
             <EditPageForm
               label={pg.label}
               slug={pg.slug}
-              onSave={(label, slug) => {
-                updateCustomPage(editingPageId, { label, slug });
+              seoTitle={cfg?.seoTitle}
+              seoDescription={cfg?.seoDescription}
+              onSave={(label, slug, seoTitle, seoDescription) => {
+                updateCustomPage(editingPageId, { label, slug, seoTitle, seoDescription });
                 setEditingPageId(null);
               }}
               onCancel={() => setEditingPageId(null)}
@@ -213,17 +237,42 @@ export function PageConfigEditor() {
         })()}
       </section>
 
+      {/* Modal Thêm trang */}
+      {addPageFormOpen && (
+        <Modal
+          open={true}
+          onClose={() => setAddPageFormOpen(false)}
+          title="Thêm trang"
+          panelClassName="!max-w-2xl !min-w-[28rem]"
+        >
+          <AddPageForm
+            onSubmit={(label, slug, seoTitle, seoDescription) => {
+              const id = addCustomPage({ label, slug, seoTitle, seoDescription }) as AdminPageIdAny;
+              setAddPageFormOpen(false);
+              setSelectedPageId(id);
+              setEditingSectionId(null);
+            }}
+            onCancel={() => setAddPageFormOpen(false)}
+          />
+        </Modal>
+      )}
+
+      {/* Modal quản lý section khi bấm Quản lý */}
       {config && selectedPageMeta && (
-        <>
-          {/* Quản lý section khi đã chọn trang */}
-          <section className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--secondary-bg-solid)]/50 p-4">
-            <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-[var(--foreground)]">
-                Đang quản lý: {selectedPageMeta.label}
-                <span className="ml-2 font-mono text-[12px] font-normal text-[var(--foreground-muted)]">
-                  {selectedPageMeta.slug}
-                </span>
-              </h3>
+        <Modal
+          open={true}
+          onClose={() => {
+            setSelectedPageId(null);
+            setEditingSectionId(null);
+          }}
+          title={`Quản lý: ${selectedPageMeta.label}`}
+          panelClassName="!max-w-5xl !max-h-[90vh] !flex !flex-col"
+        >
+          <div className="space-y-4">
+            <p className="text-[13px] text-[var(--foreground-muted)]">
+              Slug: <span className="font-mono text-[var(--foreground)]">{selectedPageMeta.slug}</span>
+            </p>
+            <div className="flex justify-end">
               <Button variant="primary" size="sm" onClick={handleAddSection}>
                 Thêm section
               </Button>
@@ -256,7 +305,11 @@ export function PageConfigEditor() {
                       </TableCell>
                       <TableCell className="text-[12px] text-[var(--foreground-muted)]">
                         {sec.type === "movie-list"
-                          ? `Filter: ${sec.filter?.category || "—"} / ${sec.filter?.country || "—"} / limit ${sec.filter?.limit ?? 24}`
+                          ? (() => {
+                              const t = sec.filter?.typeList;
+                              const typePart = t ? `${ADMIN_PAGE_LABELS[t]} · ` : "";
+                              return `Filter: ${typePart}${sec.filter?.category || "—"} / ${sec.filter?.country || "—"} / limit ${sec.filter?.limit ?? 24}`;
+                            })()
                           : ""}
                         {sec.savedMovieIds.length > 0
                           ? ` · ${sec.savedMovieIds.length} phim`
@@ -303,9 +356,17 @@ export function PageConfigEditor() {
                 </TableBody>
               </Table>
             )}
+          </div>
 
-            {/* Form chỉnh sửa section (hiện khi chọn Sửa hoặc vừa Thêm) */}
-            {editingSection && selectedPageId && (
+          {/* Popup chỉnh sửa section (khi chọn Sửa hoặc vừa Thêm) — portal + z-index cao để không bị cắt bởi modal quản lý */}
+          {editingSection && selectedPageId && (
+            <Modal
+              open={true}
+              onClose={() => setEditingSectionId(null)}
+              title={`Chỉnh sửa section: ${editingSection.title}`}
+              panelClassName="!max-w-4xl !max-h-[90vh] !flex !flex-col"
+              zIndex={60}
+            >
               <SectionEditForm
                 pageId={selectedPageId}
                 section={editingSection}
@@ -326,12 +387,30 @@ export function PageConfigEditor() {
                 }
                 onClose={() => setEditingSectionId(null)}
               />
-            )}
-          </section>
-        </>
+            </Modal>
+          )}
+        </Modal>
       )}
     </div>
   );
+}
+
+/** Build URL xem thử section: danh-sách với filter của section (movie-list) hoặc trang chủ (pinned). */
+function buildSectionTestUrl(section: AdminSection): string {
+  if (section.type === "pinned") {
+    return "/";
+  }
+  const f = section.filter ?? {};
+  const typeList = f.typeList ?? "phim-le";
+  const params = new URLSearchParams();
+  params.set("type", typeList);
+  params.set("page", "1");
+  if (f.category) params.set("category", f.category);
+  if (f.country) params.set("country", f.country);
+  if (f.year != null) params.set("year", String(f.year));
+  if (f.sortField) params.set("sortField", f.sortField);
+  if (f.sortType) params.set("sortType", f.sortType);
+  return `/danh-sach?${params.toString()}`;
 }
 
 function SectionEditForm({
@@ -352,6 +431,7 @@ function SectionEditForm({
   onRemoveMovie: (movieId: string) => void;
   onClose: () => void;
 }>) {
+  const [showTestPreview, setShowTestPreview] = useState(false);
   const updateFilter = useCallback(
     (patch: Partial<AdminFilterSetting>) => {
       const current = section.filter ?? {};
@@ -361,94 +441,156 @@ function SectionEditForm({
   );
 
   return (
-    <div className="mt-6 rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--background)] p-4">
-      <h4 className="mb-4 text-sm font-semibold text-[var(--foreground)]">
-        Chỉnh sửa section: {section.title}
-      </h4>
-
-      <div className="space-y-4">
-        <FilterRow label="Tiêu đề">
-          <Input
-            value={section.title}
-            onChange={(e) => onUpdate({ title: e.target.value })}
-            placeholder="VD: Phim mới cập nhật"
-            className="max-w-[280px]"
-          />
-        </FilterRow>
-        <FilterRow label="Kiểu">
-          <select
-            value={section.type}
-            onChange={(e) =>
-              onUpdate({ type: e.target.value as AdminSectionType })
-            }
-            className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
-          >
-            <option value="movie-list">Danh sách (API)</option>
-            <option value="pinned">Phim ghim</option>
-          </select>
-        </FilterRow>
+    <>
+      <div className="space-y-6">
+        {/* 1. Thông tin cơ bản */}
+        <section className="space-y-3 rounded-lg border border-[var(--border)] bg-[var(--secondary-bg-solid)]/30 p-4">
+          <h4 className="text-xs font-semibold uppercase tracking-wider text-[var(--foreground-muted)]">
+            Thông tin cơ bản
+          </h4>
+          <FilterRow label="Tiêu đề">
+            <Input
+              value={section.title}
+              onChange={(e) => onUpdate({ title: e.target.value })}
+              placeholder="VD: Phim mới cập nhật"
+              className="max-w-[280px]"
+            />
+          </FilterRow>
+          <FilterRow label="Kiểu">
+            <select
+              value={section.type}
+              onChange={(e) =>
+                onUpdate({ type: e.target.value as AdminSectionType })
+              }
+              className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+            >
+              <option value="movie-list">Danh sách (API)</option>
+              <option value="pinned">Phim ghim</option>
+            </select>
+          </FilterRow>
+          <FilterRow label="Loại hiển thị">
+            <select
+              value={section.displayType ?? ""}
+              onChange={(e) =>
+                onUpdate({
+                  displayType: (e.target.value || undefined) as SectionDisplayType | undefined,
+                })
+              }
+              className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] min-w-[180px]"
+            >
+              <option value="">Mặc định</option>
+              {SECTION_DISPLAY_TYPES.map((t) => (
+                <option key={t} value={t}>
+                  {DISPLAY_TYPE_LABELS[t]}
+                </option>
+              ))}
+            </select>
+          </FilterRow>
+          {section.displayType &&
+            DISPLAY_TYPES_WITH_HEADER.includes(section.displayType) && (
+              <FilterRow label="Loại header">
+                <select
+                  value={section.headerVariant ?? "see-more"}
+                  onChange={(e) =>
+                    onUpdate({
+                      headerVariant: e.target.value as SectionHeaderVariant,
+                    })
+                  }
+                  className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] min-w-[180px]"
+                >
+                  {SECTION_HEADER_VARIANTS.map((v) => (
+                    <option key={v} value={v}>
+                      {HEADER_VARIANT_LABELS[v]}
+                    </option>
+                  ))}
+                </select>
+              </FilterRow>
+            )}
+        </section>
 
         {section.type === "movie-list" && (
           <>
-            <FilterRow label="Thể loại">
-              <select
-                value={section.filter?.category ?? ""}
-                onChange={(e) =>
-                  updateFilter({ category: e.target.value || undefined })
-                }
-                className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
-              >
-                <option value="">Tất cả</option>
-                {categories.map((c) => (
-                  <option key={c._id} value={c.slug}>
-                    {c.name}
-                  </option>
-                ))}
-              </select>
-            </FilterRow>
-            <FilterRow label="Quốc gia">
-              <select
-                value={section.filter?.country ?? ""}
-                onChange={(e) =>
-                  updateFilter({ country: e.target.value || undefined })
-                }
-                className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
-              >
-                <option value="">Tất cả</option>
-                {countries.map((c) => (
-                  <option key={c._id} value={c.slug}>
-                    {c.name}
-                  </option>
-                ))}
-              </select>
-            </FilterRow>
-            <FilterRow label="Năm">
-              <select
-                value={section.filter?.year ?? ""}
-                onChange={(e) =>
-                  updateFilter({
-                    year: e.target.value ? Number(e.target.value) : undefined,
-                  })
-                }
-                className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
-              >
-                <option value="">Tất cả</option>
-                {YEARS.map((y) => (
-                  <option key={y} value={y}>
-                    {y}
-                  </option>
-                ))}
-              </select>
-            </FilterRow>
-            <FilterRow label="Sắp xếp">
-              <select
+            {/* 2. Filter (nguồn dữ liệu + sắp xếp & giới hạn) */}
+            <section className="space-y-4 rounded-lg border border-[var(--border)] bg-[var(--secondary-bg-solid)]/30 p-4">
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-[var(--foreground-muted)]">
+                Filter
+              </h4>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <span className="shrink-0 text-[13px] text-[var(--foreground-muted)]">Loại phim</span>
+                <select
+                  value={section.filter?.typeList ?? ""}
+                  onChange={(e) =>
+                    updateFilter({
+                      typeList: (e.target.value || undefined) as MovieListType | undefined,
+                    })
+                  }
+                  className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] min-w-[140px]"
+                >
+                  <option value="">Mặc định (theo trang)</option>
+                  {MOVIE_LIST_TYPES.map((t) => (
+                    <option key={t} value={t}>
+                      {ADMIN_PAGE_LABELS[t]}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <span className="shrink-0 text-[13px] text-[var(--foreground-muted)]">Thể loại</span>
+                <select
+                  value={section.filter?.category ?? ""}
+                  onChange={(e) =>
+                    updateFilter({ category: e.target.value || undefined })
+                  }
+                  className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] min-w-[120px]"
+                >
+                  <option value="">Tất cả</option>
+                  {categories.map((c) => (
+                    <option key={c._id} value={c.slug}>
+                      {c.name}
+                    </option>
+                  ))}
+                </select>
+                <span className="shrink-0 text-[13px] text-[var(--foreground-muted)]">Quốc gia</span>
+                <select
+                  value={section.filter?.country ?? ""}
+                  onChange={(e) =>
+                    updateFilter({ country: e.target.value || undefined })
+                  }
+                  className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] min-w-[120px]"
+                >
+                  <option value="">Tất cả</option>
+                  {countries.map((c) => (
+                    <option key={c._id} value={c.slug}>
+                      {c.name}
+                    </option>
+                  ))}
+                </select>
+                <span className="shrink-0 text-[13px] text-[var(--foreground-muted)]">Năm</span>
+                <input
+                  type="number"
+                  min={1900}
+                  max={2030}
+                  placeholder="VD: 2024"
+                  value={section.filter?.year ?? ""}
+                  onChange={(e) => {
+                    const v = e.target.value.trim();
+                    updateFilter({
+                      year: v ? Math.min(2030, Math.max(1900, Number(v))) : undefined,
+                    });
+                  }}
+                  className="min-w-[10rem] w-36 rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                />
+              </div>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <span className="shrink-0 text-[13px] text-[var(--foreground-muted)]">Sắp xếp</span>
+                <select
                 value={section.filter?.sortField ?? ""}
                 onChange={(e) =>
                   updateFilter({
                     sortField: (e.target.value || undefined) as SortField | undefined,
                   })
                 }
-                className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] min-w-[120px]"
               >
                 <option value="">Mặc định</option>
                 {SORT_FIELDS.map((f) => (
@@ -464,7 +606,7 @@ function SectionEditForm({
                     sortType: (e.target.value || undefined) as SortType | undefined,
                   })
                 }
-                className="ml-2 rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] min-w-[90px]"
               >
                 <option value="">—</option>
                 {SORT_TYPES.map((t) => (
@@ -473,8 +615,7 @@ function SectionEditForm({
                   </option>
                 ))}
               </select>
-            </FilterRow>
-            <FilterRow label="Limit">
+              <span className="shrink-0 text-[13px] text-[var(--foreground-muted)]">Limit</span>
               <input
                 type="number"
                 min={8}
@@ -488,59 +629,63 @@ function SectionEditForm({
                     ),
                   })
                 }
-                className="w-20 rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                className="w-16 rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
               />
-            </FilterRow>
+              </div>
+            </section>
           </>
         )}
 
-        <FilterRow label="Phim đã chọn">
-          <AddMovieBlockForSection
-            savedIds={section.savedMovieIds}
-            onAdd={onAddMovie}
-          />
-        </FilterRow>
-
-        {section.savedMovieIds.length > 0 && (
-          <div className="ml-[140px]">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>#</TableHead>
-                  <TableHead>ID</TableHead>
-                  <TableHead className="w-16 text-right">Xóa</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {section.savedMovieIds.map((id, i) => (
-                  <TableRow key={id}>
-                    <TableCell>{i + 1}</TableCell>
-                    <TableCell className="font-mono text-[12px]">{id}</TableCell>
-                    <TableCell className="text-right">
-                      <button
-                        type="button"
-                        onClick={() => onRemoveMovie(id)}
-                        className="text-[13px] text-[var(--foreground-muted)] underline hover:text-red-600"
-                      >
-                        Xóa
-                      </button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+        {/* 4. Phim đã chọn — chỉ hiển thị khi Kiểu = Phim ghim */}
+        {section.type === "pinned" && (
+          <section className="space-y-3 rounded-lg border border-[var(--border)] bg-[var(--secondary-bg-solid)]/30 p-4">
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-[var(--foreground-muted)]">
+              Phim đã chọn
+            </h4>
+            <AddMovieBlockForSection
+              savedIds={section.savedMovieIds}
+              onAdd={onAddMovie}
+              onRemove={onRemoveMovie}
+            />
+          </section>
         )}
       </div>
 
-      <div className="mt-4 flex gap-2">
-        <Button variant="secondary" size="sm" onClick={onClose}>
+      {/* 5. Hành động */}
+      <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-[var(--border)] pt-4">
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => setShowTestPreview((v) => !v)}
+        >
+          {showTestPreview ? "Ẩn xem thử" : "Xem thử"}
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="text-[12px] text-[var(--foreground-muted)]"
+          onClick={() => window.open(buildSectionTestUrl(section), "_blank", "noopener,noreferrer")}
+        >
+          Mở trang (tab mới)
+        </Button>
+        <Button variant="secondary" size="sm" onClick={onClose} className="ml-auto">
           Đóng
         </Button>
       </div>
-    </div>
+
+      {/* Preview theo Loại hiển thị — hiện bên dưới khi bấm Xem thử */}
+      {showTestPreview && (
+        <div className="mt-4 border-t border-[var(--border)] pt-4">
+          <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-[var(--foreground-muted)]">
+            Preview
+          </h4>
+          <SectionPreview section={section} />
+        </div>
+      )}
+    </>
   );
 }
+
 
 function FilterRow({
   label,
@@ -559,63 +704,143 @@ function FilterRow({
 function AddMovieBlockForSection({
   savedIds,
   onAdd,
+  onRemove,
 }: Readonly<{
   savedIds: string[];
   onAdd: (movieId: string) => void;
+  onRemove: (movieId: string) => void;
 }>) {
   const [keyword, setKeyword] = useState("");
-  const { data, isFetching } = useSearchMovies(
-    { keyword: keyword.trim(), page: 1, limit: 10 },
-    { enabled: keyword.trim().length >= 2 }
+  const [isOpen, setIsOpen] = useState(false);
+  const [nameById, setNameById] = useState<Record<string, string>>({});
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const hasSearchKeyword = keyword.trim().length >= 2;
+
+  const { data: searchData, isFetching: isSearching } = useSearchMovies(
+    { keyword: keyword.trim(), page: 1, limit: 15 },
+    { enabled: hasSearchKeyword }
   );
-  const items = data?.data?.items ?? [];
+  const searchItems = searchData?.data?.items ?? [];
+
+  const { data: latestData, isFetching: isLatestLoading } = useLatestMovieList(
+    { page: 1 },
+    { enabled: isOpen && !hasSearchKeyword }
+  );
+  const latestItems = latestData?.items ?? [];
+
+  const items = hasSearchKeyword
+    ? searchItems
+    : latestItems.map((item) => ({ _id: item._id, name: item.name, year: item.year }));
+  const isFetching = hasSearchKeyword ? isSearching : isLatestLoading;
 
   const handleSelect = useCallback(
-    (movieId: string) => {
+    (movieId: string, name: string) => {
       if (savedIds.includes(movieId)) return;
       onAdd(movieId);
+      setNameById((prev) => ({ ...prev, [movieId]: name }));
       setKeyword("");
     },
     [savedIds, onAdd]
   );
 
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const showDropdown = isOpen;
+  const listboxId = "section-movie-listbox";
+
   return (
-    <div className="space-y-2">
-      <Input
-        type="search"
-        placeholder="Tìm phim (2+ ký tự)..."
-        value={keyword}
-        onChange={(e) => setKeyword(e.target.value)}
-        className="max-w-[280px]"
-      />
-      {keyword.trim().length >= 2 && (
-        <div className="max-h-40 overflow-y-auto rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--background)] p-2">
+    <div ref={containerRef} className="relative w-full max-w-[360px]">
+      <div
+        role="combobox"
+        aria-expanded={isOpen}
+        aria-haspopup="listbox"
+        aria-controls={listboxId}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Escape") setIsOpen(false);
+        }}
+        className="min-h-[80px] rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 shadow-sm focus-within:ring-2 focus-within:ring-[var(--accent)] focus-within:border-[var(--accent)]"
+        onClick={() => setIsOpen(true)}
+      >
+        <div className="flex flex-wrap gap-1.5">
+          {savedIds.map((id) => (
+            <span
+              key={id}
+              className="inline-flex items-center gap-1 rounded-md bg-[var(--secondary-bg-solid)] px-2 py-0.5 text-[13px] text-[var(--foreground)]"
+            >
+              {nameById[id] ?? id}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRemove(id);
+                  setNameById((prev) => {
+                    const next = { ...prev };
+                    delete next[id];
+                    return next;
+                  });
+                }}
+                className="ml-0.5 rounded p-0.5 hover:bg-[var(--border)] hover:text-red-600"
+                aria-label="Xóa"
+              >
+                ×
+              </button>
+            </span>
+          ))}
+          <input
+            type="search"
+            placeholder={savedIds.length === 0 ? "Chọn phim hoặc tìm theo tên..." : "Tìm thêm phim..."}
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            onFocus={() => setIsOpen(true)}
+            className="min-w-[140px] flex-1 border-0 bg-transparent py-1 text-[13px] text-[var(--foreground)] placeholder:text-[var(--foreground-muted)] focus:outline-none focus:ring-0"
+          />
+        </div>
+      </div>
+      {showDropdown && (
+        <div
+          id={listboxId}
+          role="listbox"
+          className="absolute top-full left-0 z-50 mt-1 max-h-56 w-full overflow-auto rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--glass-bg)] shadow-lg backdrop-blur-xl"
+        >
           {isFetching && (
-            <p className="py-2 text-center text-[13px] text-[var(--foreground-muted)]">
+            <p className="px-3 py-3 text-center text-[13px] text-[var(--foreground-muted)]">
               Đang tải...
             </p>
           )}
           {!isFetching && items.length === 0 && (
-            <p className="py-2 text-[13px] text-[var(--foreground-muted)]">
-              Không tìm thấy.
+            <p className="px-3 py-3 text-[13px] text-[var(--foreground-muted)]">
+              {hasSearchKeyword ? "Không tìm thấy phim." : "Chưa có dữ liệu."}
             </p>
           )}
           {!isFetching && items.length > 0 && (
-            <ul className="space-y-1">
-              {items.map((item) => (
-                <li key={item._id}>
-                  <button
-                    type="button"
-                    onClick={() => handleSelect(item._id)}
-                    disabled={savedIds.includes(item._id)}
-                    className="w-full rounded-[var(--radius-button)] px-2 py-1.5 text-left text-[13px] hover:bg-[var(--secondary-bg-solid)] disabled:opacity-50"
-                  >
-                    {item.name}
-                    {item.year ? ` (${item.year})` : ""}
-                    {savedIds.includes(item._id) ? " ✓" : ""}
-                  </button>
-                </li>
-              ))}
+            <ul className="py-1">
+              {items.map((item) => {
+                const selected = savedIds.includes(item._id);
+                return (
+                  <li key={item._id} role="option" aria-selected={selected}>
+                    <button
+                      type="button"
+                      onClick={() => handleSelect(item._id, item.name)}
+                      disabled={selected}
+                      className="w-full px-3 py-2 text-left text-[13px] hover:bg-[var(--secondary-bg-solid)] disabled:opacity-50 disabled:hover:bg-transparent"
+                    >
+                      {item.name}
+                      {item.year ? ` (${item.year})` : ""}
+                      {selected ? " ✓" : ""}
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           )}
         </div>
@@ -628,52 +853,111 @@ function AddPageForm({
   onSubmit,
   onCancel,
 }: Readonly<{
-  onSubmit: (label: string, slug: string) => void;
+  onSubmit: (label: string, slug: string, seoTitle?: string, seoDescription?: string) => void;
   onCancel: () => void;
 }>) {
   const [label, setLabel] = useState("");
   const [slug, setSlug] = useState("");
+  const [seoTitle, setSeoTitle] = useState("");
+  const [seoDescription, setSeoDescription] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const s = slug.trim() || label.toLowerCase().replace(/\s+/g, "-");
     const finalSlug = s.startsWith("/") ? s : `/${s}`;
-    onSubmit(label.trim() || "Trang mới", finalSlug);
+    onSubmit(
+      label.trim() || "Trang mới",
+      finalSlug,
+      seoTitle.trim() || undefined,
+      seoDescription.trim() || undefined
+    );
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="mb-4 flex flex-wrap items-end gap-3 rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--background)] p-4"
-    >
-      <div>
-        <label className="mb-1 block text-[12px] text-[var(--foreground-muted)]">
-          Tên trang
-        </label>
-        <Input
-          value={label}
-          onChange={(e) => setLabel(e.target.value)}
-          placeholder="VD: Phim đề cử"
-          className="min-w-[180px]"
-        />
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-[var(--foreground-muted)]">
+            Tên trang
+          </label>
+          <Input
+            value={label}
+            onChange={(e) => setLabel(e.target.value)}
+            placeholder="VD: Phim đề cử"
+            className="w-full text-base py-2.5"
+          />
+        </div>
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-[var(--foreground-muted)]">
+            Slug (đường dẫn)
+          </label>
+          <div className="flex gap-2">
+            <Input
+              value={slug}
+              onChange={(e) => setSlug(e.target.value)}
+              placeholder="VD: /de-cu hoặc de-cu"
+              className="flex-1 font-mono text-base py-2.5"
+            />
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              className="shrink-0 px-3 py-2.5"
+              onClick={() => {
+                const gen = label.trim()
+                  ? label
+                      .trim()
+                      .toLowerCase()
+                      .normalize("NFD")
+                      .replace(/\p{Diacritic}/gu, "")
+                      .replace(/\s+/g, "-")
+                      .replace(/[^a-z0-9-]/g, "")
+                  : "";
+                setSlug(gen ? `/${gen}` : "");
+              }}
+              title="Tạo slug từ tên trang"
+            >
+              Gen
+            </Button>
+          </div>
+        </div>
       </div>
-      <div>
-        <label className="mb-1 block text-[12px] text-[var(--foreground-muted)]">
-          Slug (đường dẫn)
-        </label>
-        <Input
-          value={slug}
-          onChange={(e) => setSlug(e.target.value)}
-          placeholder="VD: /de-cu hoặc de-cu"
-          className="min-w-[180px] font-mono"
-        />
+      <div className="rounded-lg border border-[var(--border)] bg-[var(--secondary-bg-solid)]/50 p-4">
+        <h4 className="mb-3 text-sm font-semibold uppercase tracking-wider text-[var(--foreground-muted)]">
+          SEO
+        </h4>
+        <div className="space-y-4">
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-[var(--foreground-muted)]">
+              Meta title
+            </label>
+            <Input
+              value={seoTitle}
+              onChange={(e) => setSeoTitle(e.target.value)}
+              placeholder="Tiêu đề hiển thị trên tab & kết quả tìm kiếm"
+              className="w-full text-base py-2.5"
+            />
+          </div>
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-[var(--foreground-muted)]">
+              Meta description
+            </label>
+            <textarea
+              value={seoDescription}
+              onChange={(e) => setSeoDescription(e.target.value)}
+              placeholder="Mô tả ngắn cho công cụ tìm kiếm"
+              rows={4}
+              className="w-full resize-y rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2.5 text-base text-[var(--foreground)] placeholder:text-[var(--foreground-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+            />
+          </div>
+        </div>
       </div>
-      <div className="flex gap-2">
-        <Button type="submit" variant="primary" size="sm">
-          Thêm
-        </Button>
-        <Button type="button" variant="secondary" size="sm" onClick={onCancel}>
+      <div className="flex justify-end gap-3 pt-1">
+        <Button type="button" variant="secondary" size="sm" onClick={onCancel} className="px-4 py-2">
           Hủy
+        </Button>
+        <Button type="submit" variant="primary" size="sm" className="px-4 py-2">
+          Thêm
         </Button>
       </div>
     </form>
@@ -683,55 +967,118 @@ function AddPageForm({
 function EditPageForm({
   label: initialLabel,
   slug: initialSlug,
+  seoTitle: initialSeoTitle,
+  seoDescription: initialSeoDescription,
   onSave,
   onCancel,
 }: Readonly<{
   label: string;
   slug: string;
-  onSave: (label: string, slug: string) => void;
+  seoTitle?: string;
+  seoDescription?: string;
+  onSave: (label: string, slug: string, seoTitle?: string, seoDescription?: string) => void;
   onCancel: () => void;
 }>) {
   const [label, setLabel] = useState(initialLabel);
   const [slug, setSlug] = useState(initialSlug.replace(/^\//, ""));
+  const [seoTitle, setSeoTitle] = useState(initialSeoTitle ?? "");
+  const [seoDescription, setSeoDescription] = useState(initialSeoDescription ?? "");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const finalSlug = slug.trim().startsWith("/") ? slug.trim() : `/${slug.trim() || "page"}`;
-    onSave(label.trim() || "Trang", finalSlug);
+    onSave(
+      label.trim() || "Trang",
+      finalSlug,
+      seoTitle.trim() || undefined,
+      seoDescription.trim() || undefined
+    );
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="mt-4 flex flex-wrap items-end gap-3 rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--background)] p-4"
-    >
-      <div>
-        <label className="mb-1 block text-[12px] text-[var(--foreground-muted)]">
-          Tên trang
-        </label>
-        <Input
-          value={label}
-          onChange={(e) => setLabel(e.target.value)}
-          placeholder="Tên trang"
-          className="min-w-[180px]"
-        />
+    <form onSubmit={handleSubmit} className="mt-4 space-y-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-[var(--foreground-muted)]">
+            Tên trang
+          </label>
+          <Input
+            value={label}
+            onChange={(e) => setLabel(e.target.value)}
+            placeholder="Tên trang"
+            className="w-full text-base py-2.5"
+          />
+        </div>
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-[var(--foreground-muted)]">
+            Slug (đường dẫn)
+          </label>
+          <div className="flex gap-2">
+            <Input
+              value={slug}
+              onChange={(e) => setSlug(e.target.value)}
+              placeholder="de-cu"
+              className="flex-1 font-mono text-base py-2.5"
+            />
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              className="shrink-0 px-3 py-2.5"
+              onClick={() => {
+                const gen = label.trim()
+                  ? label
+                      .trim()
+                      .toLowerCase()
+                      .normalize("NFD")
+                      .replace(/\p{Diacritic}/gu, "")
+                      .replace(/\s+/g, "-")
+                      .replace(/[^a-z0-9-]/g, "")
+                  : "";
+                setSlug(gen ? `/${gen}` : "");
+              }}
+              title="Tạo slug từ tên trang"
+            >
+              Gen
+            </Button>
+          </div>
+        </div>
       </div>
-      <div>
-        <label className="mb-1 block text-[12px] text-[var(--foreground-muted)]">
-          Slug
-        </label>
-        <Input
-          value={slug}
-          onChange={(e) => setSlug(e.target.value)}
-          placeholder="de-cu"
-          className="min-w-[180px] font-mono"
-        />
+      <div className="rounded-lg border border-[var(--border)] bg-[var(--secondary-bg-solid)]/50 p-4">
+        <h4 className="mb-3 text-sm font-semibold uppercase tracking-wider text-[var(--foreground-muted)]">
+          SEO
+        </h4>
+        <div className="space-y-4">
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-[var(--foreground-muted)]">
+              Meta title
+            </label>
+            <Input
+              value={seoTitle}
+              onChange={(e) => setSeoTitle(e.target.value)}
+              placeholder="Tiêu đề hiển thị trên tab & kết quả tìm kiếm"
+              className="w-full text-base py-2.5"
+            />
+          </div>
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-[var(--foreground-muted)]">
+              Meta description
+            </label>
+            <textarea
+              value={seoDescription}
+              onChange={(e) => setSeoDescription(e.target.value)}
+              placeholder="Mô tả ngắn cho công cụ tìm kiếm"
+              rows={4}
+              className="w-full resize-y rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2.5 text-base text-[var(--foreground)] placeholder:text-[var(--foreground-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+            />
+          </div>
+        </div>
       </div>
-      <div className="flex gap-2">
-        <Button type="submit" variant="primary" size="sm">
+      <div className="flex gap-3">
+        <Button type="submit" variant="primary" size="sm" className="px-4 py-2">
           Lưu
         </Button>
-        <Button type="button" variant="secondary" size="sm" onClick={onCancel}>
+        <Button type="button" variant="secondary" size="sm" onClick={onCancel} className="px-4 py-2">
           Hủy
         </Button>
       </div>

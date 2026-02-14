@@ -1,13 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { HeaderSearch } from "./header-search";
 import { HeaderCategoryMenu } from "./header-category-menu";
 import { HeaderCountryMenu } from "./header-country-menu";
 import { Modal } from "@/components/ui/modal";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import { AdminManagementContent } from "./admin-management-modal";
+
+const isDev = process.env.NODE_ENV === "development";
 
 const SCROLL_THRESHOLD_VH = 40;
 
@@ -46,6 +48,7 @@ const MenuBars = () => (
 );
 
 export function Header() {
+  const pathname = usePathname();
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [memberModalOpen, setMemberModalOpen] = useState(false);
@@ -61,6 +64,10 @@ export function Header() {
   }, []);
 
   const headerSolid = isScrolled || mobileMenuOpen;
+
+  if (pathname === "/quan-ly-admin") {
+    return null;
+  }
 
   return (
     <header
@@ -155,29 +162,46 @@ export function Header() {
           <HeaderSearch open={searchOpen} onOpenChange={setSearchOpen} />
           <ThemeToggle variant="both" className="shrink-0" />
           <div className="flex shrink-0 items-center">
-            <button
-              type="button"
-              onClick={() => setMemberModalOpen(true)}
-              className="button-user button-login inline-flex items-center rounded-[var(--radius-button)] px-3 py-2 text-sm text-[var(--foreground)] hover:bg-[var(--secondary-bg-solid)] focus-ring"
-              aria-label="Thành viên / Quản lý admin"
-            >
-              <span className="line-center flex items-center">
-                <UserIcon />
-                <span className="hidden sm:inline">Thành viên</span>
-              </span>
-            </button>
+            {isDev ? (
+              <Link
+                href="/quan-ly-admin"
+                className="button-user button-login inline-flex items-center rounded-[var(--radius-button)] px-3 py-2 text-sm text-[var(--foreground)] hover:bg-[var(--secondary-bg-solid)] focus-ring"
+                aria-label="Quản lý admin (chỉ debug)"
+              >
+                <span className="line-center flex items-center">
+                  <UserIcon />
+                  <span className="hidden sm:inline">Quản lý admin</span>
+                </span>
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setMemberModalOpen(true)}
+                className="button-user button-login inline-flex items-center rounded-[var(--radius-button)] px-3 py-2 text-sm text-[var(--foreground)] hover:bg-[var(--secondary-bg-solid)] focus-ring"
+                aria-label="Thành viên"
+              >
+                <span className="line-center flex items-center">
+                  <UserIcon />
+                  <span className="hidden sm:inline">Thành viên</span>
+                </span>
+              </button>
+            )}
           </div>
         </div>
       </div>
 
-      <Modal
-        open={memberModalOpen}
-        onClose={() => setMemberModalOpen(false)}
-        title="Quản lý admin"
-        panelClassName="!max-w-[80vw] w-[80vw] h-[80vh] max-h-[80vh]"
-      >
-        <AdminManagementContent />
-      </Modal>
+      {!isDev && (
+        <Modal
+          open={memberModalOpen}
+          onClose={() => setMemberModalOpen(false)}
+          title="Thành viên"
+          panelClassName="!max-w-[80vw] w-[80vw] h-[80vh] max-h-[80vh]"
+        >
+          <div className="py-4 text-[13px] text-[var(--foreground-muted)]">
+            Đăng nhập / Đăng ký — sẽ kết nối backend sau.
+          </div>
+        </Modal>
+      )}
     </header>
   );
 }

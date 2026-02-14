@@ -14,7 +14,7 @@ import { PageConfigEditor } from "@/modules/admin-pages";
 
 export function AdminManagementContent() {
   return (
-    <Tabs defaultValue="pages" className="flex h-full min-h-0 flex-col">
+    <Tabs defaultValue="pages" className="flex h-full min-h-0 w-full flex-col">
       <TabsList className="mb-4 shrink-0">
         <TabsTrigger value="pages">Trang (Home, Phim lẻ...)</TabsTrigger>
         <TabsTrigger value="overview">Tổng quan</TabsTrigger>
@@ -25,7 +25,7 @@ export function AdminManagementContent() {
       <TabsContent value="pages" className="mt-0 min-h-0 flex-1 overflow-auto">
         <PageConfigEditor />
       </TabsContent>
-      <TabsContent value="overview" className="mt-0 min-h-0 flex-1">
+      <TabsContent value="overview" className="mt-0 min-h-0 flex-1 overflow-auto">
         <div className="space-y-4">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <StatCard label="Người dùng" value="—" />
@@ -38,7 +38,7 @@ export function AdminManagementContent() {
           </p>
         </div>
       </TabsContent>
-      <TabsContent value="users" className="mt-0 min-h-0 flex-1">
+      <TabsContent value="users" className="mt-0 min-h-0 flex-1 overflow-auto">
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold text-[var(--foreground)]">Danh sách người dùng</h3>
@@ -66,7 +66,7 @@ export function AdminManagementContent() {
           </Table>
         </div>
       </TabsContent>
-      <TabsContent value="content" className="mt-0 min-h-0 flex-1">
+      <TabsContent value="content" className="mt-0 min-h-0 flex-1 overflow-auto">
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold text-[var(--foreground)]">Phim / tập</h3>
@@ -94,7 +94,7 @@ export function AdminManagementContent() {
           </Table>
         </div>
       </TabsContent>
-      <TabsContent value="settings" className="mt-0 min-h-0 flex-1">
+      <TabsContent value="settings" className="mt-0 min-h-0 flex-1 overflow-auto">
         <div className="space-y-4">
           <h3 className="text-sm font-semibold text-[var(--foreground)]">Cài đặt hệ thống</h3>
           <ul className="space-y-2 text-[13px] text-[var(--foreground-muted)]">

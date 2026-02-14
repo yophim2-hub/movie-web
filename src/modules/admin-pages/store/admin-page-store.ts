@@ -13,10 +13,15 @@ import {
   ADMIN_PAGE_IDS,
   ADMIN_PAGE_LABELS,
   ADMIN_PAGE_SLUGS,
+  DEFAULT_PAGE_IDS,
+  DEFAULT_PAGE_LABELS,
 } from "../interfaces";
 
 const STORAGE_KEY = "admin-page-configs";
 const CUSTOM_PAGES_KEY = "admin-custom-pages";
+const SECTIONS_CLEARED_KEY = "admin-sections-cleared-v2";
+const HOME_SECTIONS_SEEDED_KEY = "admin-home-sections-seeded-v2";
+const OTHER_PAGES_SECTIONS_SEEDED_KEY = "admin-other-pages-sections-seeded-v1";
 
 function isCustomPageId(id: string): id is `custom-${string}` {
   return id.startsWith("custom-");
@@ -75,10 +80,11 @@ function saveCustomPages(pages: AdminCustomPageMeta[]): void {
   }
 }
 
+/** Danh sách trang hiển thị trong Quản lý: trang mặc định (Trang chủ, Phim lẻ, …) + trang tùy chỉnh. Trang mặc định (trừ Trang chủ) có filter typeList tương ứng. */
 export function getPageList(): AdminPageListItem[] {
-  const builtIn: AdminPageListItem[] = ADMIN_PAGE_IDS.map((id) => ({
+  const builtIn: AdminPageListItem[] = DEFAULT_PAGE_IDS.map((id) => ({
     id,
-    label: ADMIN_PAGE_LABELS[id],
+    label: DEFAULT_PAGE_LABELS[id],
     slug: ADMIN_PAGE_SLUGS[id],
     isBuiltIn: true,
   }));
@@ -117,6 +123,39 @@ function loadFromStorage(): Record<string, AdminPageConfig> {
       const p = parsed[cp.id];
       result[cp.id] = mergeConfig(def, p, cp.id);
     }
+
+    // Một lần: xóa toàn bộ section của mọi trang rồi lưu lại
+    if (!globalThis.localStorage.getItem(SECTIONS_CLEARED_KEY)) {
+      for (const id of Object.keys(result)) {
+        result[id].sections = [];
+      }
+      saveToStorage(result);
+      globalThis.localStorage.setItem(SECTIONS_CLEARED_KEY, "1");
+    }
+
+    // Một lần: seed section mặc định cho trang chủ
+    if (!globalThis.localStorage.getItem(HOME_SECTIONS_SEEDED_KEY)) {
+      const homeConfig = result["home"] ?? defaultConfig("home");
+      result["home"] = { ...homeConfig, sections: getDefaultHomeSections() };
+      saveToStorage(result);
+      globalThis.localStorage.setItem(HOME_SECTIONS_SEEDED_KEY, "1");
+    }
+
+    // Một lần: seed 3 section mặc định cho từng trang (phim-le, phim-bo, phim-chieu-rap, hoat-hinh) nếu trang chưa có section
+    if (!globalThis.localStorage.getItem(OTHER_PAGES_SECTIONS_SEEDED_KEY)) {
+      let changed = false;
+      const otherIds = ["phim-le", "phim-bo", "phim-chieu-rap", "hoat-hinh"] as const;
+      for (const pageId of otherIds) {
+        const cfg = result[pageId] ?? defaultConfig(pageId);
+        if (cfg.sections.length === 0) {
+          result[pageId] = { ...cfg, sections: getDefaultOtherPageSections(pageId) };
+          changed = true;
+        }
+      }
+      if (changed) saveToStorage(result);
+      globalThis.localStorage.setItem(OTHER_PAGES_SECTIONS_SEEDED_KEY, "1");
+    }
+
     return result;
   } catch {
     const result: Record<string, AdminPageConfig> = {};
@@ -176,20 +215,30 @@ function nextCustomId(): string {
   return `custom-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
-export function addCustomPage(params: { slug: string; label: string }): string {
+export function addCustomPage(params: {
+  slug: string;
+  label: string;
+  seoTitle?: string;
+  seoDescription?: string;
+}): string {
   const slug = params.slug.startsWith("/") ? params.slug : `/${params.slug}`;
   const id = nextCustomId();
   const pages = [...loadCustomPages(), { id, slug, label: params.label }];
   saveCustomPages(pages);
   const configs = loadFromStorage();
-  configs[id] = defaultConfig(id as AdminPageIdAny, { id, slug, label: params.label });
+  const base = defaultConfig(id as AdminPageIdAny, { id, slug, label: params.label });
+  configs[id] = {
+    ...base,
+    seoTitle: params.seoTitle?.trim() || undefined,
+    seoDescription: params.seoDescription?.trim() || undefined,
+  };
   saveToStorage(configs);
   return id;
 }
 
 export function updateCustomPage(
   id: string,
-  patch: { slug?: string; label?: string }
+  patch: { slug?: string; label?: string; seoTitle?: string; seoDescription?: string }
 ): void {
   if (!isCustomPageId(id)) return;
   const pages = loadCustomPages().map((p) =>
@@ -206,7 +255,10 @@ export function updateCustomPage(
   const cfg = configs[id];
   if (cfg) {
     const meta = pages.find((x) => x.id === id);
-    if (meta) configs[id] = { ...cfg, label: meta.label, slug: meta.slug };
+    const next = { ...cfg, label: meta?.label ?? cfg.label, slug: meta?.slug ?? cfg.slug };
+    if (patch.seoTitle !== undefined) next.seoTitle = patch.seoTitle.trim() || undefined;
+    if (patch.seoDescription !== undefined) next.seoDescription = patch.seoDescription.trim() || undefined;
+    configs[id] = next;
     saveToStorage(configs);
   }
 }
@@ -273,6 +325,188 @@ function nextSectionId(): string {
   return typeof globalThis.crypto !== "undefined" && globalThis.crypto.randomUUID
     ? globalThis.crypto.randomUUID()
     : `section-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+}
+
+/** Section mặc định cho trang chủ (seed một lần). */
+function getDefaultHomeSections(): AdminSection[] {
+  return [
+    {
+      id: nextSectionId(),
+      order: 0,
+      title: "Banner trang chủ",
+      type: "movie-list",
+      filter: { page: 1, limit: 8 },
+      savedMovieIds: [],
+      displayType: "banner",
+    },
+    {
+      id: nextSectionId(),
+      order: 1,
+      title: "Đây Rồi Top Phim Xem Nhiều Nhất",
+      type: "movie-list",
+      filter: {
+        typeList: "phim-le",
+        page: 1,
+        limit: 24,
+        sortField: "modified.time",
+        sortType: "desc",
+      },
+      savedMovieIds: [],
+      displayType: "poster-list",
+    },
+    {
+      id: nextSectionId(),
+      order: 2,
+      title: "Phim Điện Ảnh Mới Cóng",
+      type: "movie-list",
+      filter: {
+        typeList: "phim-le",
+        page: 1,
+        limit: 24,
+        country: "viet-nam",
+        sortField: "modified.time",
+        sortType: "desc",
+      },
+      savedMovieIds: [],
+      displayType: "poster-list",
+    },
+    {
+      id: nextSectionId(),
+      order: 3,
+      title: "Mãn Nhãn với Phim Chiếu Rạp",
+      type: "movie-list",
+      filter: {
+        typeList: "phim-chieu-rap",
+        page: 1,
+        limit: 24,
+        sortField: "modified.time",
+        sortType: "desc",
+      },
+      savedMovieIds: [],
+      displayType: "thumb-list",
+    },
+    {
+      id: nextSectionId(),
+      order: 4,
+      title: "Top 10 phim lẻ hôm nay",
+      type: "movie-list",
+      filter: {
+        typeList: "phim-le",
+        page: 1,
+        limit: 10,
+        sortField: "modified.time",
+        sortType: "desc",
+      },
+      savedMovieIds: [],
+      displayType: "top-list",
+    },
+    {
+      id: nextSectionId(),
+      order: 5,
+      title: "Kho tàng anime",
+      type: "movie-list",
+      filter: {
+        typeList: "hoat-hinh",
+        page: 1,
+        limit: 24,
+        sortField: "modified.time",
+        sortType: "desc",
+      },
+      savedMovieIds: [],
+      displayType: "poster-list",
+    },
+    {
+      id: nextSectionId(),
+      order: 6,
+      title: "Phim Hành động việt",
+      type: "movie-list",
+      filter: {
+        typeList: "phim-le",
+        page: 1,
+        limit: 24,
+        country: "viet-nam",
+        category: "hanh-dong",
+        sortField: "modified.time",
+        sortType: "desc",
+      },
+      savedMovieIds: [],
+      displayType: "poster-list",
+    },
+    {
+      id: nextSectionId(),
+      order: 7,
+      title: "Thế giới quyến rũ",
+      type: "movie-list",
+      filter: {
+        typeList: "phim-le",
+        page: 1,
+        limit: 24,
+        category: "phim-18",
+        sortField: "modified.time",
+        sortType: "desc",
+      },
+      savedMovieIds: [],
+      displayType: "thumb-list",
+    },
+  ];
+}
+
+type OtherPageId = "phim-le" | "phim-bo" | "phim-chieu-rap" | "hoat-hinh";
+
+const OTHER_PAGE_SECTION_LABELS: Record<
+  OtherPageId,
+  { banner: string; thumb: string; grid: string }
+> = {
+  "phim-le": { banner: "Phim lẻ mới nhất", thumb: "Lẻ xem nhiều nhất", grid: "Kho phim lẻ" },
+  "phim-bo": { banner: "Phim bộ mới nhất", thumb: "Bộ xem nhiều nhất", grid: "Kho phim bộ" },
+  "phim-chieu-rap": {
+    banner: "Phim chiếu rạp mới nhất",
+    thumb: "Chiếu rạp xem nhiều nhất",
+    grid: "Kho phim chiếu rạp",
+  },
+  "hoat-hinh": { banner: "Anime mới nhất", thumb: "Anime xem nhiều nhất", grid: "Kho anime" },
+};
+
+/** 3 section mặc định cho trang phim-le / phim-bo / phim-chieu-rap / hoat-hinh: banner (mới nhất), thumb (xem nhiều nhất), grid (kho phim). */
+function getDefaultOtherPageSections(pageId: OtherPageId): AdminSection[] {
+  const labels = OTHER_PAGE_SECTION_LABELS[pageId];
+  const typeList = pageId;
+  const baseFilter = {
+    typeList,
+    page: 1,
+    limit: 24,
+    sortField: "modified.time" as const,
+    sortType: "desc" as const,
+  };
+  return [
+    {
+      id: nextSectionId(),
+      order: 0,
+      title: labels.banner,
+      type: "movie-list",
+      filter: { typeList, page: 1, limit: 8, sortField: "modified.time", sortType: "desc" },
+      savedMovieIds: [],
+      displayType: "banner",
+    },
+    {
+      id: nextSectionId(),
+      order: 1,
+      title: labels.thumb,
+      type: "movie-list",
+      filter: { ...baseFilter, limit: 16 },
+      savedMovieIds: [],
+      displayType: "thumb-list",
+    },
+    {
+      id: nextSectionId(),
+      order: 2,
+      title: labels.grid,
+      type: "movie-list",
+      filter: baseFilter,
+      savedMovieIds: [],
+      displayType: "grid-list",
+    },
+  ];
 }
 
 export function addSection(

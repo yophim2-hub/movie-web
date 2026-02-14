@@ -1,7 +1,11 @@
 "use client";
 
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+/** Số modal đang mở — chỉ bật lại scroll khi = 0 (tránh lỗi khi có modal lồng nhau). */
+let openModalCount = 0;
 
 interface ModalProps {
   open: boolean;
@@ -13,6 +17,8 @@ interface ModalProps {
   closeOnOverlayClick?: boolean;
   /** Class cho panel (nội dung modal) */
   panelClassName?: string;
+  /** z-index cho wrapper (modal lồng nhau dùng cao hơn, VD: 60) */
+  zIndex?: number;
 }
 
 const overlayTransition = {
@@ -32,25 +38,42 @@ export function Modal({
   title,
   closeOnOverlayClick = true,
   panelClassName = "",
+  zIndex = 50,
 }: Readonly<ModalProps>) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   useEffect(() => {
     if (!open) return;
+    openModalCount += 1;
+    const html = document.documentElement;
+    const body = document.body;
+    const prevHtmlOverflow = html.style.overflow;
+    const prevBodyOverflow = body.style.overflow;
+    html.style.overflow = "hidden";
+    body.style.overflow = "hidden";
+
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     document.addEventListener("keydown", handleEscape);
-    document.body.style.overflow = "hidden";
+
     return () => {
       document.removeEventListener("keydown", handleEscape);
-      document.body.style.overflow = "";
+      openModalCount = Math.max(0, openModalCount - 1);
+      if (openModalCount === 0) {
+        html.style.overflow = prevHtmlOverflow;
+        body.style.overflow = prevBodyOverflow;
+      }
     };
   }, [open, onClose]);
 
-  return (
+  const modalNode = (
     <AnimatePresence>
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          className="flex items-center justify-center p-4"
+          style={{ position: "fixed", inset: 0, zIndex }}
           role="dialog"
           aria-modal="true"
           aria-labelledby={title ? "modal-title" : undefined}
@@ -87,4 +110,9 @@ export function Modal({
       )}
     </AnimatePresence>
   );
+
+  if (!mounted || typeof document === "undefined") {
+    return null;
+  }
+  return createPortal(modalNode, document.body);
 }

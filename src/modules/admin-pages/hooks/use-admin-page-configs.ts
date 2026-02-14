@@ -44,14 +44,20 @@ export function useAdminPageConfigs() {
 
   const pageList = persistGetPageList();
 
-  const addCustomPage = useCallback((params: { slug: string; label: string }) => {
-    const id = persistAddCustomPage(params);
-    setConfigs(getAdminPageConfigs());
-    return id;
-  }, []);
+  const addCustomPage = useCallback(
+    (params: { slug: string; label: string; seoTitle?: string; seoDescription?: string }) => {
+      const id = persistAddCustomPage(params);
+      setConfigs(getAdminPageConfigs());
+      return id;
+    },
+    []
+  );
 
   const updateCustomPage = useCallback(
-    (id: string, patch: { slug?: string; label?: string }) => {
+    (
+      id: string,
+      patch: { slug?: string; label?: string; seoTitle?: string; seoDescription?: string }
+    ) => {
       persistUpdateCustomPage(id, patch);
       setConfigs(getAdminPageConfigs());
     },

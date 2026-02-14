@@ -24,7 +24,7 @@ import { PageWithAllComponents } from "./page-with-all-components";
 
 export default function HomePage() {
   return (
-    <PageLayout className="pb-24">
+    <div className="pb-24">
       <header className="mb-16 sm:mb-20">
         <h1
           className="text-[28px] font-semibold tracking-tight text-foreground sm:text-[32px]"
@@ -182,6 +182,6 @@ export default function HomePage() {
             Xem tất cả UI components
           </Link>
         </footer>
-    </PageLayout>
+    </div>
   );
 }

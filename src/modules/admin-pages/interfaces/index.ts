@@ -44,6 +44,22 @@ export interface AdminFilterSetting {
 /** Kiểu section: danh sách theo API filter hoặc block phim ghim (chỉ saved). */
 export type AdminSectionType = "movie-list" | "pinned";
 
+/** Loại hiển thị danh sách phim trong section. */
+export const SECTION_DISPLAY_TYPES = [
+  "banner",
+  "banner-small",
+  "poster-list",
+  "thumb-list",
+  "grid-list",
+  "poster-thumb",
+  "top-list",
+] as const;
+export type SectionDisplayType = (typeof SECTION_DISPLAY_TYPES)[number];
+
+/** Loại header cho section (poster-list, grid-list, thumb-list, poster-thumb): Xem thêm hoặc nút điều hướng. */
+export const SECTION_HEADER_VARIANTS = ["see-more", "navigation"] as const;
+export type SectionHeaderVariant = (typeof SECTION_HEADER_VARIANTS)[number];
+
 /**
  * Một section trong trang: có tiêu đề, thứ tự, kiểu (movie-list | pinned), filter và/hoặc phim đã chọn.
  */
@@ -58,6 +74,10 @@ export interface AdminSection {
   filter: AdminFilterSetting;
   /** ID phim (_id) — dùng cho "pinned" hoặc bổ sung cho "movie-list". */
   savedMovieIds: string[];
+  /** Loại hiển thị: banner, danh sách poster / thumb / grid / poster+thumb. */
+  displayType?: SectionDisplayType;
+  /** Loại header khi dùng poster-list / grid-list / thumb-list / poster-thumb: "Xem thêm" hoặc nút < >. Mặc định see-more. */
+  headerVariant?: SectionHeaderVariant;
 }
 
 /**
@@ -72,6 +92,10 @@ export interface AdminPageConfig {
   savedMovieIds: string[];
   /** Các section trong trang (carousel/block), có thể sắp xếp. */
   sections: AdminSection[];
+  /** SEO: meta title (thẻ title). */
+  seoTitle?: string;
+  /** SEO: meta description. */
+  seoDescription?: string;
 }
 
 export const ADMIN_PAGE_LABELS: Record<AdminPageId, string> = {
@@ -97,6 +121,28 @@ export const ADMIN_PAGE_SLUGS: Record<AdminPageId, string> = {
   "phim-thuyet-minh": "/phim-thuyet-minh",
   "phim-long-tieng": "/phim-long-tieng",
   "tv-shows": "/tv-shows",
+};
+
+/** Các trang mặc định hiển thị trong Quản lý (Trang chủ + 5 trang theo type). Trừ Trang chủ, filter mặc định dùng typeList tương ứng. */
+export const DEFAULT_PAGE_IDS = [
+  "home",
+  "phim-le",
+  "phim-bo",
+  "hoat-hinh",
+  "tv-shows",
+  "phim-chieu-rap",
+] as const;
+
+export type DefaultPageId = (typeof DEFAULT_PAGE_IDS)[number];
+
+/** Nhãn hiển thị cho trang mặc định (Anime, Phim truyền hình thay cho Hoạt hình / TV Shows). */
+export const DEFAULT_PAGE_LABELS: Record<DefaultPageId, string> = {
+  home: "Trang chủ",
+  "phim-le": "Phim lẻ",
+  "phim-bo": "Phim bộ",
+  "hoat-hinh": "Anime",
+  "tv-shows": "Phim truyền hình",
+  "phim-chieu-rap": "Phim chiếu rạp",
 };
 
 /** Trang tùy chỉnh do user thêm */
