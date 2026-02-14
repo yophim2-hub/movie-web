@@ -5,6 +5,9 @@ import { useState, useEffect } from "react";
 import { HeaderSearch } from "./header-search";
 import { HeaderCategoryMenu } from "./header-category-menu";
 import { HeaderCountryMenu } from "./header-country-menu";
+import { Modal } from "@/components/ui/modal";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { AdminManagementContent } from "./admin-management-modal";
 
 const SCROLL_THRESHOLD_VH = 40;
 
@@ -45,6 +48,7 @@ const MenuBars = () => (
 export function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [memberModalOpen, setMemberModalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -146,14 +150,16 @@ export function Header() {
           <HeaderCountryMenu onMobileNavClick={() => setMobileMenuOpen(false)} />
         </nav>
 
-        {/* Phải: search + profile */}
+        {/* Phải: search + theme + profile */}
         <div className="flex flex-1 items-center justify-end gap-2">
           <HeaderSearch open={searchOpen} onOpenChange={setSearchOpen} />
+          <ThemeToggle variant="both" className="shrink-0" />
           <div className="flex shrink-0 items-center">
             <button
               type="button"
+              onClick={() => setMemberModalOpen(true)}
               className="button-user button-login inline-flex items-center rounded-[var(--radius-button)] px-3 py-2 text-sm text-[var(--foreground)] hover:bg-[var(--secondary-bg-solid)] focus-ring"
-              aria-label="Đăng nhập"
+              aria-label="Thành viên / Quản lý admin"
             >
               <span className="line-center flex items-center">
                 <UserIcon />
@@ -163,6 +169,15 @@ export function Header() {
           </div>
         </div>
       </div>
+
+      <Modal
+        open={memberModalOpen}
+        onClose={() => setMemberModalOpen(false)}
+        title="Quản lý admin"
+        panelClassName="!max-w-[80vw] w-[80vw] h-[80vh] max-h-[80vh]"
+      >
+        <AdminManagementContent />
+      </Modal>
     </header>
   );
 }

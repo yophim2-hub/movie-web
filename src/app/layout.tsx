@@ -68,7 +68,7 @@ const themeScript = `
 (function() {
   var t = localStorage.getItem('theme');
   if (t !== 'dark' && t !== 'light') {
-    t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    t = 'dark';
     localStorage.setItem('theme', t);
   }
   document.documentElement.classList.add('theme-' + t);

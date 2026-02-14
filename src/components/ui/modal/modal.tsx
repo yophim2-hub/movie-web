@@ -64,7 +64,7 @@ export function Modal({
             onClick={closeOnOverlayClick ? onClose : undefined}
           />
           <motion.div
-            className={`relative z-10 w-full max-w-md overflow-hidden rounded-[var(--radius-sheet)] border border-[var(--border)] bg-[var(--glass-bg)] shadow-[var(--shadow-lg)] backdrop-blur-xl ${panelClassName}`}
+            className={`relative z-10 mx-auto flex w-full max-w-md flex-col overflow-hidden rounded-[var(--radius-sheet)] border border-[var(--border)] bg-[var(--glass-bg)] shadow-[var(--shadow-lg)] backdrop-blur-xl ${panelClassName}`}
             initial={{ opacity: 0, scale: 0.96, y: 8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 8 }}
@@ -72,7 +72,7 @@ export function Modal({
             onClick={(e) => e.stopPropagation()}
           >
             {title && (
-              <div className="border-b border-[var(--border)] px-6 py-4">
+              <div className="shrink-0 border-b border-[var(--border)] px-6 py-4">
                 <h2
                   id="modal-title"
                   className="text-[15px] font-semibold text-[var(--foreground)]"
@@ -81,7 +81,7 @@ export function Modal({
                 </h2>
               </div>
             )}
-            <div className="p-6">{children}</div>
+            <div className="min-h-0 flex-1 overflow-auto p-6">{children}</div>
           </motion.div>
         </div>
       )}
