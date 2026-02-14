@@ -21,6 +21,14 @@ function isM3u8Request(url: string, contentType: string | null): boolean {
   return false;
 }
 
+async function fetchWithTimeout(
+  url: string,
+  headers: Record<string, string>,
+  timeoutMs: number
+): Promise<Response> {
+  return fetch(url, { headers, signal: AbortSignal.timeout(timeoutMs) });
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const url = searchParams.get("url");
@@ -42,30 +50,48 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  // Nhiều CDN (kkphimplayer6, v.v.) trả 404 nếu thiếu Referer hoặc Referer không phải domain của họ (đặc biệt khi request từ server Vercel). Gửi Referer = origin upstream để CDN chấp nhận.
+  // CDN (kkphimplayer6) có thể chặn request từ server (Vercel IP). Thử nhiều Referer:
+  // 1) Referer từ client (trang của user) — CDN có thể whitelist domain của chúng ta
+  // 2) Referer = origin upstream — fallback chuẩn
   const userAgent =
     request.headers.get("user-agent") ||
-    "Mozilla/5.0 (Windows NT 10.0; rv:109.0) Gecko/20100101 Firefox/115.0";
-  let referer: string | null = null;
-  try {
-    const upstreamOrigin = new URL(decodedUrl).origin;
-    referer = `${upstreamOrigin}/`;
-  } catch {
-    referer = request.headers.get("referer");
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
+  const clientReferer = request.headers.get("referer");
+  const clientOrigin = request.headers.get("origin");
+  let referer: string | null = clientReferer || clientOrigin;
+  if (!referer) {
+    try {
+      const upstreamOrigin = new URL(decodedUrl).origin;
+      referer = `${upstreamOrigin}/`;
+    } catch {
+      referer = null;
+    }
   }
-  const fetchHeaders: Record<string, string> = {
-    Accept: "*/*",
-    "User-Agent": userAgent,
+  const buildHeaders = (ref: string | null): Record<string, string> => {
+    const h: Record<string, string> = {
+      Accept: "*/*",
+      "User-Agent": userAgent,
+      "Accept-Language": "vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7",
+    };
+    if (ref) h.Referer = ref;
+    return h;
   };
-  if (referer) fetchHeaders.Referer = referer;
 
+  const timeout = 25000;
   let res: Response;
   try {
-    res = await fetch(decodedUrl, {
-      headers: fetchHeaders,
-      // Vercel serverless có thể bị upstream cắt kết nối; tăng timeout.
-      signal: AbortSignal.timeout(25000),
-    });
+    res = await fetchWithTimeout(decodedUrl, buildHeaders(referer), timeout);
+    if (res.status === 404 && referer) {
+      try {
+        const upstreamRef = `${new URL(decodedUrl).origin}/`;
+        if (referer !== upstreamRef) {
+          const retryRes = await fetchWithTimeout(decodedUrl, buildHeaders(upstreamRef), timeout);
+          if (retryRes.ok) res = retryRes;
+        }
+      } catch {
+        /* ignore retry */
+      }
+    }
   } catch (e) {
     console.error("[stream] fetch error:", e);
     return NextResponse.json(
@@ -115,14 +141,14 @@ export async function GET(request: NextRequest) {
   }
 
   // Segment hoặc file khác: stream thẳng
-  const headers = new Headers();
+  const outHeaders = new Headers();
   const contentLength = res.headers.get("content-length");
-  if (contentLength) headers.set("Content-Length", contentLength);
+  if (contentLength) outHeaders.set("Content-Length", contentLength);
   const contentTypeOut = res.headers.get("content-type");
-  if (contentTypeOut) headers.set("Content-Type", contentTypeOut);
+  if (contentTypeOut) outHeaders.set("Content-Type", contentTypeOut);
 
   return new NextResponse(res.body, {
     status: res.status,
-    headers,
+    headers: outHeaders,
   });
 }

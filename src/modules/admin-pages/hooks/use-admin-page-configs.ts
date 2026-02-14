@@ -68,6 +68,10 @@ export function useAdminPageConfigs() {
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Tải thất bại");
+      // Luôn hiển thị data mặc định khi API lỗi
+      const defaults = mergeFromApiPayload({}, []);
+      setConfigs(defaults);
+      setCustomPages([]);
     } finally {
       setIsLoading(false);
     }

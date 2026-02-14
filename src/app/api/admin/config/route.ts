@@ -1,14 +1,14 @@
 /**
  * API Admin Config — đọc/ghi cấu hình trang từ file.
- * Bảo mật: Production yêu cầu header X-Admin-Secret trùng ADMIN_SECRET (env).
- * Development: không cần secret nếu ADMIN_SECRET chưa set.
+ * GET: public (section config để render trang chủ, phim-le, phim-bo...).
+ * PATCH: yêu cầu X-Admin-Secret trùng ADMIN_SECRET (chỉ admin mới ghi).
  */
 
 import { NextResponse } from "next/server";
 import { readAdminConfigFile, writeAdminConfigFile } from "@/lib/admin-config-file";
 
-/** Cho phép khi: dev không set secret, HOẶC header X-Admin-Secret trùng ADMIN_SECRET (prod). */
-function isAuthorized(request: Request): boolean {
+/** PATCH cần auth: dev không set secret thì cho qua, prod phải có header trùng ADMIN_SECRET. */
+function isWriteAuthorized(request: Request): boolean {
   const secret = process.env.ADMIN_SECRET;
   if (!secret) {
     return process.env.NODE_ENV === "development";
@@ -17,10 +17,7 @@ function isAuthorized(request: Request): boolean {
   return header === secret;
 }
 
-export async function GET(request: Request) {
-  if (!isAuthorized(request)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+export async function GET() {
   try {
     const payload = await readAdminConfigFile();
     return NextResponse.json(payload);
@@ -31,7 +28,7 @@ export async function GET(request: Request) {
 }
 
 export async function PATCH(request: Request) {
-  if (!isAuthorized(request)) {
+  if (!isWriteAuthorized(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   try {
