@@ -75,8 +75,15 @@ export async function GET(request: NextRequest) {
   }
 
   if (!res.ok) {
+    const is404 = res.status === 404;
     return NextResponse.json(
-      { error: `Upstream ${res.status}` },
+      {
+        error: is404
+          ? "Upstream 404 (nội dung có thể chỉ khả dụng tại Việt Nam)"
+          : `Upstream ${res.status}`,
+        code: is404 ? "GEO_BLOCKED" : "UPSTREAM_ERROR",
+        directUrl: decodedUrl,
+      },
       { status: res.status }
     );
   }

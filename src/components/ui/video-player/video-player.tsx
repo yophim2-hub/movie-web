@@ -5,14 +5,20 @@ import { getStreamProxyUrl } from "./get-stream-proxy-url";
 
 function createM3u8Handler(
   Hls: typeof import("hls.js").default,
-  onError?: (error: unknown) => void
+  onError?: (error: unknown) => void,
+  onFatalSoFallback?: () => void
 ) {
   return (video: HTMLVideoElement, url: string, art: { on: (e: string, fn: () => void) => void }) => {
     if (Hls.isSupported()) {
       const hls = new Hls({ xhrSetup: (xhr) => { xhr.withCredentials = false; } });
       hls.loadSource(url);
       hls.attachMedia(video);
-      hls.on(Hls.Events.ERROR, (_, data) => { if (data.fatal) onError?.(data); });
+      hls.on(Hls.Events.ERROR, (_, data) => {
+        if (data.fatal) {
+          onError?.(data);
+          onFatalSoFallback?.();
+        }
+      });
       art.on("destroy", () => hls.destroy());
     } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
       video.src = url;
@@ -57,10 +63,12 @@ export function VideoPlayer({
   const onTimeUpdateRef = useRef(onTimeUpdate);
   const lastSaveRef = useRef(0);
   const [adRemovalOn, setAdRemovalOn] = useState(useAdRemoval);
+  const [fallbackToDirect, setFallbackToDirect] = useState(false);
   const [isReady, setIsReady] = useState(false);
 
   onTimeUpdateRef.current = onTimeUpdate;
-  const streamUrl = adRemovalOn ? getStreamProxyUrl(m3u8Url) : m3u8Url;
+  const useProxy = adRemovalOn && !fallbackToDirect;
+  const streamUrl = useProxy ? getStreamProxyUrl(m3u8Url) : m3u8Url;
 
   useEffect(() => {
     if (!containerRef.current || !m3u8Url) return;
@@ -75,13 +83,18 @@ export function VideoPlayer({
 
       if (destroyed) return;
 
+      const isProxyUrl = useProxy;
       const art = new Artplayer({
         container,
         url: streamUrl,
         type: "m3u8",
         poster,
         lang: "vi",
-        customType: { m3u8: createM3u8Handler(Hls, onError) },
+        customType: {
+          m3u8: createM3u8Handler(Hls, onError, () => {
+            if (isProxyUrl) setFallbackToDirect(true);
+          }),
+        },
         setting: true,
         playbackRate: true,
         aspectRatio: true,
