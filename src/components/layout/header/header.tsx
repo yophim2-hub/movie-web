@@ -1,15 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { HeaderSearch } from "./header-search";
 import { HeaderCategoryMenu } from "./header-category-menu";
 import { HeaderCountryMenu } from "./header-country-menu";
-import { Modal } from "@/components/ui/modal";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-
-const isDev = process.env.NODE_ENV === "development";
 
 const SCROLL_THRESHOLD_VH = 40;
 
@@ -26,19 +22,6 @@ const SearchIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
   </svg>
 );
 
-const UserIcon = () => (
-  <svg
-    stroke="currentColor"
-    fill="currentColor"
-    strokeWidth="0"
-    viewBox="0 0 448 512"
-    className="mr-1.5 h-4 w-4 shrink-0"
-    aria-hidden
-  >
-    <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" />
-  </svg>
-);
-
 const MenuBars = () => (
   <span className="flex flex-col gap-1" aria-hidden>
     <span className="block h-0.5 w-5 rounded-full bg-current" />
@@ -48,10 +31,8 @@ const MenuBars = () => (
 );
 
 export function Header() {
-  const pathname = usePathname();
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [memberModalOpen, setMemberModalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -64,10 +45,6 @@ export function Header() {
   }, []);
 
   const headerSolid = isScrolled || mobileMenuOpen;
-
-  if (pathname === "/quan-ly-admin") {
-    return null;
-  }
 
   return (
     <header
@@ -161,47 +138,8 @@ export function Header() {
         <div className="flex flex-1 items-center justify-end gap-2">
           <HeaderSearch open={searchOpen} onOpenChange={setSearchOpen} />
           <ThemeToggle variant="both" className="shrink-0" />
-          <div className="flex shrink-0 items-center">
-            {isDev ? (
-              <Link
-                href="/quan-ly-admin"
-                className="button-user button-login inline-flex items-center rounded-[var(--radius-button)] px-3 py-2 text-sm text-[var(--foreground)] hover:bg-[var(--secondary-bg-solid)] focus-ring"
-                aria-label="Quản lý admin (chỉ debug)"
-              >
-                <span className="line-center flex items-center">
-                  <UserIcon />
-                  <span className="hidden sm:inline">Quản lý admin</span>
-                </span>
-              </Link>
-            ) : (
-              <button
-                type="button"
-                onClick={() => setMemberModalOpen(true)}
-                className="button-user button-login inline-flex items-center rounded-[var(--radius-button)] px-3 py-2 text-sm text-[var(--foreground)] hover:bg-[var(--secondary-bg-solid)] focus-ring"
-                aria-label="Thành viên"
-              >
-                <span className="line-center flex items-center">
-                  <UserIcon />
-                  <span className="hidden sm:inline">Thành viên</span>
-                </span>
-              </button>
-            )}
-          </div>
         </div>
       </div>
-
-      {!isDev && (
-        <Modal
-          open={memberModalOpen}
-          onClose={() => setMemberModalOpen(false)}
-          title="Thành viên"
-          panelClassName="!max-w-[80vw] w-[80vw] h-[80vh] max-h-[80vh]"
-        >
-          <div className="py-4 text-[13px] text-[var(--foreground-muted)]">
-            Đăng nhập / Đăng ký — sẽ kết nối backend sau.
-          </div>
-        </Modal>
-      )}
     </header>
   );
 }

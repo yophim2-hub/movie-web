@@ -5,6 +5,7 @@ import type { AdminPageIdAny } from "@/modules/admin-pages/interfaces";
 import { ADMIN_PAGE_SLUGS } from "@/modules/admin-pages/interfaces";
 import { useHasMounted } from "./use-has-mounted";
 import { SectionRenderer } from "./section-renderer";
+import { PageSectionsLoading } from "./page-sections-loading";
 
 export interface PageSectionsViewProps {
   /** pageId trong config (home, phim-le, phim-bo, ...) */
@@ -33,8 +34,11 @@ export function PageSectionsView({
   const sortedSections = [...sections].sort((a, b) => a.order - b.order);
   const slug = seeMoreHref ?? (typeof pageId === "string" && pageId in ADMIN_PAGE_SLUGS ? ADMIN_PAGE_SLUGS[pageId as keyof typeof ADMIN_PAGE_SLUGS] : "/");
 
-  // Chỉ render theo config sau khi mount và load xong để tránh hydration mismatch.
-  if (!mounted || isLoading || sortedSections.length === 0) {
+  if (!mounted || isLoading) {
+    return <PageSectionsLoading />;
+  }
+
+  if (sortedSections.length === 0) {
     return null;
   }
 

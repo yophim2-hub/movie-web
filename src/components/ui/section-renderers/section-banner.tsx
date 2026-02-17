@@ -39,8 +39,10 @@ export function SectionBanner({
 
   useEffect(() => {
     const el = dotRefs.current[activeIndex];
-    if (el && dotsContainerRef.current) {
-      el.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    const container = dotsContainerRef.current?.firstElementChild as HTMLElement | null;
+    if (el && container) {
+      const left = el.offsetLeft - container.offsetWidth / 2 + el.offsetWidth / 2;
+      container.scrollTo({ left, behavior: "smooth" });
     }
   }, [activeIndex]);
 

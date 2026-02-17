@@ -19,6 +19,7 @@ export interface SectionGridListPagination {
   currentPage: number;
   totalPages: number;
   getPageHref: (page: number) => string;
+  onPageChange?: (page: number) => void;
 }
 
 export interface SectionGridListProps {
@@ -164,11 +165,12 @@ export function SectionGridList({
               <span className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent)] border-t-transparent" />
             </div>
           )}
-          {pagination && pagination.totalPages > 1 && (
+          {pagination && (
             <Pagination
               currentPage={pagination.currentPage}
               totalPages={pagination.totalPages}
               getPageHref={pagination.getPageHref}
+              onPageChange={pagination.onPageChange}
               className="mt-8"
             />
           )}

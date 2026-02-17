@@ -2,8 +2,9 @@
 
 import { useCallback, useRef, useEffect } from "react";
 import { keepPreviousData } from "@tanstack/react-query";
-import { MoviePosterCard, Pagination, MovieFilter } from "@/components/ui";
+import { MovieFilter } from "@/components/ui";
 import type { MovieFilterState } from "@/components/ui";
+import { SectionByDisplayType } from "@/components/ui/section-renderers";
 import { PageLayout } from "@/components/layout";
 import { useSearchMovies, useCategories, useCountries } from "@/hooks";
 import type { SortField, SortType } from "@/types/movie-list";
@@ -132,40 +133,24 @@ function TimKiemContent() {
           )}
 
           {items.length > 0 && (
-            <div ref={listRef} className="relative">
-              <div
-                className={`transition-opacity duration-200 ${isFetching ? "opacity-60 pointer-events-none" : "opacity-100"}`}
-              >
-                <ul className="grid grid-cols-3 gap-4 lg:grid-cols-8">
-                  {items.map((item) => (
-                    <li key={item._id} className="min-w-0">
-                      <MoviePosterCard item={item} />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              {isFetching && (
-                <div
-                  className="absolute inset-0 flex items-center justify-center rounded-[var(--radius-panel)] bg-[var(--background)]/50"
-                  aria-hidden
-                >
-                  <span className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent)] border-t-transparent" />
-                </div>
-              )}
-              {totalPages > 1 && (
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  getPageHref={(p) =>
-                    `/tim-kiem?${new URLSearchParams({
-                      ...Object.fromEntries(searchParams.entries()),
-                      page: String(p),
-                    }).toString()}`
-                  }
-                  className="mt-8"
-                />
-              )}
-            </div>
+            <SectionByDisplayType
+              title=""
+              items={items}
+              displayType="grid-list"
+              basePath="/phim"
+              showHeader={false}
+              listRef={listRef}
+              isLoading={isFetching}
+              pagination={{
+                currentPage,
+                totalPages,
+                getPageHref: (p) =>
+                  `/tim-kiem?${new URLSearchParams({
+                    ...Object.fromEntries(searchParams.entries()),
+                    page: String(p),
+                  }).toString()}`,
+              }}
+            />
           )}
         </>
       )}

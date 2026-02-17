@@ -302,35 +302,35 @@ export function WatchContent({
 
   if (layout === "split") {
     return (
-      <div className="flex h-dvh flex-col overflow-hidden lg:h-auto lg:overflow-visible lg:pb-24">
-        <PageLayout className="flex flex-1 flex-col py-4 min-h-0 lg:flex-none">
+      <div className="flex flex-col pb-24">
+        <PageLayout className="py-4">
           {breadcrumb}
-          <div className="mt-4 grid flex-1 min-h-0 grid-cols-1 gap-6 overflow-hidden lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] lg:items-start lg:overflow-visible">
+          <div className="mt-4 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] lg:items-start">
             {/* Video: mobile = cố định trên, desktop = bình thường */}
-            <div className="flex min-w-0 shrink-0 flex-col lg:shrink">
-              <div>{playerBlock}</div>
+            <div className="min-w-0">
+              <div className="sticky top-0 z-30 bg-[var(--background)] lg:static">{playerBlock}</div>
               {/* Desktop: thông tin phim dưới video */}
               <div className="mt-4 hidden lg:block lg:pr-6">{movieInfoBlock}</div>
             </div>
             {/* Mobile: tab Thông tin | Tập | Đề xuất — chỉ vùng này scroll */}
-            <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden lg:flex-none lg:sticky lg:top-24 lg:self-start">
-              <div className="flex min-h-0 flex-1 flex-col overflow-hidden lg:hidden">
-                <Tabs defaultValue="info" className="flex min-h-0 w-full min-w-0 flex-1 flex-col">
-                  <TabsList className="mb-3 shrink-0 grid w-full min-w-0 grid-cols-3">
+            <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
+              <div className="lg:hidden">
+                <Tabs defaultValue="info" className="w-full">
+                  <TabsList className="mb-3 grid w-full grid-cols-3">
                     <TabsTrigger value="info">Thông tin</TabsTrigger>
                     <TabsTrigger value="episodes">Tập</TabsTrigger>
                     <TabsTrigger value="suggested">Đề xuất</TabsTrigger>
                   </TabsList>
                   <TabsContent
                     value="info"
-                    className="mt-0 min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain"
+                    className="mt-0"
                     forceMount
                   >
                     {movieInfoBlock}
                   </TabsContent>
                   <TabsContent
                     value="episodes"
-                    className="mt-0 min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain"
+                    className="mt-0"
                     forceMount
                   >
                     {episodes.length > 0 ? (
@@ -350,7 +350,7 @@ export function WatchContent({
                   </TabsContent>
                   <TabsContent
                     value="suggested"
-                    className="mt-0 min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain"
+                    className="mt-0"
                     forceMount
                   >
                     {movie.category?.[0]?.slug ? (

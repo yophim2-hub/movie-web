@@ -9,6 +9,8 @@ export interface PaginationProps {
   totalPages: number;
   /** Hàm tạo href cho từng trang (nhận page number) */
   getPageHref: (page: number) => string;
+  /** Callback khi đổi trang (dùng cho state-based pagination, sẽ preventDefault) */
+  onPageChange?: (page: number) => void;
   /** Label nút "Trước" */
   prevLabel?: string;
   /** Label nút "Sau" */
@@ -52,6 +54,7 @@ export function Pagination({
   currentPage,
   totalPages,
   getPageHref,
+  onPageChange,
   prevLabel = defaultPrevLabel,
   nextLabel = defaultNextLabel,
   siblingCount = 2,
@@ -74,6 +77,7 @@ export function Pagination({
           scroll={false}
           className={linkClass}
           aria-label={`Trang ${prevPage}`}
+          onClick={onPageChange ? (e) => { e.preventDefault(); onPageChange(prevPage); } : undefined}
         >
           {prevLabel}
         </Link>
@@ -110,6 +114,7 @@ export function Pagination({
             scroll={false}
             className={linkClass}
             aria-label={`Trang ${pageNum}`}
+            onClick={onPageChange ? (e) => { e.preventDefault(); onPageChange(pageNum); } : undefined}
           >
             {pageNum}
           </Link>
@@ -122,6 +127,7 @@ export function Pagination({
           scroll={false}
           className={linkClass}
           aria-label={`Trang ${nextPage}`}
+          onClick={onPageChange ? (e) => { e.preventDefault(); onPageChange(nextPage); } : undefined}
         >
           {nextLabel}
         </Link>
