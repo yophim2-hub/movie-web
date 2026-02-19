@@ -27,7 +27,7 @@ export default function PhimNganPage() {
   return (
     <div className="pb-24">
       {hasSections ? (
-        <PageSectionsView pageId="phim-ngan" />
+        <PageSectionsView pageId="phim-ngan" sections={sections} />
       ) : (
         <ErrorState
           title="Chưa cấu hình section cho Phim ngắn"

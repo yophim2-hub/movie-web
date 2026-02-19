@@ -27,7 +27,7 @@ export default function HoatHinhPage() {
   return (
     <div className="pb-24">
       {hasSections ? (
-        <PageSectionsView pageId="hoat-hinh" />
+        <PageSectionsView pageId="hoat-hinh" sections={sections} />
       ) : (
         <ErrorState
           title="Chưa cấu hình section cho Hoạt hình"

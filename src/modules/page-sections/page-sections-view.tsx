@@ -1,17 +1,16 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useAdminPageConfigs } from "@/modules/admin-pages";
-import type { AdminPageIdAny } from "@/modules/admin-pages/interfaces";
+import type { AdminPageIdAny, AdminSection } from "@/modules/admin-pages/interfaces";
 import { ADMIN_PAGE_SLUGS } from "@/modules/admin-pages/interfaces";
-import { useHasMounted } from "./use-has-mounted";
 import { SectionRenderer } from "./section-renderer";
-import { PageSectionsLoading } from "./page-sections-loading";
 import { SectionLoadingSkeleton } from "@/components/ui/section-renderers";
 
 export interface PageSectionsViewProps {
   /** pageId trong config (home, phim-le, phim-bo, ...) */
   pageId: AdminPageIdAny;
+  /** Sections đã resolve từ parent — tránh duplicate fetch */
+  sections: AdminSection[];
   /** Base path cho link phim, mặc định /phim */
   basePath?: string;
   /** Slug trang cho link "Xem thêm" (mặc định lấy từ ADMIN_PAGE_SLUGS) */
@@ -24,22 +23,19 @@ export interface PageSectionsViewProps {
 }
 
 /**
- * Render toàn bộ section của một trang theo config (localStorage).
+ * Render toàn bộ section của một trang theo config.
  * Dùng cho trang chủ, phim-le, phim-bo, hoat-hinh, phim-chieu-rap.
  * Hỗ trợ infinite scroll: cuộn tới đâu load section tới đó.
  */
 export function PageSectionsView({
   pageId,
+  sections,
   basePath = "/phim",
   seeMoreHref,
   className = "",
   initialVisibleCount,
   loadMoreStep = 4,
 }: Readonly<PageSectionsViewProps>) {
-  const mounted = useHasMounted();
-  const { configs, isLoading } = useAdminPageConfigs();
-  const config = configs[pageId];
-  const sections = config?.sections ?? [];
   const sortedSections = [...sections].sort((a, b) => a.order - b.order);
   const slug = seeMoreHref ?? (typeof pageId === "string" && pageId in ADMIN_PAGE_SLUGS ? ADMIN_PAGE_SLUGS[pageId as keyof typeof ADMIN_PAGE_SLUGS] : "/");
 
@@ -70,10 +66,6 @@ export function PageSectionsView({
     observer.observe(el);
     return () => observer.disconnect();
   }, [loadMore, initialVisibleCount]);
-
-  if (!mounted || isLoading) {
-    return <PageSectionsLoading />;
-  }
 
   if (sortedSections.length === 0) {
     return null;

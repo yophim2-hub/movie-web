@@ -27,7 +27,7 @@ export default function PhimBoPage() {
   return (
     <div className="pb-24">
       {hasSections ? (
-        <PageSectionsView pageId="phim-bo" />
+        <PageSectionsView pageId="phim-bo" sections={sections} />
       ) : (
         <ErrorState
           title="Chưa cấu hình section cho Phim bộ"

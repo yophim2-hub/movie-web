@@ -27,7 +27,7 @@ export default function PhimChieuRapPage() {
   return (
     <div className="pb-24">
       {hasSections ? (
-        <PageSectionsView pageId="phim-chieu-rap" />
+        <PageSectionsView pageId="phim-chieu-rap" sections={sections} />
       ) : (
         <ErrorState
           title="Chưa cấu hình section cho Phim chiếu rạp"

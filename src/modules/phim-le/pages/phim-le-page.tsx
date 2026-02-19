@@ -27,7 +27,7 @@ export default function PhimLePage() {
   return (
     <div className="pb-24">
       {hasSections ? (
-        <PageSectionsView pageId="phim-le" />
+        <PageSectionsView pageId="phim-le" sections={sections} />
       ) : (
         <ErrorState
           title="Chưa cấu hình section cho Phim lẻ"
