@@ -119,6 +119,18 @@ export async function GET(request: NextRequest) {
 
   if (isM3u8) {
     const text = await res.text();
+
+    // raw=1: trả M3U8 nguyên bản (client tự xử lý quảng cáo)
+    const raw = searchParams.get("raw") === "1";
+    if (raw) {
+      return new NextResponse(text, {
+        headers: {
+          "Content-Type": "application/vnd.apple.mpegurl; charset=utf-8",
+          "Cache-Control": "private, max-age=60",
+        },
+      });
+    }
+
     const isMaster = isMasterPlaylist(text);
 
     if (isMaster) {
