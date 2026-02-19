@@ -22,6 +22,9 @@ import {
 
 type OtherPageId = "phim-le" | "phim-bo" | "phim-chieu-rap" | "hoat-hinh";
 
+/** Pages that use category filter instead of typeList (no forced typeList). */
+const CATEGORY_BASED_PAGES = new Set<string>(["home", "phim-ngan"]);
+
 function isCustomPageId(id: string): id is `custom-${string}` {
   return id.startsWith("custom-");
 }
@@ -41,10 +44,11 @@ function defaultConfig(
     };
   }
   const label = ADMIN_PAGE_LABELS[pageId as AdminPageId];
-  const filter: AdminFilterSetting =
-    pageId === "home"
-      ? { page: 1, limit: 24 }
-      : { typeList: pageId as AdminFilterSetting["typeList"], page: 1, limit: 24 };
+  const filter: AdminFilterSetting = CATEGORY_BASED_PAGES.has(pageId)
+    ? pageId === "phim-ngan"
+      ? { category: "phim-ngan", page: 1, limit: 24 }
+      : { page: 1, limit: 24 }
+    : { typeList: pageId as AdminFilterSetting["typeList"], page: 1, limit: 24 };
   return {
     pageId,
     label,
@@ -74,7 +78,7 @@ function mergeConfig(
     savedMovieIds: parsed.savedMovieIds.filter((x): x is string => typeof x === "string"),
     sections,
   };
-  if (!isCustomPageId(pageId) && pageId !== "home") {
+  if (!isCustomPageId(pageId) && !CATEGORY_BASED_PAGES.has(pageId)) {
     (merged.filter as AdminFilterSetting).typeList = pageId as AdminFilterSetting["typeList"];
   }
   return merged;
@@ -106,6 +110,15 @@ const OTHER_PAGE_SECTION_LABELS: Record<OtherPageId, { banner: string; thumb: st
   "hoat-hinh": { banner: "Anime mới nhất", thumb: "Anime xem nhiều nhất", grid: "Kho anime" },
 };
 
+function getDefaultPhimNganSections(): AdminSection[] {
+  const cat = "phim-ngan";
+  return [
+    { id: nextSectionId(), order: 0, title: "Phim ngắn mới nhất", type: "movie-list", filter: { typeList: "phim-bo", page: 1, limit: 8, category: cat, sortField: "modified.time", sortType: "desc" }, savedMovieIds: [], displayType: "banner" },
+    { id: nextSectionId(), order: 1, title: "Phim ngắn xem nhiều", type: "movie-list", filter: { typeList: "phim-bo", page: 1, limit: 16, category: cat, sortField: "modified.time", sortType: "desc" }, savedMovieIds: [], displayType: "thumb-list" },
+    { id: nextSectionId(), order: 2, title: "Kho phim ngắn", type: "movie-list", filter: { typeList: "phim-bo", page: 1, limit: 24, category: cat, sortField: "modified.time", sortType: "desc" }, savedMovieIds: [], displayType: "grid-list" },
+  ];
+}
+
 function getDefaultOtherPageSections(pageId: OtherPageId): AdminSection[] {
   const labels = OTHER_PAGE_SECTION_LABELS[pageId];
   const typeList = pageId;
@@ -133,6 +146,7 @@ export function mergeFromApiPayload(pageConfigs: Record<string, AdminPageConfig>
     for (const id of ADMIN_PAGE_IDS) result[id] = defaultConfig(id);
     for (const p of customPages) result[p.id] = defaultConfig(p.id as AdminPageIdAny, p);
     result["home"] = { ...result["home"]!, sections: getDefaultHomeSections() };
+    result["phim-ngan"] = { ...result["phim-ngan"]!, sections: getDefaultPhimNganSections() };
     const otherIds: OtherPageId[] = ["phim-le", "phim-bo", "phim-chieu-rap", "hoat-hinh"];
     for (const pageId of otherIds) {
       result[pageId] = { ...result[pageId]!, sections: getDefaultOtherPageSections(pageId) };
@@ -275,7 +289,7 @@ export function applyAddSection(
   const current = configs[pageId] ?? defaultConfig(pageId, customMeta);
   const order = current.sections.length;
   const defaultFilter: AdminFilterSetting =
-    pageId === "home" || isCustomPageId(pageId) ? { page: 1, limit: 24 } : { typeList: pageId as AdminFilterSetting["typeList"], page: 1, limit: 24 };
+    CATEGORY_BASED_PAGES.has(pageId as string) || isCustomPageId(pageId) ? { page: 1, limit: 24 } : { typeList: pageId as AdminFilterSetting["typeList"], page: 1, limit: 24 };
   const newSection: AdminSection = {
     id: nextSectionId(),
     order,

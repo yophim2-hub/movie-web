@@ -103,7 +103,7 @@ export function HeaderSearch({
       ref={searchWrapRef}
       id="search"
       className={`relative z-20 max-w-[280px] flex-1 transition-[var(--duration-normal)] sm:max-w-[320px] ${className} ${
-        open ? "block w-full lg:flex" : "hidden w-0 lg:flex lg:flex-1"
+        open ? "block w-full lg:flex" : "flex w-0 lg:flex lg:w-auto lg:flex-1"
       }`}
     >
       <form

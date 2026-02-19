@@ -16,7 +16,7 @@
           "type": "movie-list",
           "filter": {
             "page": 1,
-            "limit": 8
+            "limit": 10
           },
           "savedMovieIds": [],
           "displayType": "banner"
@@ -24,7 +24,7 @@
         {
           "id": "f9342ee0-a625-4bb8-9b26-81b5751a8814",
           "order": 1,
-          "title": "Đây Rồi Top Phim Xem Nhiều Nhất",
+          "title": "Phim Mới Cập Nhật Hôm Nay",
           "type": "movie-list",
           "filter": {
             "typeList": "phim-le",
@@ -37,15 +37,16 @@
           "displayType": "poster-list"
         },
         {
-          "id": "e6f2fa4a-c572-41ae-88ec-7b2e5d9cea27",
+          "id": "b1a2c3d4-1111-4aaa-bbbb-111111111111",
           "order": 2,
-          "title": "Phim Điện Ảnh Mới Cóng",
+          "title": "Phim Hàn Đỉnh Nóc - Drama Tình Cảm",
           "type": "movie-list",
           "filter": {
-            "typeList": "phim-le",
+            "typeList": "phim-bo",
             "page": 1,
             "limit": 24,
-            "country": "viet-nam",
+            "country": "han-quoc",
+            "category": "tinh-cam",
             "sortField": "modified.time",
             "sortType": "desc"
           },
@@ -55,7 +56,7 @@
         {
           "id": "864047de-db7c-49f3-9b21-274bdd5d3323",
           "order": 3,
-          "title": "Mãn Nhãn với Phim Chiếu Rạp",
+          "title": "Mãn Nhãn Phim Chiếu Rạp",
           "type": "movie-list",
           "filter": {
             "typeList": "phim-chieu-rap",
@@ -70,7 +71,7 @@
         {
           "id": "fc0de575-3279-4f9e-a1e7-9251fd7c52b5",
           "order": 4,
-          "title": "Top 10 phim lẻ hôm nay",
+          "title": "Top 10 Phim Lẻ Hot Nhất",
           "type": "movie-list",
           "filter": {
             "typeList": "phim-le",
@@ -83,14 +84,15 @@
           "displayType": "top-list"
         },
         {
-          "id": "8323c78c-14a9-4c64-bd4f-b1e28d0f0fee",
+          "id": "b1a2c3d4-2222-4aaa-bbbb-222222222222",
           "order": 5,
-          "title": "Kho tàng anime",
+          "title": "Rùng Mình Kinh Dị - Không Dành Cho Yếu Tim",
           "type": "movie-list",
           "filter": {
-            "typeList": "hoat-hinh",
+            "typeList": "phim-le",
             "page": 1,
             "limit": 24,
+            "category": "kinh-di",
             "sortField": "modified.time",
             "sortType": "desc"
           },
@@ -98,15 +100,14 @@
           "displayType": "poster-list"
         },
         {
-          "id": "cd40b7e6-7c1a-4249-b299-fb75ed789c3f",
+          "id": "8323c78c-14a9-4c64-bd4f-b1e28d0f0fee",
           "order": 6,
-          "title": "Phim Hành động việt",
+          "title": "Anime Siêu Cháy - Hành Động Mãn Nhãn",
           "type": "movie-list",
           "filter": {
-            "typeList": "phim-le",
+            "typeList": "hoat-hinh",
             "page": 1,
             "limit": 24,
-            "country": "viet-nam",
             "category": "hanh-dong",
             "sortField": "modified.time",
             "sortType": "desc"
@@ -115,9 +116,315 @@
           "displayType": "poster-list"
         },
         {
-          "id": "ac29c1dd-4f64-4e19-a87b-3fd070d6e6a0",
+          "id": "b1a2c3d4-3333-4aaa-bbbb-333333333333",
           "order": 7,
-          "title": "Thế giới quyến rũ",
+          "title": "Bom Tấn Hành Động Âu Mỹ",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-le",
+            "page": 1,
+            "limit": 24,
+            "country": "au-my",
+            "category": "hanh-dong",
+            "sortField": "_id",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "thumb-list"
+        },
+        {
+          "id": "b1a2c3d4-4444-4aaa-bbbb-444444444444",
+          "order": 8,
+          "title": "Viễn Tưởng Đỉnh Cao - Sci-Fi Chất Lừ",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-le",
+            "page": 1,
+            "limit": 24,
+            "category": "vien-tuong",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "poster-list"
+        },
+        {
+          "id": "b1a2c3d4-5555-4aaa-bbbb-555555555555",
+          "order": 9,
+          "title": "Cười Xả Stress - Hài Hước Giải Trí",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-le",
+            "page": 1,
+            "limit": 24,
+            "category": "hai-huoc",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "thumb-list"
+        },
+        {
+          "id": "b1a2c3d4-6666-4aaa-bbbb-666666666666",
+          "order": 10,
+          "title": "Cổ Trang Trung Quốc - Kiếm Hiệp Giang Hồ",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-bo",
+            "page": 1,
+            "limit": 24,
+            "country": "trung-quoc",
+            "category": "co-trang",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "poster-list"
+        },
+        {
+          "id": "b1a2c3d4-7777-4aaa-bbbb-777777777777",
+          "order": 11,
+          "title": "Phá Án Ly Kỳ - Hình Sự Gay Cấn",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-bo",
+            "page": 1,
+            "limit": 24,
+            "category": "hinh-su",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "thumb-list"
+        },
+        {
+          "id": "b1a2c3d4-8888-4aaa-bbbb-888888888888",
+          "order": 12,
+          "title": "Phim Bộ Âu Mỹ Gây Nghiện",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-bo",
+            "page": 1,
+            "limit": 24,
+            "country": "au-my",
+            "category": "tam-ly",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "poster-list"
+        },
+        {
+          "id": "b1a2c3d4-9999-4aaa-bbbb-999999999999",
+          "order": 13,
+          "title": "Bí Ẩn Siêu Hack Não",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-le",
+            "page": 1,
+            "limit": 24,
+            "category": "bi-an",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "poster-list"
+        },
+        {
+          "id": "b1a2c3d4-aaaa-4aaa-bbbb-aaaaaaaaaaaa",
+          "order": 14,
+          "title": "Phim Thái Ngọt Ngào - Tình Yêu Xứ Chùa Vàng",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-bo",
+            "page": 1,
+            "limit": 24,
+            "country": "thai-lan",
+            "category": "tinh-cam",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "poster-list"
+        },
+        {
+          "id": "b1a2c3d4-bbbb-4aaa-bbbb-bbbbbbbbbbbb",
+          "order": 15,
+          "title": "Top 10 Phim Bộ Đang Hot",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-bo",
+            "page": 1,
+            "limit": 10,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "top-list"
+        },
+        {
+          "id": "b1a2c3d4-cccc-4aaa-bbbb-cccccccccccc",
+          "order": 16,
+          "title": "Phiêu Lưu Mạo Hiểm - Khám Phá Thế Giới",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-le",
+            "page": 1,
+            "limit": 24,
+            "category": "phieu-luu",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "thumb-list"
+        },
+        {
+          "id": "b1a2c3d4-dddd-4aaa-bbbb-dddddddddddd",
+          "order": 17,
+          "title": "Anime Viễn Tưởng - Thế Giới Song Song",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "hoat-hinh",
+            "page": 1,
+            "limit": 24,
+            "category": "vien-tuong",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "poster-list"
+        },
+        {
+          "id": "b1a2c3d4-eeee-4aaa-bbbb-eeeeeeeeeeee",
+          "order": 18,
+          "title": "Phim Tâm Lý Điểm Cao IMDb",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-le",
+            "page": 1,
+            "limit": 24,
+            "category": "tam-ly",
+            "sortField": "_id",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "poster-list"
+        },
+        {
+          "id": "b1a2c3d4-ffff-4aaa-bbbb-ffffffffffff",
+          "order": 19,
+          "title": "Drama Nhật Bản Tinh Tế",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-bo",
+            "page": 1,
+            "limit": 24,
+            "country": "nhat-ban",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "thumb-list"
+        },
+        {
+          "id": "c1a2c3d4-1111-4aaa-bbbb-111111111111",
+          "order": 20,
+          "title": "Phim Bộ Hành Động Nóng Hổi",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-bo",
+            "page": 1,
+            "limit": 24,
+            "category": "hanh-dong",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "poster-list"
+        },
+        {
+          "id": "c1a2c3d4-2222-4aaa-bbbb-222222222222",
+          "order": 21,
+          "title": "Võ Thuật Kungfu - Đỉnh Cao Đối Kháng",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-le",
+            "page": 1,
+            "limit": 24,
+            "category": "vo-thuat",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "thumb-list"
+        },
+        {
+          "id": "c1a2c3d4-3333-4aaa-bbbb-333333333333",
+          "order": 22,
+          "title": "Phim Ấn Độ Sôi Động - Bollywood Chất",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-le",
+            "page": 1,
+            "limit": 24,
+            "country": "an-do",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "poster-list"
+        },
+        {
+          "id": "c1a2c3d4-4444-4aaa-bbbb-444444444444",
+          "order": 23,
+          "title": "Chiến Tranh Hào Hùng - Sử Thi Đỉnh Cao",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-le",
+            "page": 1,
+            "limit": 24,
+            "category": "chien-tranh",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "thumb-list"
+        },
+        {
+          "id": "c1a2c3d4-5555-4aaa-bbbb-555555555555",
+          "order": 24,
+          "title": "Chính Kịch Cuốn Hút - Kịch Tính Từng Phút",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-le",
+            "page": 1,
+            "limit": 24,
+            "category": "chinh-kich",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "poster-list"
+        },
+        {
+          "id": "c1a2c3d4-6666-4aaa-bbbb-666666666666",
+          "order": 25,
+          "title": "TV Shows Giải Trí Đỉnh Cao",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "tv-shows",
+            "page": 1,
+            "limit": 24,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "thumb-list"
+        },
+        {
+          "id": "ac29c1dd-4f64-4e19-a87b-3fd070d6e6a0",
+          "order": 26,
+          "title": "Thế Giới Quyến Rũ 18+",
           "type": "movie-list",
           "filter": {
             "typeList": "phim-le",
@@ -352,6 +659,66 @@
             "typeList": "hoat-hinh",
             "page": 1,
             "limit": 24,
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "grid-list"
+        }
+      ]
+    },
+    "phim-ngan": {
+      "pageId": "phim-ngan",
+      "label": "Phim ngắn",
+      "filter": {
+        "category": "phim-ngan",
+        "page": 1,
+        "limit": 24
+      },
+      "savedMovieIds": [],
+      "sections": [
+        {
+          "id": "pn-001-banner",
+          "order": 0,
+          "title": "Phim ngắn mới nhất",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-bo",
+            "page": 1,
+            "limit": 8,
+            "category": "phim-ngan",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "banner"
+        },
+        {
+          "id": "pn-002-thumb",
+          "order": 1,
+          "title": "Phim ngắn xem nhiều",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-bo",
+            "page": 1,
+            "limit": 16,
+            "category": "phim-ngan",
+            "sortField": "modified.time",
+            "sortType": "desc"
+          },
+          "savedMovieIds": [],
+          "displayType": "thumb-list"
+        },
+        {
+          "id": "pn-003-grid",
+          "order": 2,
+          "title": "Kho phim ngắn",
+          "type": "movie-list",
+          "filter": {
+            "typeList": "phim-bo",
+            "page": 1,
+            "limit": 24,
+            "category": "phim-ngan",
             "sortField": "modified.time",
             "sortType": "desc"
           },

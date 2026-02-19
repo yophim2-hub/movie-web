@@ -4,8 +4,12 @@ import { PageLayout } from "@/components/layout";
 import { useCategories } from "@/hooks";
 import Link from "next/link";
 
+/** Slugs ẩn khỏi danh sách thể loại (đã có trang riêng). */
+const HIDDEN_CATEGORY_SLUGS = new Set(["phim-ngan"]);
+
 export default function TheLoaiListPage() {
-  const { data: categories, isLoading, isError } = useCategories();
+  const { data: allCategories, isLoading, isError } = useCategories();
+  const categories = allCategories?.filter((c) => !HIDDEN_CATEGORY_SLUGS.has(c.slug));
 
   return (
     <PageLayout className="pb-24">

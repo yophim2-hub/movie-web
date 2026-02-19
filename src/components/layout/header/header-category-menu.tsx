@@ -25,10 +25,14 @@ const DROPDOWN_GRID_CLASS = "grid grid-cols-2 gap-0.5 sm:grid-cols-4";
 const MENU_ITEM_CLASS =
   "menu-item rounded-[var(--radius-button)] px-3 py-2 text-sm capitalize text-[var(--foreground)] hover:bg-[var(--secondary-bg-solid)]";
 
+/** Slugs ẩn khỏi dropdown thể loại (đã có trang riêng). */
+const HIDDEN_CATEGORY_SLUGS = new Set(["phim-ngan"]);
+
 export function HeaderCategoryMenu({
   onMobileNavClick,
 }: Readonly<{ onMobileNavClick?: () => void }>) {
   const { data: categories } = useCategories();
+  const filteredCategories = categories?.filter((c) => !HIDDEN_CATEGORY_SLUGS.has(c.slug));
 
   return (
     <>
@@ -48,7 +52,7 @@ export function HeaderCategoryMenu({
         </MenuButton>
         <MenuItems anchor="bottom start" className={DROPDOWN_CLASS}>
           <div className={DROPDOWN_GRID_CLASS}>
-            {categories?.map((cat) => (
+            {filteredCategories?.map((cat) => (
               <MenuItem key={cat._id}>
                 <Link
                   href={`/the-loai/${cat.slug}`}

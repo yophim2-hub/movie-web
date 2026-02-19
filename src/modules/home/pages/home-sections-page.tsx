@@ -22,7 +22,7 @@ export default function HomeSectionsPage() {
   return (
     <div className="pb-24">
       {hasSections ? (
-        <PageSectionsView pageId="home" />
+        <PageSectionsView pageId="home" initialVisibleCount={8} loadMoreStep={6} />
       ) : (
         <div className="rounded-xl border border-[var(--border)] bg-[var(--secondary-bg-solid)]/50 p-8 text-center">
           <p className="text-[15px] text-[var(--foreground-muted)]">
