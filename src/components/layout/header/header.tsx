@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { HeaderSearch } from "./header-search";
@@ -142,9 +143,29 @@ export function Header() {
           }`}
           title="Trang chủ"
         >
-          <span className="whitespace-nowrap text-xl font-semibold tracking-tight text-[var(--foreground)]">
-            Rồ Phim
-          </span>
+          <Image
+            src="/logo.png"
+            alt="Rồ Phim"
+            width={32}
+            height={32}
+            className="rounded-lg"
+            priority
+          />
+          <div className="ml-1.5 flex flex-col leading-none">
+            <span
+              className="whitespace-nowrap text-lg font-bold tracking-tight"
+              style={{
+                background: "linear-gradient(135deg, #f97316, #ea580c, #dc2626)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              Rồ Phim
+            </span>
+            <span className="text-[10px] tracking-wide text-[var(--foreground-muted)]">
+              Kho tàng phim
+            </span>
+          </div>
         </Link>
 
         {/* ── Mobile search input (animated expand) ── */}

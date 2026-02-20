@@ -48,12 +48,14 @@ export const metadata: Metadata = {
     title: "Phim Hay | Rồ Phim | Xem Phim Online HD 4K Không Quảng Cáo",
     description:
       "Rồ Phim - Trang xem phim hay, phim mới Vietsub chất lượng 4K/Full HD. Cập nhật nhanh nhất phim bộ, phim lẻ, phim chiếu rạp. Trải nghiệm xem phim mượt mà, không quảng cáo, hoàn toàn miễn phí.",
+    images: [{ url: "https://rophimm.org/logo.png", width: 512, height: 512, alt: "Rồ Phim" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Phim Hay | Rồ Phim | Xem Phim Online HD 4K Không Quảng Cáo",
     description:
       "Rồ Phim - Trang xem phim hay, phim mới Vietsub chất lượng 4K/Full HD. Cập nhật nhanh nhất phim bộ, phim lẻ, phim chiếu rạp.",
+    images: ["https://rophimm.org/logo.png"],
   },
   robots: {
     index: true,
