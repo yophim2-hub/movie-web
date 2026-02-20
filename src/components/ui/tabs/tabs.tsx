@@ -98,7 +98,7 @@ export function TabsTrigger({
       aria-selected={isSelected}
       aria-controls={`panel-${value}`}
       id={`tab-${value}`}
-      className={`relative rounded-md px-3 py-1.5 text-[13px] font-medium transition-colors focus-ring ${isSelected ? "text-[var(--foreground)]" : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"} ${className}`}
+      className={`relative rounded-md px-3 py-1.5 text-[13px] font-medium transition-colors focus-ring ${isSelected ? "text-white" : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"} ${className}`}
       onClick={() => setValue(value)}
       whileTap={{ scale: 0.98 }}
       transition={{ duration: 0.15 }}
@@ -106,7 +106,8 @@ export function TabsTrigger({
       {isSelected && (
         <motion.span
           layoutId="tabs-indicator"
-          className="absolute inset-0 rounded-md bg-[var(--background)] shadow-[var(--shadow-sm)]"
+          className="absolute inset-0 rounded-md shadow-[var(--shadow-sm)]"
+          style={{ background: "linear-gradient(135deg, #f97316, #ea580c, #dc2626)" }}
           transition={{ type: "spring", stiffness: 400, damping: 30 }}
         />
       )}

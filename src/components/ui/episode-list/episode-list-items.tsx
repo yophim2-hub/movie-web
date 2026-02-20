@@ -81,9 +81,11 @@ export interface SingleMovieCardProps {
   readonly movieSlug?: string;
   /** true = phim full (1 server 1 tập): chỉ /xem-phim/slug */
   readonly fullOnly?: boolean;
+  /** true = bản đang xem (highlight) */
+  readonly isActive?: boolean;
 }
 
-export function SingleMovieCard({ server, posterUrl, movieName, movieSlug, fullOnly }: SingleMovieCardProps) {
+export function SingleMovieCard({ server, posterUrl, movieName, movieSlug, fullOnly, isActive }: SingleMovieCardProps) {
   const first = server.server_data?.[0];
   if (!first) return null;
   const externalHref = first.link_embed || first.link_m3u8;
@@ -96,8 +98,9 @@ export function SingleMovieCard({ server, posterUrl, movieName, movieSlug, fullO
   const thumbSrc = buildThumbUrl(posterUrl);
   const title = movieName ?? first.name;
 
-  const className =
-    "flex overflow-hidden rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--secondary-bg-solid)] text-[var(--foreground)] no-underline transition hover:border-[var(--accent)] hover:shadow-[var(--shadow-md)]";
+  const className = isActive
+    ? "flex overflow-hidden rounded-[var(--radius-panel)] border-2 border-[var(--accent)] bg-[var(--accent-soft)] text-[var(--foreground)] no-underline transition shadow-[var(--shadow-md)]"
+    : "flex overflow-hidden rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--secondary-bg-solid)] text-[var(--foreground)] no-underline transition hover:border-[var(--accent)] hover:shadow-[var(--shadow-md)]";
 
   const content = (
     <>
@@ -128,8 +131,11 @@ export function SingleMovieCard({ server, posterUrl, movieName, movieSlug, fullO
         <div className="media-title line-clamp-2 text-[13px] font-medium text-[var(--foreground)]">
           {title}
         </div>
-        <span className="inline-flex w-fit rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-2.5 py-1 text-[11px] font-medium text-[var(--foreground)] hover:border-[var(--accent)] hover:text-[var(--accent)]">
-          Xem bản này
+        <span className={isActive
+          ? "inline-flex w-fit rounded-[var(--radius-button)] border border-[var(--accent)] bg-[var(--accent)] px-2.5 py-1 text-[11px] font-medium text-white"
+          : "inline-flex w-fit rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-2.5 py-1 text-[11px] font-medium text-[var(--foreground)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
+        }>
+          {isActive ? "Đang xem" : "Xem bản này"}
         </span>
       </div>
     </>

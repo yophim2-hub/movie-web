@@ -86,78 +86,83 @@ function EpisodeListWatch({
   className,
 }: EpisodeListWatchProps) {
   const horizontalItems = useRanges ? baseItems : items;
+  const isSingleMovie = episodes.every((s) => (s.server_data?.length ?? 0) <= 1);
   return (
     <div className={`flex min-h-0 min-w-0 flex-col gap-4 ${className}`.trim()}>
-      <div className="min-w-0 shrink-0">
-        <h3 className="mb-2 text-sm font-semibold text-[var(--foreground)]">{title}</h3>
-        {hasMultipleServers && (
-          <div className="mb-2 flex flex-wrap gap-1">
+      {isSingleMovie ? (
+        <div className="min-w-0 flex-1 overflow-y-auto overscroll-contain rounded-[var(--radius-panel)] bg-[var(--secondary-bg-solid)] p-3">
+          <h3 className="mb-2 text-sm font-semibold text-[var(--foreground)]">Chọn bản xem</h3>
+          <div className="flex flex-col gap-2">
             {episodes.map((s, i) => (
-              <button
+              <SingleMovieCard
                 key={`${s.server_name}-${i}`}
-                type="button"
-                onClick={() => setServerIndex(i)}
-                className={`flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs transition ${
-                  i === activeIndex
-                    ? "border-[var(--accent)] bg-[var(--secondary-bg-solid)] text-[var(--accent)]"
-                    : "border-[var(--border)] bg-[var(--secondary-bg-solid)] text-[var(--foreground-muted)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
-                }`}
-              >
-                <TvMonitorIcon className="h-3.5 w-3.5" />
-                {s.server_name}
-              </button>
-            ))}
-          </div>
-        )}
-        {useRanges && rangeCount > 0 && (
-          <div className="mb-2 overflow-x-auto overflow-y-hidden">
-            <div className="flex gap-2 py-0.5">
-              {Array.from({ length: rangeCount }, (_, i) => (
-                <button
-                  key={`range-${i}`}
-                  type="button"
-                  onClick={() => setActiveRangeIndex(i)}
-                  className={`shrink-0 rounded-[var(--radius-button)] border px-2.5 py-1.5 text-xs transition ${
-                    i === activeRangeIndex
-                      ? "border-[var(--accent)] bg-[var(--secondary-bg-solid)] text-[var(--accent)]"
-                      : "border-[var(--border)] bg-[var(--secondary-bg-solid)] text-[var(--foreground)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
-                  }`}
-                >
-                  Tập {i * rangeSize + 1}-{Math.min((i + 1) * rangeSize, items.length)}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-        <div className="overflow-x-auto overflow-y-hidden pb-1">
-          <div className="flex min-w-0 gap-2">
-            {horizontalItems.map((ep) => (
-              <EpisodeCard
-                key={ep.slug}
-                ep={ep}
+                server={s}
+                posterUrl={posterUrl}
+                movieName={movieName}
                 movieSlug={movieSlug}
                 fullOnly={fullOnly}
-                isActive={activeEpisodeSlug != null && activeEpisodeSlug === ep.slug}
+                isActive={i === activeIndex}
               />
             ))}
           </div>
         </div>
-      </div>
-      <div className="min-w-0 flex-1 overflow-y-auto overscroll-contain rounded-[var(--radius-panel)] bg-[var(--secondary-bg-solid)] p-3">
-        <h3 className="mb-2 text-sm font-semibold text-[var(--foreground)]">Chọn bản xem</h3>
-        <div className="flex flex-col gap-2">
-          {episodes.map((s, i) => (
-            <SingleMovieCard
-              key={`${s.server_name}-${i}`}
-              server={s}
-              posterUrl={posterUrl}
-              movieName={movieName}
-              movieSlug={movieSlug}
-              fullOnly={fullOnly}
-            />
-          ))}
+      ) : (
+        <div className="min-w-0 shrink-0">
+          <h3 className="mb-2 text-sm font-semibold text-[var(--foreground)]">{title}</h3>
+          {hasMultipleServers && (
+            <div className="mb-2 flex flex-wrap gap-1">
+              {episodes.map((s, i) => (
+                <button
+                  key={`${s.server_name}-${i}`}
+                  type="button"
+                  onClick={() => setServerIndex(i)}
+                  className={`flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs transition ${
+                    i === activeIndex
+                      ? "border-[var(--accent)] bg-[var(--secondary-bg-solid)] text-[var(--accent)]"
+                      : "border-[var(--border)] bg-[var(--secondary-bg-solid)] text-[var(--foreground-muted)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                  }`}
+                >
+                  <TvMonitorIcon className="h-3.5 w-3.5" />
+                  {s.server_name}
+                </button>
+              ))}
+            </div>
+          )}
+          {useRanges && rangeCount > 0 && (
+            <div className="mb-2 overflow-x-auto overflow-y-hidden">
+              <div className="flex gap-2 py-0.5">
+                {Array.from({ length: rangeCount }, (_, i) => (
+                  <button
+                    key={`range-${i}`}
+                    type="button"
+                    onClick={() => setActiveRangeIndex(i)}
+                    className={`shrink-0 rounded-[var(--radius-button)] border px-2.5 py-1.5 text-xs transition ${
+                      i === activeRangeIndex
+                        ? "border-[var(--accent)] bg-[var(--secondary-bg-solid)] text-[var(--accent)]"
+                        : "border-[var(--border)] bg-[var(--secondary-bg-solid)] text-[var(--foreground)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                    }`}
+                  >
+                    Tập {i * rangeSize + 1}-{Math.min((i + 1) * rangeSize, items.length)}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          <div className="overflow-x-auto overflow-y-hidden pb-1">
+            <div className="flex min-w-0 gap-2">
+              {horizontalItems.map((ep) => (
+                <EpisodeCard
+                  key={ep.slug}
+                  ep={ep}
+                  movieSlug={movieSlug}
+                  fullOnly={fullOnly}
+                  isActive={activeEpisodeSlug != null && activeEpisodeSlug === ep.slug}
+                />
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

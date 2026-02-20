@@ -30,21 +30,37 @@ export function MovieStatusBlock({
 }: MovieStatusBlockProps) {
   const label = formatStatus(status);
   const isOngoing = status.toLowerCase() === "ongoing";
+  const isCompleted = status.toLowerCase() === "completed";
   const hasEpisodeProgress =
     (episodeCurrent != null && episodeCurrent !== "") || (episodeTotal != null && episodeTotal !== "");
 
-  const progressText =
-    hasEpisodeProgress && (episodeCurrent != null || episodeTotal != null)
-      ? `Đã chiếu: Tập ${episodeCurrent ?? "?"} / ${episodeTotal ?? "?"}`
-      : label;
+  // "Hoàn Tất (32/32)" → đã chứa tổng tập, không cần thêm episodeTotal
+  const currentLower = episodeCurrent?.toLowerCase() ?? "";
+  const isFullText = currentLower.includes("hoàn tất") || currentLower.includes("full");
+
+  let progressText = label;
+  if (hasEpisodeProgress) {
+    if (isFullText) {
+      progressText = episodeCurrent!;
+    } else if (episodeCurrent && episodeTotal) {
+      progressText = `Tập ${episodeCurrent} / ${episodeTotal}`;
+    } else if (episodeCurrent) {
+      progressText = `Tập ${episodeCurrent}`;
+    } else {
+      progressText = `Tổng ${episodeTotal} tập`;
+    }
+  }
 
   return (
     <div
       className={`mb-4 flex items-center justify-center gap-2 rounded-[var(--radius-button)] py-2 text-[12px] ${
-        isOngoing
-          ? "bg-[var(--accent-soft)] text-[var(--foreground)]"
-          : "bg-[var(--secondary-bg-solid)] text-[var(--foreground-muted)]"
+        isCompleted
+          ? "text-white"
+          : isOngoing
+            ? "bg-[var(--accent-soft)] text-[var(--foreground)]"
+            : "bg-[var(--secondary-bg-solid)] text-[var(--foreground-muted)]"
       } ${className}`}
+      style={isCompleted ? { background: "linear-gradient(135deg, #f97316, #ea580c, #dc2626)" } : undefined}
       data-status={status.toLowerCase()}
     >
       {isOngoing && <SmallSpinner />}
