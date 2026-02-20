@@ -1,9 +1,11 @@
 /**
- * Custom HLS.js playlist loader: fetch M3U8 qua proxy (CORS bypass),
- * clean quảng cáo trên client, trả về CDN URLs trực tiếp cho segments.
+ * Custom HLS.js playlist loader:
+ * 1) Ưu tiên fetch M3U8 TRỰC TIẾP từ CDN (browser VN IP → CDN chấp nhận)
+ * 2) Fallback qua /api/stream proxy nếu direct bị CORS chặn
+ * 3) Clean quảng cáo hoàn toàn trên client
  *
- * Segments sẽ được HLS.js default loader fetch trực tiếp từ CDN
- * → giảm ~99% bandwidth server.
+ * Segments được HLS.js default loader fetch trực tiếp từ CDN
+ * → giảm ~99% bandwidth server, bypass geo-block (server nước ngoài).
  */
 import type {
   Loader,
@@ -38,13 +40,61 @@ function createStats(): LoaderStats {
   };
 }
 
+/**
+ * Fetch M3U8: thử trực tiếp CDN trước, fallback qua server proxy.
+ *
+ * Direct fetch dùng:
+ * - credentials: "omit" → không gửi cookie
+ * - referrerPolicy: "no-referrer" → CDN không thấy Referer lạ
+ * - mode: "cors" → browser enforce CORS, nhưng nhiều CDN cho phép
+ */
+async function fetchM3u8WithFallback(
+  originalUrl: string,
+  signal: AbortSignal
+): Promise<{ text: string; ok: boolean; via: "direct" | "proxy" }> {
+  // 1) Direct fetch — browser ở VN, IP Việt Nam → CDN chấp nhận
+  try {
+    const res = await fetch(originalUrl, {
+      mode: "cors",
+      credentials: "omit",
+      referrerPolicy: "no-referrer",
+      signal,
+    });
+    if (res.ok) {
+      const text = await res.text();
+      return { text, ok: true, via: "direct" };
+    }
+  } catch (e) {
+    // Nếu bị abort (timeout) thì throw luôn, không thử proxy
+    if (signal.aborted) throw e;
+    // CORS hoặc network error → thử proxy
+  }
+
+  // 2) Proxy fallback — /api/stream fetch M3U8 rồi trả về client
+  try {
+    const proxyUrl = getProxyUrl(originalUrl);
+    const res = await fetch(proxyUrl, {
+      credentials: "omit",
+      signal,
+    });
+    if (res.ok) {
+      const text = await res.text();
+      return { text, ok: true, via: "proxy" };
+    }
+  } catch (e) {
+    if (signal.aborted) throw e;
+  }
+
+  return { text: "", ok: false, via: "proxy" };
+}
+
 export class AdFreePlaylistLoader
   implements Loader<PlaylistLoaderContext>
 {
   public context: PlaylistLoaderContext | null = null;
   public stats: LoaderStats = createStats();
 
-  private xhr: XMLHttpRequest | null = null;
+  private abortController: AbortController | null = null;
   private timeoutId: ReturnType<typeof setTimeout> | null = null;
 
   destroy(): void {
@@ -52,10 +102,8 @@ export class AdFreePlaylistLoader
   }
 
   abort(): void {
-    if (this.xhr) {
-      this.xhr.abort();
-      this.xhr = null;
-    }
+    this.abortController?.abort();
+    this.abortController = null;
     if (this.timeoutId !== null) {
       clearTimeout(this.timeoutId);
       this.timeoutId = null;
@@ -72,89 +120,77 @@ export class AdFreePlaylistLoader
     this.stats.loading.start = performance.now();
 
     const originalUrl = context.url;
-    const proxyUrl = getProxyUrl(originalUrl);
-
-    const xhr = new XMLHttpRequest();
-    this.xhr = xhr;
-
-    xhr.open("GET", proxyUrl, true);
-    xhr.responseType = "text";
-    xhr.withCredentials = false;
-
-    if (context.headers) {
-      for (const [key, value] of Object.entries(context.headers)) {
-        xhr.setRequestHeader(key, value);
-      }
-    }
+    const ac = new AbortController();
+    this.abortController = ac;
 
     const timeoutMs =
       config.loadPolicy?.maxLoadTimeMs ?? config.timeout ?? 20000;
     this.timeoutId = setTimeout(() => {
-      xhr.abort();
-      callbacks.onTimeout(this.stats, context, xhr);
+      ac.abort();
+      callbacks.onTimeout(this.stats, context, null);
     }, timeoutMs);
 
-    xhr.onload = () => {
-      if (this.timeoutId !== null) {
-        clearTimeout(this.timeoutId);
-        this.timeoutId = null;
-      }
+    fetchM3u8WithFallback(originalUrl, ac.signal)
+      .then(({ text, ok, via }) => {
+        if (this.timeoutId !== null) {
+          clearTimeout(this.timeoutId);
+          this.timeoutId = null;
+        }
 
-      this.stats.loading.first = performance.now();
-      this.stats.loading.end = performance.now();
-      this.stats.loaded = xhr.responseText?.length ?? 0;
-      this.stats.total = this.stats.loaded;
+        this.stats.loading.first = performance.now();
+        this.stats.loading.end = performance.now();
+        this.stats.loaded = text.length;
+        this.stats.total = text.length;
 
-      if (xhr.status >= 200 && xhr.status < 300) {
-        let text = xhr.responseText;
+        if (!ok) {
+          callbacks.onError(
+            { code: 0, text: "All fetch attempts failed" },
+            context,
+            null,
+            this.stats
+          );
+          return;
+        }
+
+        if (process.env.NODE_ENV === "development") {
+          console.log(`[AdFreeLoader] M3U8 loaded via ${via}: ${originalUrl.slice(0, 80)}…`);
+        }
 
         // Clean M3U8 trên client
-        if (isMasterPlaylist(text)) {
-          text = rewriteMasterPlaylistUrls(text, originalUrl);
+        let cleaned = text;
+        if (isMasterPlaylist(cleaned)) {
+          cleaned = rewriteMasterPlaylistUrls(cleaned, originalUrl);
         } else {
-          text = cleanMediaPlaylistClient(text, originalUrl);
+          cleaned = cleanMediaPlaylistClient(cleaned, originalUrl);
         }
 
         callbacks.onSuccess(
-          { url: originalUrl, data: text, code: xhr.status },
+          { url: originalUrl, data: cleaned, code: 200 },
           this.stats,
           context,
-          xhr
+          null
         );
-      } else {
+      })
+      .catch(() => {
+        if (this.timeoutId !== null) {
+          clearTimeout(this.timeoutId);
+          this.timeoutId = null;
+        }
+        this.stats.loading.end = performance.now();
         callbacks.onError(
-          { code: xhr.status, text: xhr.statusText },
+          { code: 0, text: "Network error" },
           context,
-          xhr,
+          null,
           this.stats
         );
-      }
-    };
-
-    xhr.onerror = () => {
-      if (this.timeoutId !== null) {
-        clearTimeout(this.timeoutId);
-        this.timeoutId = null;
-      }
-      this.stats.loading.end = performance.now();
-      callbacks.onError(
-        { code: xhr.status, text: "Network error" },
-        context,
-        xhr,
-        this.stats
-      );
-    };
-
-    xhr.send();
+      });
   }
 
   getCacheAge(): number | null {
-    if (!this.xhr) return null;
-    const age = this.xhr.getResponseHeader("age");
-    return age ? parseInt(age, 10) : null;
+    return null;
   }
 
-  getResponseHeader(name: string): string | null {
-    return this.xhr?.getResponseHeader(name) ?? null;
+  getResponseHeader(): string | null {
+    return null;
   }
 }

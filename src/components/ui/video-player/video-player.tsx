@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { getStreamProxyUrl } from "./get-stream-proxy-url";
 import { AdFreePlaylistLoader } from "./ad-free-hls-loader";
+import { DirectCDNFragmentLoader } from "./direct-cdn-fragment-loader";
 
 type HlsType = typeof import("hls.js").default;
 
@@ -24,9 +25,11 @@ function createM3u8Handler(
         xhrSetup: (xhr) => { xhr.withCredentials = false; },
       };
 
-      // Client-side ad removal: custom playlist loader
+      // Client-side ad removal: custom loaders fetch trực tiếp từ CDN
+      // → bypass server proxy (server nước ngoài bị CDN chặn)
       if (adRemovalMode === "client") {
         hlsConfig.pLoader = AdFreePlaylistLoader as never;
+        hlsConfig.fLoader = DirectCDNFragmentLoader as never;
       }
 
       const hls = new Hls(hlsConfig);
