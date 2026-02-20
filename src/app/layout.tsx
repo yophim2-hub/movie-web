@@ -56,8 +56,8 @@ export const metadata: Metadata = {
       "Bỏng Phim - Trang xem phim hay, phim mới Vietsub chất lượng 4K/Full HD. Cập nhật nhanh nhất phim bộ, phim lẻ, phim chiếu rạp.",
   },
   robots: {
-    index: true,
-    follow: true,
+    index: false,
+    follow: false,
   },
   alternates: {
     canonical: "https://bongphim.vn",
