@@ -19,13 +19,13 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://bongphim.vn"),
+  metadataBase: new URL("https://rophimm.org"),
   title: {
-    default: "Phim Hay | Bỏng Phim | Xem Phim Online HD 4K Không Quảng Cáo",
-    template: "%s | Bỏng Phim",
+    default: "Phim Hay | Rồ Phim | Xem Phim Online HD 4K Không Quảng Cáo",
+    template: "%s | Rồ Phim",
   },
   description:
-    "Bỏng Phim - Trang xem phim hay, phim mới Vietsub chất lượng 4K/Full HD. Cập nhật nhanh nhất phim bộ, phim lẻ, phim chiếu rạp. Trải nghiệm xem phim mượt mà, không quảng cáo, hoàn toàn miễn phí.",
+    "Rồ Phim - Trang xem phim hay, phim mới Vietsub chất lượng 4K/Full HD. Cập nhật nhanh nhất phim bộ, phim lẻ, phim chiếu rạp. Trải nghiệm xem phim mượt mà, không quảng cáo, hoàn toàn miễn phí.",
   keywords: [
     "phim hay",
     "xem phim online",
@@ -36,31 +36,31 @@ export const metadata: Metadata = {
     "phim lẻ",
     "phim chiếu rạp",
     "phim miễn phí",
-    "Bỏng Phim",
+    "Rồ Phim",
   ],
-  authors: [{ name: "Bỏng Phim" }],
-  creator: "Bỏng Phim",
+  authors: [{ name: "Rồ Phim" }],
+  creator: "Rồ Phim",
   openGraph: {
     type: "website",
     locale: "vi_VN",
-    url: "https://bongphim.vn",
-    siteName: "Bỏng Phim",
-    title: "Phim Hay | Bỏng Phim | Xem Phim Online HD 4K Không Quảng Cáo",
+    url: "https://rophimm.org",
+    siteName: "Rồ Phim",
+    title: "Phim Hay | Rồ Phim | Xem Phim Online HD 4K Không Quảng Cáo",
     description:
-      "Bỏng Phim - Trang xem phim hay, phim mới Vietsub chất lượng 4K/Full HD. Cập nhật nhanh nhất phim bộ, phim lẻ, phim chiếu rạp. Trải nghiệm xem phim mượt mà, không quảng cáo, hoàn toàn miễn phí.",
+      "Rồ Phim - Trang xem phim hay, phim mới Vietsub chất lượng 4K/Full HD. Cập nhật nhanh nhất phim bộ, phim lẻ, phim chiếu rạp. Trải nghiệm xem phim mượt mà, không quảng cáo, hoàn toàn miễn phí.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Phim Hay | Bỏng Phim | Xem Phim Online HD 4K Không Quảng Cáo",
+    title: "Phim Hay | Rồ Phim | Xem Phim Online HD 4K Không Quảng Cáo",
     description:
-      "Bỏng Phim - Trang xem phim hay, phim mới Vietsub chất lượng 4K/Full HD. Cập nhật nhanh nhất phim bộ, phim lẻ, phim chiếu rạp.",
+      "Rồ Phim - Trang xem phim hay, phim mới Vietsub chất lượng 4K/Full HD. Cập nhật nhanh nhất phim bộ, phim lẻ, phim chiếu rạp.",
   },
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
   },
   alternates: {
-    canonical: "https://bongphim.vn",
+    canonical: "https://rophimm.org",
   },
 };
 

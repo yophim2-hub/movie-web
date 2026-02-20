@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Thể Loại Phim",
   description:
-    "Chọn thể loại phim: hành động, tình cảm, kinh dị, viễn tưởng, hài, anime... Xem phim theo thể loại tại Bỏng Phim.",
+    "Chọn thể loại phim: hành động, tình cảm, kinh dị, viễn tưởng, hài, anime... Xem phim theo thể loại tại Rồ Phim.",
   openGraph: {
-    title: "Thể Loại Phim | Bỏng Phim",
+    title: "Thể Loại Phim | Rồ Phim",
     description:
-      "Chọn thể loại phim để xem. Hành động, tình cảm, kinh dị, anime... tại Bỏng Phim.",
-    url: "https://bongphim.vn/the-loai",
+      "Chọn thể loại phim để xem. Hành động, tình cảm, kinh dị, anime... tại Rồ Phim.",
+    url: "https://rophimm.org/the-loai",
   },
 };
 

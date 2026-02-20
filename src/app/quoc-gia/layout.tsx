@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Phim Theo Quốc Gia",
   description:
-    "Xem phim theo quốc gia: Hàn Quốc, Trung Quốc, Nhật Bản, Mỹ, Thái Lan, Việt Nam... Cập nhật nhanh tại Bỏng Phim.",
+    "Xem phim theo quốc gia: Hàn Quốc, Trung Quốc, Nhật Bản, Mỹ, Thái Lan, Việt Nam... Cập nhật nhanh tại Rồ Phim.",
   openGraph: {
-    title: "Phim Theo Quốc Gia | Bỏng Phim",
+    title: "Phim Theo Quốc Gia | Rồ Phim",
     description:
-      "Xem phim theo quốc gia. Hàn, Trung, Nhật, Mỹ, Thái... tại Bỏng Phim.",
-    url: "https://bongphim.vn/quoc-gia",
+      "Xem phim theo quốc gia. Hàn, Trung, Nhật, Mỹ, Thái... tại Rồ Phim.",
+    url: "https://rophimm.org/quoc-gia",
   },
 };
 

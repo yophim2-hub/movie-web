@@ -33,7 +33,7 @@ export default function HomePage() {
             lineHeight: 1.15,
           }}
         >
-          Bỏng Phim
+          Rồ Phim
         </h1>
           <p
             className="mt-3 max-w-xl text-[13px] leading-[1.5] text-foreground-muted"

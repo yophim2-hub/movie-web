@@ -14,18 +14,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const description =
       item.origin_name || item.episode_current
         ? [item.origin_name, item.episode_current].filter(Boolean).join(" · ")
-        : `Xem phim ${item.name} Vietsub tại Bỏng Phim`;
-    const url = `https://bongphim.vn/xem-phim/${slug}`;
+        : `Xem phim ${item.name} Vietsub tại Rồ Phim`;
+    const url = `https://rophimm.org/xem-phim/${slug}`;
     return {
       title,
       description,
       openGraph: {
-        title: `${title} | Bỏng Phim`,
+        title: `${title} | Rồ Phim`,
         description,
         url,
       },
       robots: { index: false, follow: true },
-      alternates: { canonical: `https://bongphim.vn/phim/${slug}` },
+      alternates: { canonical: `https://rophimm.org/phim/${slug}` },
     };
   } catch {
     return { title: "Xem phim" };

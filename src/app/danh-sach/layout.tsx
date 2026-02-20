@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Danh Sách Phim",
   description:
-    "Danh sách phim đầy đủ với bộ lọc theo thể loại, quốc gia, năm, chất lượng. Xem phim lẻ, phim bộ, phim chiếu rạp tại Bỏng Phim.",
+    "Danh sách phim đầy đủ với bộ lọc theo thể loại, quốc gia, năm, chất lượng. Xem phim lẻ, phim bộ, phim chiếu rạp tại Rồ Phim.",
   openGraph: {
-    title: "Danh Sách Phim | Bỏng Phim",
+    title: "Danh Sách Phim | Rồ Phim",
     description:
-      "Danh sách phim với bộ lọc theo thể loại, quốc gia, năm. Xem phim miễn phí tại Bỏng Phim.",
-    url: "https://bongphim.vn/danh-sach",
+      "Danh sách phim với bộ lọc theo thể loại, quốc gia, năm. Xem phim miễn phí tại Rồ Phim.",
+    url: "https://rophimm.org/danh-sach",
   },
 };
 

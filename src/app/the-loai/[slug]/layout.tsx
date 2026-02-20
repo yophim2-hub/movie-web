@@ -14,14 +14,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const titlePage = res?.data?.titlePage;
     const title = titlePage || "Thể loại";
     const description = titlePage
-      ? `Xem phim thể loại ${titlePage} mới nhất Vietsub. Cập nhật nhanh tại Bỏng Phim.`
-      : "Xem phim theo thể loại tại Bỏng Phim.";
-    const url = `https://bongphim.vn/the-loai/${slug}`;
+      ? `Xem phim thể loại ${titlePage} mới nhất Vietsub. Cập nhật nhanh tại Rồ Phim.`
+      : "Xem phim theo thể loại tại Rồ Phim.";
+    const url = `https://rophimm.org/the-loai/${slug}`;
     return {
       title,
       description,
       openGraph: {
-        title: `${title} | Bỏng Phim`,
+        title: `${title} | Rồ Phim`,
         description,
         url,
       },

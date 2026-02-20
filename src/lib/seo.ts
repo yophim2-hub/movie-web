@@ -1,4 +1,4 @@
-/** Giới hạn độ dài title SEO (~55 ký tự) để tổng với " | Bỏng Phim" không vượt ~70. */
+/** Giới hạn độ dài title SEO (~55 ký tự) để tổng với " | Rồ Phim" không vượt ~70. */
 const SEO_TITLE_MAX_LENGTH = 55;
 
 /**

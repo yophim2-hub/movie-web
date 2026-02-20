@@ -143,7 +143,7 @@ export function Header() {
           title="Trang chủ"
         >
           <span className="whitespace-nowrap text-xl font-semibold tracking-tight text-[var(--foreground)]">
-            Bỏng Phim
+            Rồ Phim
           </span>
         </Link>
 

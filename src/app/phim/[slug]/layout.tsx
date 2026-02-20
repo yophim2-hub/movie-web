@@ -18,9 +18,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       [item.origin_name, item.year, item.quality, item.lang]
         .filter(Boolean)
         .join(" · ") ||
-      `Xem phim ${item.name} Vietsub tại Bỏng Phim`;
+      `Xem phim ${item.name} Vietsub tại Rồ Phim`;
     const ogImage = seo?.og_image?.[0];
-    const url = seo?.og_url || `https://bongphim.vn/phim/${slug}`;
+    const url = seo?.og_url || `https://rophimm.org/phim/${slug}`;
     return {
       title,
       description,

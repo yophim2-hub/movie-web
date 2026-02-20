@@ -14,19 +14,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (!item) return { title: "Xem phim" };
     const title = `Xem: ${shortenTitleForSeo(item.name)} - Tập ${episodeSlug}`;
     const description = item.episode_current
-      ? `${item.name} ${item.episode_current} Vietsub - Xem tại Bỏng Phim`
-      : `Xem phim ${item.name} Vietsub tại Bỏng Phim`;
-    const url = `https://bongphim.vn/xem-phim/${slug}/${episodeSlug}`;
+      ? `${item.name} ${item.episode_current} Vietsub - Xem tại Rồ Phim`
+      : `Xem phim ${item.name} Vietsub tại Rồ Phim`;
+    const url = `https://rophimm.org/xem-phim/${slug}/${episodeSlug}`;
     return {
       title,
       description,
       openGraph: {
-        title: `${title} | Bỏng Phim`,
+        title: `${title} | Rồ Phim`,
         description,
         url,
       },
       robots: { index: false, follow: true },
-      alternates: { canonical: `https://bongphim.vn/phim/${slug}` },
+      alternates: { canonical: `https://rophimm.org/phim/${slug}` },
     };
   } catch {
     return { title: "Xem phim" };

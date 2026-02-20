@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Phim Bộ",
   description:
-    "Xem phim bộ mới nhất, phim bộ hay Vietsub trọn bộ. Cập nhật nhanh phim Hàn, Trung, Thái, Âu Mỹ. Xem phim bộ miễn phí tại Bỏng Phim.",
+    "Xem phim bộ mới nhất, phim bộ hay Vietsub trọn bộ. Cập nhật nhanh phim Hàn, Trung, Thái, Âu Mỹ. Xem phim bộ miễn phí tại Rồ Phim.",
   openGraph: {
-    title: "Phim Bộ | Bỏng Phim",
+    title: "Phim Bộ | Rồ Phim",
     description:
-      "Xem phim bộ mới nhất, phim bộ hay Vietsub trọn bộ. Cập nhật nhanh tại Bỏng Phim.",
-    url: "https://bongphim.vn/phim-bo",
+      "Xem phim bộ mới nhất, phim bộ hay Vietsub trọn bộ. Cập nhật nhanh tại Rồ Phim.",
+    url: "https://rophimm.org/phim-bo",
   },
 };
 
