@@ -41,7 +41,7 @@ export default function TheLoaiListPage() {
       )}
 
       {categories && categories.length > 0 && (
-        <ul className="grid grid-cols-3 gap-4 lg:grid-cols-8">
+        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8">
           {categories.map((cat) => (
             <li key={cat._id}>
               <Link
