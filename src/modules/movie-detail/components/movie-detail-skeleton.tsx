@@ -8,7 +8,7 @@ export function MovieDetailSkeleton() {
     <div className="min-w-0 overflow-x-hidden pb-24">
       {/* Hero placeholder — cùng tỉ lệ & margin như MovieDetailHero */}
       <div
-        className="top-detail-wrap relative z-[1] -mx-6 w-[calc(100%+3rem)] overflow-hidden aspect-[21/9] min-h-[200px] sm:-mx-8 sm:min-h-[240px] sm:w-[calc(100%+4rem)]"
+        className="top-detail-wrap relative z-[1] -mx-6 w-[calc(100%+3rem)] overflow-hidden aspect-[21/6] min-h-[160px] sm:-mx-8 sm:min-h-[200px] sm:w-[calc(100%+4rem)]"
         aria-hidden
       >
         <div
