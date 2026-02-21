@@ -34,7 +34,7 @@ export function SectionTopList({
   return (
     <section className={`min-w-0 ${className}`}>
       <div className="mb-4 flex items-center justify-between gap-4">
-        <h2 className="min-w-0 shrink text-lg font-semibold text-[var(--foreground)]">
+        <h2 className="min-w-0 shrink text-base font-semibold text-[var(--foreground)] sm:text-lg">
           {title}
         </h2>
         <div className="flex shrink-0 gap-2">
@@ -71,13 +71,13 @@ export function SectionTopList({
                 </div>
                 <div className="flex min-w-0 items-start gap-4">
                   <span
-                    className="shrink-0 font-black italic text-[var(--accent)] drop-shadow-sm"
-                    style={{ transform: "skewX(-10deg)", fontSize: "2.5rem", lineHeight: 1 }}
+                    className="shrink-0 text-[2rem] font-black italic text-[var(--accent)] drop-shadow-sm sm:text-[2.5rem]"
+                    style={{ transform: "skewX(-10deg)", lineHeight: 1 }}
                   >
                     {index + 1}
                   </span>
                   <div className="info min-w-0 flex-1 space-y-0.5">
-                    <h4 className="item-title lim-1 min-w-0 text-[13px] font-medium leading-tight">
+                    <h4 className="item-title lim-1 min-w-0 text-[12px] font-medium leading-tight sm:text-[13px]">
                       <Link
                         href={`${basePath}/${item.slug}`}
                         title={item.name}
@@ -86,7 +86,7 @@ export function SectionTopList({
                         {item.name}
                       </Link>
                     </h4>
-                    <h4 className="alias-title lim-1 min-w-0 text-[12px] leading-tight text-[var(--accent)]">
+                    <h4 className="alias-title lim-1 min-w-0 text-[11px] leading-tight text-[var(--accent)] sm:text-[12px]">
                       <Link
                         href={`${basePath}/${item.slug}`}
                         title={formatOriginName(item.origin_name)}

@@ -49,7 +49,7 @@ export function MoviePosterCard({
       <Link href={href} className="v-thumbnail relative block">
         {/* Pin badge: "Full" / số tập — vàng, góc trái trên */}
         {episode ? (
-          <div className="pin-new m-pin-new absolute left-0 top-0 z-[1] flex items-center rounded-br-[var(--radius-button)] bg-[var(--accent)] px-2 py-1 text-[11px] font-semibold leading-none text-white shadow-[var(--shadow-sm)]">
+          <div className="pin-new m-pin-new absolute left-0 top-0 z-[1] flex items-center rounded-br-[var(--radius-button)] bg-[var(--accent)] px-1.5 py-0.5 text-[10px] font-semibold leading-none text-white shadow-[var(--shadow-sm)] sm:px-2 sm:py-1 sm:text-[11px]">
             <strong>{episode}</strong>
           </div>
         ) : null}
@@ -67,7 +67,7 @@ export function MoviePosterCard({
         </div>
       </Link>
       <div className="info min-w-0 space-y-0.5">
-        <h4 className="item-title lim-1 min-w-0 text-[13px] font-medium leading-tight">
+        <h4 className="item-title lim-1 min-w-0 text-[12px] font-medium leading-tight sm:text-[13px]">
           <Link
             href={href}
             title={title}
@@ -76,7 +76,7 @@ export function MoviePosterCard({
             {title}
           </Link>
         </h4>
-        <h4 className="alias-title lim-1 min-w-0 text-[12px] leading-tight text-[var(--accent)]">
+        <h4 className="alias-title lim-1 min-w-0 text-[11px] leading-tight text-[var(--accent)] sm:text-[12px]">
           <Link
             href={href}
             title={alias}

@@ -55,7 +55,7 @@ function PosterThumbCard({
       {/* Ảnh thumb bên trên */}
       <Link href={href} className="group relative block">
         {pin ? (
-          <div className="absolute left-0 top-0 z-[1] flex items-center rounded-br-[var(--radius-button)] bg-[var(--accent)] px-2 py-1 text-[11px] font-semibold text-[var(--foreground)] shadow-[var(--shadow-sm)]">
+          <div className="absolute left-0 top-0 z-[1] flex items-center rounded-br-[var(--radius-button)] bg-[var(--accent)] px-1.5 py-0.5 text-[10px] font-semibold text-[var(--foreground)] shadow-[var(--shadow-sm)] sm:px-2 sm:py-1 sm:text-[11px]">
             {pin}
           </div>
         ) : null}
@@ -94,13 +94,13 @@ function PosterThumbCard({
             <Link
               href={href}
               title={name}
-              className="block text-[13px] font-medium text-[var(--foreground)] hover:text-[var(--accent)]"
+              className="block text-[12px] font-medium text-[var(--foreground)] hover:text-[var(--accent)] sm:text-[13px]"
             >
               {name}
             </Link>
           </h4>
           {alias ? (
-            <p className="alias-title mt-0.5 line-clamp-1 text-[12px] text-[var(--foreground-muted)]">
+            <p className="alias-title mt-0.5 line-clamp-1 text-[11px] text-[var(--foreground-muted)] sm:text-[12px]">
               <Link href={href} title={alias} className="hover:text-[var(--accent)]">
                 {alias}
               </Link>
@@ -132,7 +132,7 @@ export function SectionPosterThumb({
   return (
     <section className={`min-w-0 ${className}`}>
       <div className="mb-4 flex items-center justify-between gap-4">
-        <h2 className="min-w-0 shrink text-lg font-semibold text-[var(--foreground)]">
+        <h2 className="min-w-0 shrink text-base font-semibold text-[var(--foreground)] sm:text-lg">
           {title}
         </h2>
         {useNavigation ? (
@@ -159,7 +159,7 @@ export function SectionPosterThumb({
         ) : (
           <Link
             href={seeMoreHref ?? basePath}
-            className="shrink-0 text-sm font-medium text-[var(--accent)] hover:text-[var(--accent-hover)]"
+            className="shrink-0 text-xs font-medium text-[var(--accent)] hover:text-[var(--accent-hover)] sm:text-sm"
           >
             {seeMoreLabel}
           </Link>

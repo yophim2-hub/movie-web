@@ -47,7 +47,7 @@ export function SectionPosterList({
   return (
     <section className={`min-w-0 ${className}`}>
       <div className="mb-4 flex items-center justify-between gap-4">
-        <h2 className="min-w-0 shrink text-lg font-semibold text-[var(--foreground)]">
+        <h2 className="min-w-0 shrink text-base font-semibold text-[var(--foreground)] sm:text-lg">
           {title}
         </h2>
         {useNavigation ? (
@@ -66,7 +66,7 @@ export function SectionPosterList({
         ) : (
           <Link
             href={seeMoreHref ?? basePath}
-            className="shrink-0 text-sm font-medium text-[var(--accent)] hover:text-[var(--accent-hover)]"
+            className="shrink-0 text-xs font-medium text-[var(--accent)] hover:text-[var(--accent-hover)] sm:text-sm"
           >
             {seeMoreLabel}
           </Link>

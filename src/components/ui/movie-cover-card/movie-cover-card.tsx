@@ -50,7 +50,7 @@ export function MovieCoverCard({
         className="v-thumbnail v-thumbnail-hoz group relative block bg-[var(--secondary-bg-solid)]"
       >
         {pin ? (
-          <div className="pin-new m-pin-new absolute left-0 top-0 z-[1] flex items-center rounded-br-[var(--radius-button)] bg-[var(--accent)] px-2 py-1 text-[11px] font-semibold text-[var(--foreground)] shadow-[var(--shadow-sm)]">
+          <div className="pin-new m-pin-new absolute left-0 top-0 z-[1] flex items-center rounded-br-[var(--radius-button)] bg-[var(--accent)] px-1.5 py-0.5 text-[10px] font-semibold text-[var(--foreground)] shadow-[var(--shadow-sm)] sm:px-2 sm:py-1 sm:text-[11px]">
             {pin}
           </div>
         ) : null}
@@ -91,7 +91,7 @@ export function MovieCoverCard({
             <Link
               href={href}
               title={title}
-              className="block truncate text-[13px] font-medium text-[var(--foreground)] hover:text-[var(--accent)]"
+              className="block truncate text-[12px] font-medium text-[var(--foreground)] hover:text-[var(--accent)] sm:text-[13px]"
             >
               {title}
             </Link>
@@ -101,7 +101,7 @@ export function MovieCoverCard({
               <Link
                 href={href}
                 title={alias}
-                className="block truncate text-[12px] text-[var(--foreground-muted)] hover:text-[var(--accent)]"
+                className="block truncate text-[11px] text-[var(--foreground-muted)] hover:text-[var(--accent)] sm:text-[12px]"
               >
                 {alias}
               </Link>

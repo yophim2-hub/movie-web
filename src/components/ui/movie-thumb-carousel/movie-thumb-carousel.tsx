@@ -61,7 +61,7 @@ export function MovieThumbCarousel({
       <div className="mb-4 flex items-center justify-between gap-4">
         <h2
           id={titleId}
-          className="min-w-0 shrink text-lg font-semibold text-[var(--foreground)]"
+          className="min-w-0 shrink text-base font-semibold text-[var(--foreground)] sm:text-lg"
         >
           {title}
         </h2>
@@ -90,7 +90,7 @@ export function MovieThumbCarousel({
         {!useNavigation && seeMoreHref && (
           <Link
             href={seeMoreHref}
-            className="shrink-0 text-sm font-medium text-[var(--accent)] hover:text-[var(--accent-hover)]"
+            className="shrink-0 text-xs font-medium text-[var(--accent)] hover:text-[var(--accent-hover)] sm:text-sm"
           >
             {seeMoreLabel}
           </Link>
