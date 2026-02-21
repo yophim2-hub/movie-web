@@ -127,9 +127,11 @@ export function MovieDetailSidebar({
         <div>
           <span className="text-[12px] font-medium text-[var(--foreground-muted)]">Thể loại: </span>
           <div className="mt-1.5 flex flex-wrap gap-1.5">
-            {category.map((c) => (
+            {category
+              .filter((c, i, arr) => arr.findIndex((x) => x.slug === c.slug) === i)
+              .map((c) => (
               <Link
-                key={c.id}
+                key={c.slug}
                 href={`/the-loai/${c.slug}`}
                 className="rounded-[var(--radius-button)] bg-[var(--secondary-bg-solid)] px-2 py-1 text-[12px] text-[var(--foreground)] hover:bg-[var(--secondary-hover)]"
               >
@@ -143,9 +145,11 @@ export function MovieDetailSidebar({
         <div>
           <span className="text-[12px] font-medium text-[var(--foreground-muted)]">Quốc gia: </span>
           <div className="mt-1.5 flex flex-wrap gap-1.5">
-            {country.map((c) => (
+            {country
+              .filter((c, i, arr) => arr.findIndex((x) => x.slug === c.slug) === i)
+              .map((c) => (
               <Link
-                key={c.id}
+                key={c.slug}
                 href={`/quoc-gia/${c.slug}`}
                 className="rounded-[var(--radius-button)] bg-[var(--secondary-bg-solid)] px-2 py-1 text-[12px] text-[var(--foreground)] hover:bg-[var(--secondary-hover)]"
               >

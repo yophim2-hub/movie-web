@@ -191,9 +191,9 @@ export function WatchContent({
           <div className="flex flex-nowrap items-baseline gap-2">
             <span className="shrink-0 text-[12px] font-medium text-[var(--foreground-muted)]">Thể loại:</span>
             <div className="flex min-w-0 flex-wrap gap-1.5">
-              {movie.category!.map((c) => (
+              {movie.category!.filter((c, i, arr) => arr.findIndex((x) => x.slug === c.slug) === i).map((c) => (
                 <Link
-                  key={c.id}
+                  key={c.slug}
                   href={`/the-loai/${c.slug}`}
                   className="rounded-[var(--radius-button)] bg-[var(--secondary-bg-solid)] px-2 py-1 text-[12px] text-[var(--foreground)] hover:bg-[var(--secondary-hover)]"
                 >
@@ -207,9 +207,9 @@ export function WatchContent({
           <div className="flex flex-nowrap items-baseline gap-2">
             <span className="shrink-0 text-[12px] font-medium text-[var(--foreground-muted)]">Quốc gia:</span>
             <div className="flex min-w-0 flex-wrap gap-1.5">
-              {movie.country!.map((c) => (
+              {movie.country!.filter((c, i, arr) => arr.findIndex((x) => x.slug === c.slug) === i).map((c) => (
                 <Link
-                  key={c.id}
+                  key={c.slug}
                   href={`/quoc-gia/${c.slug}`}
                   className="rounded-[var(--radius-button)] bg-[var(--secondary-bg-solid)] px-2 py-1 text-[12px] text-[var(--foreground)] hover:bg-[var(--secondary-hover)]"
                 >
