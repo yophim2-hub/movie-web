@@ -11,7 +11,7 @@ export function MovieDetailHero({ imageUrl }: MovieDetailHeroProps) {
     : `https://phimimg.com/${imageUrl}`;
 
   return (
-    <div className="top-detail-wrap relative z-[1] -mx-6 w-[calc(100%+3rem)] overflow-hidden aspect-[21/9] min-h-[200px] sm:-mx-8 sm:min-h-[240px] sm:w-[calc(100%+4rem)]">
+    <div className="top-detail-wrap relative z-[1] -mx-6 w-[calc(100%+3rem)] overflow-hidden aspect-[21/6] min-h-[160px] sm:-mx-8 sm:min-h-[200px] sm:w-[calc(100%+4rem)]">
       {/* Background image */}
       <div
         className="background-fade absolute inset-0 bg-cover bg-top bg-no-repeat"
