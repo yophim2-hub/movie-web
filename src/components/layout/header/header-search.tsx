@@ -185,7 +185,7 @@ export function HeaderSearch({
                               ? item.poster_url
                               : `https://phimimg.com/${item.poster_url}`
                           }
-                          alt=""
+                          alt={item.name}
                           className="h-full w-full object-cover"
                           loading="lazy"
                         />

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { fetchMovieDetail } from "@/lib/api";
 import { shortenTitleForSeo } from "@/lib/seo";
+import { MovieJsonLd } from "./movie-jsonld";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -18,9 +19,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       [item.origin_name, item.year, item.quality, item.lang]
         .filter(Boolean)
         .join(" · ") ||
-      `Xem phim ${item.name} Vietsub tại Rồ Phim`;
+      `Xem ngay phim ${item.name} Vietsub miễn phí tại Rồ Phim`;
     const ogImage = seo?.og_image?.[0];
     const url = seo?.og_url || `https://rophimm.org/phim/${slug}`;
+    const ogType = item.type === "series" ? "video.tv_show" : "video.movie";
     return {
       title,
       description,
@@ -28,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title,
         description,
         url,
-        type: "website",
+        type: ogType,
         ...(ogImage && { images: [{ url: ogImage }] }),
       },
       twitter: {
@@ -44,8 +46,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function PhimSlugLayout({
+export default async function PhimSlugLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
-  return children;
+  params,
+}: Readonly<{ children: React.ReactNode; params: Promise<{ slug: string }> }>) {
+  const { slug } = await params;
+  return (
+    <>
+      <MovieJsonLd slug={slug} />
+      {children}
+    </>
+  );
 }

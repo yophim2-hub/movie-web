@@ -4,12 +4,14 @@ const POSTER_BASE = "https://phimimg.com";
 
 interface MovieDetailPosterProps {
   posterUrl: string;
+  movieName?: string;
   /** Dùng cho variant compact (vd: max-w-[140px]) */
   className?: string;
 }
 
 export function MovieDetailPoster({
   posterUrl,
+  movieName,
   className = "",
 }: Readonly<MovieDetailPosterProps>) {
   const src =
@@ -21,7 +23,7 @@ export function MovieDetailPoster({
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={src}
-          alt=""
+          alt={movieName ? `Poster phim ${movieName}` : "Poster phim"}
           className="h-full w-full object-cover"
         />
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { PageLayout } from "@/components/layout";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { formatOriginName } from "@/components/ui/movie-poster-card";
 import { useMovieDetail } from "@/hooks";
 import { useParams } from "next/navigation";
@@ -101,11 +102,22 @@ export default function MovieDetailPage() {
     <div className="content-fade-in min-w-0 overflow-x-hidden pb-24">
       <MovieDetailHero imageUrl={movie.thumb_url || movie.poster_url} />
       <PageLayout className="relative z-[2] min-w-0 -mt-[14.3%] rounded-t-2xl pt-6 shadow-[0_-4px_24px_rgba(0,0,0,0.06)]">
+        <Breadcrumb
+          items={[
+            { label: "Trang chủ", href: "/" },
+            ...(movie.category?.[0]
+              ? [{ label: movie.category[0].name, href: `/the-loai/${movie.category[0].slug}` }]
+              : []),
+            { label: movie.name },
+          ]}
+          className="mb-6"
+        />
         {/* Màn hình nhỏ: poster + title căn giữa, rồi Xem phim → tab (full width) */}
         <div className="flex min-w-0 flex-col gap-6 lg:hidden">
           <div className="flex min-w-0 flex-col items-center gap-4">
             <MovieDetailPoster
               posterUrl={movie.poster_url}
+              movieName={movie.name}
               className="w-full max-w-[140px]"
             />
             <div className="w-full min-w-0 text-center">{headerBlock}</div>

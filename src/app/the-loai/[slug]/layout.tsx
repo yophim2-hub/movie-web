@@ -14,8 +14,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const titlePage = res?.data?.titlePage;
     const title = titlePage || "Thể loại";
     const description = titlePage
-      ? `Xem phim thể loại ${titlePage} mới nhất Vietsub. Cập nhật nhanh tại Rồ Phim.`
-      : "Xem phim theo thể loại tại Rồ Phim.";
+      ? `Khám phá phim thể loại ${titlePage} mới nhất Vietsub. Xem ngay miễn phí, cập nhật hàng ngày tại Rồ Phim.`
+      : "Khám phá và xem ngay phim theo thể loại tại Rồ Phim.";
     const url = `https://rophimm.org/the-loai/${slug}`;
     return {
       title,

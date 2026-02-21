@@ -30,7 +30,7 @@ export function WatchSidebar({
   activeEpisodeSlug,
 }: WatchSidebarProps) {
   return (
-    <aside className="flex h-full min-h-0 min-w-0 flex-col overflow-hidden">
+    <aside className="flex h-full min-h-0 w-full flex-col overflow-hidden rounded-[var(--radius-panel)] bg-[var(--secondary-bg-solid)] p-3">
       <Tabs defaultValue={TAB_EPISODES} className="flex h-full min-h-0 flex-col">
         <TabsList className="mb-3 shrink-0">
           <TabsTrigger value={TAB_EPISODES}>Tập</TabsTrigger>

@@ -6,7 +6,7 @@ const BASE_URL = "https://rophimm.org";
 export async function GET() {
   const now = new Date().toISOString();
 
-  const sitemaps = ["sitemap-page.xml", "sitemap-category.xml", "sitemap-region.xml"];
+  const sitemaps = ["sitemap-page.xml", "sitemap-category.xml", "sitemap-region.xml", "sitemap-movie.xml"];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

@@ -3,11 +3,14 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Hoạt Hình",
   description:
-    "Xem hoạt hình, anime mới nhất Vietsub. Cập nhật nhanh phim hoạt hình trẻ em, anime Nhật. Xem miễn phí tại Rồ Phim.",
+    "Khám phá thế giới hoạt hình, anime mới nhất Vietsub. Xem ngay anime Nhật, hoạt hình trẻ em chất lượng HD. Trải nghiệm miễn phí tại Rồ Phim.",
+  alternates: {
+    canonical: "https://rophimm.org/hoat-hinh",
+  },
   openGraph: {
     title: "Hoạt Hình | Rồ Phim",
     description:
-      "Xem hoạt hình, anime mới nhất Vietsub. Cập nhật nhanh tại Rồ Phim.",
+      "Khám phá hoạt hình, anime mới nhất Vietsub. Xem ngay miễn phí tại Rồ Phim.",
     url: "https://rophimm.org/hoat-hinh",
   },
 };

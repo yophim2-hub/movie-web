@@ -4,8 +4,6 @@ const BASE_URL = "https://rophimm.org";
 
 /** Page sitemap — các trang chính */
 export async function GET() {
-  const now = new Date().toISOString();
-
   const pages = [
     { loc: "/", changefreq: "daily", priority: "1" },
     { loc: "/danh-sach", changefreq: "daily", priority: "0.8" },
@@ -22,10 +20,9 @@ ${pages
   .map(
     (p) => `<url>
 <loc>${BASE_URL}${p.loc}</loc>
-<lastmod>${now}</lastmod>
 <changefreq>${p.changefreq}</changefreq>
 <priority>${p.priority}</priority>
-</url>`
+</url>`,
   )
   .join("\n")}
 </urlset>`;

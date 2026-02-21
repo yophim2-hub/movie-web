@@ -37,15 +37,17 @@ export function MovieStatusBlock({
   // "Hoàn Tất (32/32)" → đã chứa tổng tập, không cần thêm episodeTotal
   const currentLower = episodeCurrent?.toLowerCase() ?? "";
   const isFullText = currentLower.includes("hoàn tất") || currentLower.includes("full");
+  // Loại bỏ prefix "Tập" nếu API đã trả về sẵn (tránh "Tập Tập ...")
+  const cleanCurrent = episodeCurrent?.replace(/^Tập\s*/i, "").trim();
 
   let progressText = label;
   if (hasEpisodeProgress) {
     if (isFullText) {
       progressText = episodeCurrent!;
-    } else if (episodeCurrent && episodeTotal) {
-      progressText = `Tập ${episodeCurrent} / ${episodeTotal}`;
-    } else if (episodeCurrent) {
-      progressText = `Tập ${episodeCurrent}`;
+    } else if (cleanCurrent && episodeTotal) {
+      progressText = `Tập ${cleanCurrent} / ${episodeTotal}`;
+    } else if (cleanCurrent) {
+      progressText = `Tập ${cleanCurrent}`;
     } else {
       progressText = `Tổng ${episodeTotal} tập`;
     }

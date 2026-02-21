@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Tìm Kiếm Phim",
   description:
-    "Tìm kiếm phim theo tên, từ khóa. Xem phim hay Vietsub, lọc theo thể loại, quốc gia. Tìm phim nhanh tại Rồ Phim.",
+    "Tìm ngay phim theo tên, từ khóa. Khám phá phim hay Vietsub, lọc theo thể loại, quốc gia. Tìm phim yêu thích nhanh chóng tại Rồ Phim.",
   openGraph: {
     title: "Tìm Kiếm Phim | Rồ Phim",
     description:
-      "Tìm kiếm phim theo tên, từ khóa. Xem phim miễn phí tại Rồ Phim.",
+      "Tìm ngay và khám phá phim hay Vietsub. Tìm phim yêu thích tại Rồ Phim.",
     url: "https://rophimm.org/tim-kiem",
   },
 };

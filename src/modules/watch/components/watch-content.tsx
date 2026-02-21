@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { VideoPlayer } from "@/components/ui/video-player";
 import { MovieDetailRelated } from "@/modules/movie-detail";
 import { useWatchHistory } from "@/store/watch-history";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import Link from "next/link";
 import { useMemo } from "react";
 import type { EpisodeItem, EpisodeServer } from "@/types/movie-detail";
@@ -141,35 +142,17 @@ export function WatchContent({
 
   const firstCategory = movie.category?.[0];
   const breadcrumb = (
-    <nav
-      className="mb-4 flex flex-wrap items-center gap-x-2 text-sm text-[var(--foreground-muted)]"
-      aria-label="Breadcrumb"
-    >
-      <Link href="/" className="text-[var(--accent)] hover:underline">
-        Trang chủ
-      </Link>
-      {firstCategory && (
-        <>
-          <span aria-hidden>/</span>
-          <Link
-            href={`/the-loai/${firstCategory.slug}`}
-            className="text-[var(--accent)] hover:underline"
-          >
-            {firstCategory.name}
-          </Link>
-        </>
-      )}
-      <span aria-hidden>/</span>
-      <Link href={`/phim/${slug}`} className="text-[var(--accent)] hover:underline">
-        {movie.name}
-      </Link>
-      {episode && (
-        <>
-          <span aria-hidden>/</span>
-          <span className="text-[var(--foreground)]">{episode.name}</span>
-        </>
-      )}
-    </nav>
+    <Breadcrumb
+      items={[
+        { label: "Trang chủ", href: "/" },
+        ...(firstCategory
+          ? [{ label: firstCategory.name, href: `/the-loai/${firstCategory.slug}` }]
+          : []),
+        { label: movie.name, href: `/phim/${slug}` },
+        ...(episode ? [{ label: episode.name }] : []),
+      ]}
+      className="mb-4"
+    />
   );
 
   const timeDisplay = formatTimeToHoursMinutes(movie.time ?? "");
@@ -305,15 +288,15 @@ export function WatchContent({
       <div className="flex flex-col pb-24">
         <PageLayout className="py-4">
           {breadcrumb}
-          <div className="mt-4 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] lg:items-start">
-            {/* Video: mobile = cố định trên, desktop = bình thường */}
+          {/* Row 1: Video + Sidebar — sidebar height = video height on desktop */}
+          <div className="mt-4 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)]">
+            {/* Video */}
             <div className="min-w-0">
               <div className="sticky top-0 z-30 bg-[var(--background)] lg:static">{playerBlock}</div>
-              {/* Desktop: thông tin phim dưới video */}
-              <div className="mt-4 hidden lg:block lg:pr-6">{movieInfoBlock}</div>
             </div>
-            {/* Mobile: tab Thông tin | Tập | Đề xuất — chỉ vùng này scroll */}
-            <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
+            {/* Right column: mobile = tabs, desktop = sidebar pinned to video height */}
+            <div className="min-w-0 lg:relative">
+              {/* Mobile: tab Thông tin | Tập | Đề xuất */}
               <div className="lg:hidden">
                 <Tabs defaultValue="info" className="w-full">
                   <TabsList className="mb-3 grid w-full grid-cols-3">
@@ -366,8 +349,8 @@ export function WatchContent({
                   </TabsContent>
                 </Tabs>
               </div>
-              {/* Desktop: sidebar Tập | Đề xuất */}
-              <div className="hidden lg:block">
+              {/* Desktop: sidebar — absolute so it doesn't expand the grid row beyond video height */}
+              <div className="hidden lg:absolute lg:inset-0 lg:flex">
                 <WatchSidebar
                   name={movie.name}
                   episodes={episodes}
@@ -380,6 +363,8 @@ export function WatchContent({
               </div>
             </div>
           </div>
+          {/* Row 2: Movie info — desktop only, below the grid */}
+          <div className="mt-6 hidden lg:block lg:max-w-[70%]">{movieInfoBlock}</div>
         </PageLayout>
       </div>
     );

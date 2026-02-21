@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Montserrat } from "next/font/google";
-import { Header } from "@/components/layout";
+import { Header, Footer } from "@/components/layout";
+import { JsonLd } from "@/components/seo";
 import { QueryProvider } from "@/providers/query-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { ToastAndProgress } from "@/providers/toast-and-progress";
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     template: "%s | Rồ Phim",
   },
   description:
-    "Rồ Phim - Trang xem phim hay, phim mới Vietsub chất lượng 4K/Full HD. Cập nhật nhanh nhất phim bộ, phim lẻ, phim chiếu rạp. Trải nghiệm xem phim mượt mà, không quảng cáo, hoàn toàn miễn phí.",
+    "Khám phá kho phim khổng lồ tại Rồ Phim. Xem ngay phim mới Vietsub 4K/Full HD miễn phí. Thưởng thức phim bộ, phim lẻ, phim chiếu rạp không quảng cáo. Cập nhật hàng ngày!",
   keywords: [
     "phim hay",
     "xem phim online",
@@ -47,14 +48,14 @@ export const metadata: Metadata = {
     siteName: "Rồ Phim",
     title: "Phim Hay | Rồ Phim | Xem Phim Online HD 4K Không Quảng Cáo",
     description:
-      "Rồ Phim - Trang xem phim hay, phim mới Vietsub chất lượng 4K/Full HD. Cập nhật nhanh nhất phim bộ, phim lẻ, phim chiếu rạp. Trải nghiệm xem phim mượt mà, không quảng cáo, hoàn toàn miễn phí.",
+      "Khám phá kho phim khổng lồ tại Rồ Phim. Xem ngay phim mới Vietsub 4K/Full HD miễn phí, không quảng cáo.",
     images: [{ url: "https://rophimm.org/logo.png", width: 512, height: 512, alt: "Rồ Phim" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Phim Hay | Rồ Phim | Xem Phim Online HD 4K Không Quảng Cáo",
     description:
-      "Rồ Phim - Trang xem phim hay, phim mới Vietsub chất lượng 4K/Full HD. Cập nhật nhanh nhất phim bộ, phim lẻ, phim chiếu rạp.",
+      "Khám phá kho phim khổng lồ tại Rồ Phim. Xem ngay phim mới Vietsub 4K/Full HD miễn phí, không quảng cáo.",
     images: ["https://rophimm.org/logo.png"],
   },
   robots: {
@@ -89,6 +90,43 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: themeScript }}
           suppressHydrationWarning
         />
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "WebSite",
+                "@id": "https://rophimm.org/#website",
+                url: "https://rophimm.org",
+                name: "Rồ Phim",
+                description:
+                  "Khám phá kho phim khổng lồ tại Rồ Phim. Xem ngay phim mới Vietsub 4K/Full HD miễn phí.",
+                inLanguage: "vi",
+                potentialAction: {
+                  "@type": "SearchAction",
+                  target: {
+                    "@type": "EntryPoint",
+                    urlTemplate:
+                      "https://rophimm.org/tim-kiem?keyword={search_term_string}",
+                  },
+                  "query-input": "required name=search_term_string",
+                },
+              },
+              {
+                "@type": "Organization",
+                "@id": "https://rophimm.org/#organization",
+                name: "Rồ Phim",
+                url: "https://rophimm.org",
+                logo: {
+                  "@type": "ImageObject",
+                  url: "https://rophimm.org/logo.png",
+                  width: 512,
+                  height: 512,
+                },
+              },
+            ],
+          }}
+        />
       </head>
       <body className={`${geistMono.variable} ${montserrat.variable} antialiased min-h-screen`}>
         <QueryProvider>
@@ -96,6 +134,7 @@ export default function RootLayout({
             <WatchHistoryProvider>
               <Header />
               <main>{children}</main>
+              <Footer />
               <ToastAndProgress />
             </WatchHistoryProvider>
           </ThemeProvider>

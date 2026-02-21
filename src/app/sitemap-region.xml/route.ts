@@ -5,8 +5,6 @@ const BASE_URL = "https://rophimm.org";
 
 /** Region sitemap — tất cả quốc gia */
 export async function GET() {
-  const now = new Date().toISOString();
-
   let countries: { slug: string }[] = [];
   try {
     countries = await fetchCountries();
@@ -20,10 +18,9 @@ ${countries
   .map(
     (c) => `<url>
 <loc>${BASE_URL}/quoc-gia/${c.slug}</loc>
-<lastmod>${now}</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.8</priority>
-</url>`
+</url>`,
   )
   .join("\n")}
 </urlset>`;

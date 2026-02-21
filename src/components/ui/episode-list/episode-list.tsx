@@ -107,10 +107,10 @@ function EpisodeListWatch({
           </div>
         </div>
       ) : (
-        <div className="min-w-0 shrink-0">
-          <h3 className="mb-2 text-sm font-semibold text-[var(--foreground)]">{title}</h3>
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+          <h3 className="mb-2 shrink-0 text-sm font-semibold text-[var(--foreground)]">{title}</h3>
           {hasMultipleServers && (
-            <div className="mb-2 flex flex-wrap gap-1">
+            <div className="mb-2 shrink-0 flex flex-wrap gap-1">
               {episodes.map((s, i) => (
                 <button
                   key={`${s.server_name}-${i}`}
@@ -129,7 +129,7 @@ function EpisodeListWatch({
             </div>
           )}
           {useRanges && rangeCount > 0 && (
-            <div className="mb-2 overflow-x-auto overflow-y-hidden">
+            <div className="mb-2 shrink-0 overflow-x-auto overflow-y-hidden">
               <div className="flex gap-2 py-0.5">
                 {Array.from({ length: rangeCount }, (_, i) => (
                   <button
@@ -148,18 +148,16 @@ function EpisodeListWatch({
               </div>
             </div>
           )}
-          <div className="overflow-x-auto overflow-y-hidden pb-1">
-            <div className="flex min-w-0 gap-2">
-              {horizontalItems.map((ep) => (
-                <EpisodeCard
-                  key={ep.slug}
-                  ep={ep}
-                  movieSlug={movieSlug}
-                  fullOnly={fullOnly}
-                  isActive={activeEpisodeSlug != null && activeEpisodeSlug === ep.slug}
-                />
-              ))}
-            </div>
+          <div className="grid grid-cols-3 gap-1.5 sm:grid-cols-4">
+            {horizontalItems.map((ep) => (
+              <EpisodeCard
+                key={ep.slug}
+                ep={ep}
+                movieSlug={movieSlug}
+                fullOnly={fullOnly}
+                isActive={activeEpisodeSlug != null && activeEpisodeSlug === ep.slug}
+              />
+            ))}
           </div>
         </div>
       )}
