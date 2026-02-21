@@ -14,11 +14,11 @@ export function MovieDetailHero({ imageUrl }: MovieDetailHeroProps) {
     <div className="top-detail-wrap relative z-[1] -mx-6 w-[calc(100%+3rem)] overflow-hidden aspect-[21/9] min-h-[200px] sm:-mx-8 sm:min-h-[240px] sm:w-[calc(100%+4rem)]">
       {/* Background image */}
       <div
-        className="background-fade absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="background-fade absolute inset-0 bg-cover bg-top bg-no-repeat"
         style={{ backgroundImage: `url("${src}")` }}
       />
       <div
-        className="cover-image absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+        className="cover-image absolute inset-0 bg-cover bg-top bg-no-repeat opacity-40"
         style={{ backgroundImage: `url("${src}")` }}
       />
       {/* Dark overlay on top of image (lớp phủ) */}
