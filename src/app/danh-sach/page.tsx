@@ -2,7 +2,7 @@
 
 import { MovieFilter } from "@/components/ui";
 import type { MovieFilterState } from "@/components/ui";
-import { SectionByDisplayType } from "@/components/ui/section-renderers";
+import { SectionByDisplayType, SectionLoadingSkeleton } from "@/components/ui/section-renderers";
 import { PageLayout } from "@/components/layout";
 import {
   useMovieList,
@@ -107,9 +107,7 @@ function DanhSachContent() {
       )}
 
       {!data?.data?.items?.length && isFetching && (
-        <p className="py-8 text-center text-sm text-[var(--foreground-muted)]">
-          Đang tải...
-        </p>
+        <SectionLoadingSkeleton displayType="grid-list" />
       )}
 
       {!isError && items.length === 0 && !isFetching && (
@@ -147,11 +145,8 @@ export default function DanhSachPage() {
     <Suspense
       fallback={
         <PageLayout className="pb-24">
-          <div className="mb-6 h-8 w-64 animate-pulse rounded bg-[var(--secondary-bg-solid)]" />
-          <div className="h-24 animate-pulse rounded bg-[var(--secondary-bg-solid)]" />
-          <p className="py-8 text-center text-sm text-[var(--foreground-muted)]">
-            Đang tải...
-          </p>
+          <div className="mb-6 h-8 w-64 skeleton-shimmer rounded" />
+          <SectionLoadingSkeleton displayType="grid-list" />
         </PageLayout>
       }
     >

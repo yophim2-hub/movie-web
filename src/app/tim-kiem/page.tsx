@@ -1,15 +1,14 @@
 "use client";
 
-import { useCallback, useRef, useEffect } from "react";
+import { useCallback, useRef, useEffect, Suspense } from "react";
 import { keepPreviousData } from "@tanstack/react-query";
 import { MovieFilter } from "@/components/ui";
 import type { MovieFilterState } from "@/components/ui";
-import { SectionByDisplayType } from "@/components/ui/section-renderers";
+import { SectionByDisplayType, SectionLoadingSkeleton } from "@/components/ui/section-renderers";
 import { PageLayout } from "@/components/layout";
 import { useSearchMovies, useCategories, useCountries } from "@/hooks";
 import type { SortField, SortType } from "@/types/movie-list";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Suspense } from "react";
 
 function TimKiemContent() {
   const listRef = useRef<HTMLDivElement>(null);
@@ -115,9 +114,7 @@ function TimKiemContent() {
           />
 
           {isLoading && !data && (
-            <p className="py-8 text-center text-sm text-[var(--foreground-muted)]">
-              Đang tìm...
-            </p>
+            <SectionLoadingSkeleton displayType="grid-list" />
           )}
 
           {isError && (
@@ -163,8 +160,8 @@ export default function TimKiemPage() {
     <Suspense
       fallback={
         <PageLayout className="pb-24">
-          <div className="mb-8 h-8 w-48 animate-pulse rounded bg-[var(--secondary-bg-solid)]" />
-          <p className="text-sm text-[var(--foreground-muted)]">Đang tải...</p>
+          <div className="mb-8 h-8 w-48 skeleton-shimmer rounded" />
+          <SectionLoadingSkeleton displayType="grid-list" />
         </PageLayout>
       }
     >

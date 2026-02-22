@@ -40,16 +40,18 @@ export function SectionLoadingSkeleton({
   if (isList) {
     const isPoster = displayType === "poster-list" || displayType === "grid-list" || displayType === "poster-thumb";
     const isGrid = displayType === "grid-list";
-    const count = isGrid ? 12 : 10;
+    const count = isGrid ? 24 : 10;
 
     return (
       <section className={`min-w-0 ${className}`} aria-busy="true">
-        <div className="mb-4 flex items-center justify-between gap-4">
-          <SkeletonBox className="h-6 w-32 rounded-[var(--radius-button)]" />
-          <SkeletonBox className="h-4 w-16 rounded-[var(--radius-button)]" />
-        </div>
+        {!isGrid && (
+          <div className="mb-4 flex items-center justify-between gap-4">
+            <SkeletonBox className="h-6 w-32 rounded-[var(--radius-button)]" />
+            <SkeletonBox className="h-4 w-16 rounded-[var(--radius-button)]" />
+          </div>
+        )}
         {isGrid ? (
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4">
+          <div className="grid grid-cols-3 gap-4 lg:grid-cols-8">
             {Array.from({ length: count }, (_, i) => (
               <SkeletonBox
                 key={i}

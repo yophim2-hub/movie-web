@@ -4,7 +4,7 @@ import { Suspense, useRef, useEffect, useCallback } from "react";
 import { keepPreviousData } from "@tanstack/react-query";
 import { MovieFilter } from "@/components/ui";
 import type { MovieFilterState } from "@/components/ui";
-import { SectionByDisplayType } from "@/components/ui/section-renderers";
+import { SectionByDisplayType, SectionLoadingSkeleton } from "@/components/ui/section-renderers";
 import { PageLayout } from "@/components/layout";
 import { useCategoryDetail, useCategories, useCountries } from "@/hooks";
 import type { SortField, SortType } from "@/types/movie-list";
@@ -104,9 +104,7 @@ function TheLoaiContent() {
       )}
 
       {!data?.data?.items?.length && isFetching && (
-        <p className="py-8 text-center text-sm text-[var(--foreground-muted)]">
-          Đang tải...
-        </p>
+        <SectionLoadingSkeleton displayType="grid-list" />
       )}
 
       {!isError && items.length === 0 && !isFetching && (
@@ -141,15 +139,8 @@ function TheLoaiContent() {
 
 const fallback = (
   <PageLayout className="pb-24">
-    <div className="mb-8 h-9 w-48 animate-pulse rounded bg-[var(--secondary-bg-solid)]" />
-    <div className="grid grid-cols-3 gap-4 lg:grid-cols-8">
-      {Array.from({ length: 12 }).map((_, i) => (
-        <div
-          key={i}
-          className="aspect-[2/3] animate-pulse rounded-[var(--radius-panel)] bg-[var(--secondary-bg-solid)]"
-        />
-      ))}
-    </div>
+    <div className="mb-8 h-9 w-48 skeleton-shimmer rounded" />
+    <SectionLoadingSkeleton displayType="grid-list" />
   </PageLayout>
 );
 
