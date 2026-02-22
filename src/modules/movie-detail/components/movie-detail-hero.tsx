@@ -21,25 +21,14 @@ export function MovieDetailHero({ imageUrl }: MovieDetailHeroProps) {
         className="cover-image absolute inset-0 bg-cover bg-top bg-no-repeat opacity-40"
         style={{ backgroundImage: `url("${src}")` }}
       />
-      {/* Dark overlay on top of image (lớp phủ) */}
-      <div
-        className="overlay absolute inset-0"
-        style={{ backgroundColor: "rgba(32, 35, 49, 0.55)" }}
-      />
-      {/* Dotted texture — lớp phủ dùng dotted.png làm mask (vignette: tối giữa, nhạt ra viền) */}
+      {/* Dotted overlay */}
       <div
         className="absolute inset-0"
-        style={{
-          backgroundColor: "rgba(0, 0, 0, 0.35)",
-          maskImage: "url(/images/dotted.png)",
-          maskSize: "cover",
-          maskPosition: "center",
-          WebkitMaskImage: "url(/images/dotted.png)",
-          WebkitMaskSize: "cover",
-          WebkitMaskPosition: "center",
-        }}
+        style={{ backgroundImage: "url('/images/dotted.png')", backgroundRepeat: "repeat" }}
       />
-      {/* Gradient fade to page background */}
+      {/* Gradient top — header readable */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-transparent" />
+      {/* Gradient bottom — fade to page background */}
       <div className="cover-fade absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--background)]" />
     </div>
   );

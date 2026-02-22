@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { isPhimimgUrl, webpLoader } from "@/lib/image-loader";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import type { MovieListItem } from "@/types/movie-list";
@@ -66,8 +65,6 @@ function PosterThumbCard({
             fill
             sizes="(max-width: 640px) 50vw, 280px"
             className="object-cover transition duration-200 group-hover:scale-[1.03]"
-            loader={isPhimimgUrl(thumbSrc) ? webpLoader : undefined}
-            unoptimized={!isPhimimgUrl(thumbSrc)}
           />
         </div>
       </Link>
@@ -84,8 +81,6 @@ function PosterThumbCard({
               fill
               sizes="80px"
               className="object-cover transition duration-200 hover:scale-[1.03]"
-              loader={isPhimimgUrl(posterSrc) ? webpLoader : undefined}
-              unoptimized={!isPhimimgUrl(posterSrc)}
             />
           </div>
         </Link>

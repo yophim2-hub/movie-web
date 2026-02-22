@@ -4,7 +4,6 @@ import {
   Button,
   Card,
   Divider,
-  ImageWebP,
   Input,
   PageLayout,
   Skeleton,
@@ -21,6 +20,7 @@ import {
   TabsTrigger,
   ThemeToggle,
 } from "@/components";
+import Image from "next/image";
 import Link from "next/link";
 import { PageWithAllComponents } from "./page-with-all-components";
 
@@ -81,25 +81,20 @@ export default function HomePage() {
           </Card>
         </section>
 
-        {/* Ảnh — ImageWebP */}
+        {/* Ảnh */}
         <section className="mt-10">
           <Card variant="outline" padding="none">
             <div
               className="relative aspect-video overflow-hidden"
               style={{ borderRadius: "var(--radius-panel)" }}
             >
-              <ImageWebP
+              <Image
                 src="/next.svg"
                 alt="Next.js"
                 fill
                 className="object-contain p-8 dark:invert"
                 sizes="(max-width: 768px) 100vw, 672px"
               />
-            </div>
-            <div className="p-5">
-              <p className="text-[13px] text-foreground-subtle">
-                Ảnh qua ImageWebP → phục vụ WebP.
-              </p>
             </div>
           </Card>
         </section>

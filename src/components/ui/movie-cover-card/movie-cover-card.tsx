@@ -1,6 +1,5 @@
 "use client";
 
-import { isPhimimgUrl, webpLoader } from "@/lib/image-loader";
 import Image from "next/image";
 import Link from "next/link";
 import type { MovieListItem } from "@/types/movie-list";
@@ -62,8 +61,6 @@ export function MovieCoverCard({
             height={164}
             sizes="(max-width: 640px) 90vw, 365px"
             className="h-full w-full object-cover transition duration-200 group-hover:scale-[1.03]"
-            loader={isPhimimgUrl(posterSrc) ? webpLoader : undefined}
-            unoptimized={!isPhimimgUrl(posterSrc)}
           />
         </div>
       </Link>
@@ -80,8 +77,6 @@ export function MovieCoverCard({
                 height={120}
                 sizes="80px"
                 className="h-full w-full object-cover transition duration-200 hover:scale-[1.03]"
-                loader={isPhimimgUrl(thumbSrc) ? webpLoader : undefined}
-                unoptimized={!isPhimimgUrl(thumbSrc)}
               />
             </div>
           </Link>

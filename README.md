@@ -26,11 +26,7 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 - **Animation chậm & mượt**: `transition-macos` (0.35s), `transition-macos-slow` (0.5s), easing `ease-out-quart` / `ease-out-expo`.
 - **Typography**: System font `-apple-system` (SF Pro trên Mac), biến trong `globals.css`.
 
-UI components: `@/components/ui` — `Button`, `Card`, `ImageWebP`.
-
-## Ảnh WebP
-
-Mọi ảnh nên dùng component `ImageWebP` từ `@/components/ui`. Next.js (với `next.config.ts` `images.formats: ['image/webp']`) tự tối ưu và phục vụ WebP cho ảnh qua `<Image>`.
+UI components: `@/components/ui` — `Button`, `Card`.
 
 ## Learn More
 

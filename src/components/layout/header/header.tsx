@@ -7,7 +7,7 @@ import { HeaderSearch } from "./header-search";
 import { HeaderCategoryMenu } from "./header-category-menu";
 import { HeaderCountryMenu } from "./header-country-menu";
 
-const SCROLL_THRESHOLD_VH = 40;
+const SCROLL_THRESHOLD_VH = 8;
 
 const SearchIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
   <svg
@@ -104,17 +104,9 @@ export function Header() {
     <header
       className={`fixed left-0 right-0 top-0 z-10 border-b transition-[background-color,border-color] duration-[var(--duration-normal)] ease-[var(--ease-out-quart)] ${
         headerSolid
-          ? "border-[var(--border)] bg-[var(--glass-bg)] backdrop-blur-[var(--blur-amount)]"
+          ? "border-[var(--border)] bg-[var(--background)]"
           : "border-transparent bg-transparent"
       }`}
-      style={
-        headerSolid
-          ? {
-              WebkitBackdropFilter:
-                "saturate(200%) blur(var(--blur-amount-strong))",
-            }
-          : undefined
-      }
     >
       <div className="relative flex min-h-[64px] w-full items-center gap-3 px-4 sm:gap-4 sm:px-6">
         {/* ── Mobile: menu | logo | search ── */}

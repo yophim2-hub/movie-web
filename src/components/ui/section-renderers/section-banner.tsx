@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { isPhimimgUrl, webpLoader } from "@/lib/image-loader";
 import Image from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -94,8 +93,6 @@ export function SectionBanner({
                     fill
                     sizes="56px"
                     className="object-cover"
-                    loader={isPhimimgUrl(buildImageUrl(item.poster_url || item.thumb_url)) ? webpLoader : undefined}
-                    unoptimized={!isPhimimgUrl(buildImageUrl(item.poster_url || item.thumb_url))}
                   />
                 </div>
               </SwiperSlide>
@@ -155,7 +152,7 @@ function BannerSlideContent({
         style={{ backgroundImage: `url('${posterSrc}')` }}
         aria-hidden
       />
-      <div className="cover-fade relative min-h-[35vh] w-full aspect-[2/1] sm:min-h-0 sm:aspect-[21/9] md:aspect-[3/1] md:max-h-[90vh]">
+      <div className="cover-fade relative min-h-[35vh] w-full aspect-[2/1] sm:min-h-0 sm:aspect-[21/9] md:aspect-auto md:h-[80vh]">
         <div className="cover-image absolute inset-0">
           <Image
             src={posterSrc}
@@ -164,14 +161,24 @@ function BannerSlideContent({
             sizes="100vw"
             className="object-cover object-top"
             style={{ color: "transparent" }}
-            loader={isPhimimgUrl(posterSrc) ? webpLoader : undefined}
-            unoptimized={!isPhimimgUrl(posterSrc)}
             priority
           />
         </div>
+        {/* Dotted overlay */}
+        <div
+          className="absolute inset-0 z-[1] pointer-events-none"
+          style={{ backgroundImage: "url('/images/dotted.png')", backgroundRepeat: "repeat" }}
+          aria-hidden
+        />
       </div>
+      {/* Gradient top — header readable */}
       <div
-        className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none"
+        className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/60 via-transparent to-transparent"
+        aria-hidden
+      />
+      {/* Gradient bottom — fade to page background */}
+      <div
+        className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[var(--background)] via-transparent to-transparent"
         aria-hidden
       />
       <div className="safe-area absolute bottom-0 left-0 right-0 z-[1] p-3 sm:p-6">

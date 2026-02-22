@@ -6,7 +6,6 @@ export { ErrorState } from "./error-state";
 export type { ErrorStateProps } from "./error-state";
 export { EpisodeList } from "./episode-list";
 export type { EpisodeListProps, EpisodeListVariant } from "./episode-list";
-export { ImageWebP } from "./image-web-p";
 export { Input } from "./input";
 export { MoviePosterCard } from "./movie-poster-card";
 export type { MoviePosterCardProps } from "./movie-poster-card";

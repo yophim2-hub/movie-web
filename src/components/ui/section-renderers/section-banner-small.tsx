@@ -1,6 +1,5 @@
 "use client";
 
-import { isPhimimgUrl, webpLoader } from "@/lib/image-loader";
 import Image from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -82,8 +81,6 @@ function BannerSmallSlideContent({
           fill
           sizes="100vw"
           className="object-cover object-top transition duration-300 group-hover:scale-[1.03]"
-          loader={isPhimimgUrl(posterSrc) ? webpLoader : undefined}
-          unoptimized={!isPhimimgUrl(posterSrc)}
           priority
         />
         <div

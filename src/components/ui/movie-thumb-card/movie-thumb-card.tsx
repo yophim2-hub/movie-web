@@ -1,6 +1,5 @@
 "use client";
 
-import { isPhimimgUrl, webpLoader } from "@/lib/image-loader";
 import Image from "next/image";
 import Link from "next/link";
 import type { MovieListItem } from "@/types/movie-list";
@@ -57,8 +56,6 @@ export function MovieThumbCard({
             height={163}
             sizes="(max-width: 640px) 80vw, 290px"
             className="h-full w-full object-cover transition duration-200 group-hover:scale-[1.03]"
-            loader={isPhimimgUrl(imgSrc) ? webpLoader : undefined}
-            unoptimized={!isPhimimgUrl(imgSrc)}
           />
         </div>
       </Link>
