@@ -6,10 +6,10 @@ const BASE_URL = "https://rophimm.org";
 /** Sub-sitemap phim theo trang: /sitemap-movie-1.xml, /sitemap-movie-2.xml, ... */
 export async function GET(
   _request: Request,
-  { params }: { params: Promise<{ id: string }> },
+  { params }: { params: Promise<Record<string, string>> },
 ) {
   try {
-    const { id } = await params;
+    const { id } = (await params) as { id: string };
     const page = Number.parseInt(id, 10);
     if (Number.isNaN(page) || page < 1) {
       return new NextResponse("Not found", { status: 404 });
