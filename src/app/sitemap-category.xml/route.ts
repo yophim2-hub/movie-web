@@ -5,6 +5,7 @@ const BASE_URL = "https://rophimm.org";
 
 /** Category sitemap — tất cả thể loại */
 export async function GET() {
+  const now = new Date().toISOString();
   let categories: { slug: string }[] = [];
   try {
     categories = await fetchCategories();
@@ -18,6 +19,7 @@ ${categories
   .map(
     (cat) => `<url>
 <loc>${BASE_URL}/the-loai/${cat.slug}</loc>
+<lastmod>${now}</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.8</priority>
 </url>`,

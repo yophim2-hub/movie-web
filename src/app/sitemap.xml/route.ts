@@ -3,22 +3,33 @@ import { fetchLatestMovieList } from "@/lib/api";
 
 const BASE_URL = "https://rophimm.org";
 
+/** Mỗi sitemap batch 20 trang API — phải khớp với api/sitemap-movie/[id]/route.ts */
+const API_PAGES_PER_SITEMAP = 20;
+
 /** Sitemap index — trỏ đến các sub-sitemap (page, category, region) + sitemap-movie-1..N */
 export async function GET() {
   const now = new Date().toISOString();
 
-  const staticSitemaps = ["sitemap-page.xml", "sitemap-category.xml", "sitemap-region.xml"];
+  const staticSitemaps = [
+    "sitemap-page.xml",
+    "sitemap-category.xml",
+    "sitemap-region.xml",
+  ];
 
-  // Lấy tổng số trang phim để sinh sitemap-movie-1.xml ... sitemap-movie-N.xml
-  let moviePages = 0;
+  // Lấy tổng số trang API để tính số lượng batched sitemaps
+  let totalApiPages = 0;
   try {
     const firstPage = await fetchLatestMovieList({ page: 1 });
-    moviePages = firstPage.pagination.totalPages;
+    totalApiPages = firstPage.pagination.totalPages;
   } catch (e) {
     console.error("[sitemap] Failed to get movie pages:", e);
   }
 
-  const movieSitemaps = Array.from({ length: moviePages }, (_, i) => `sitemap-movie-${i + 1}.xml`);
+  const totalBatches = Math.ceil(totalApiPages / API_PAGES_PER_SITEMAP);
+  const movieSitemaps = Array.from(
+    { length: totalBatches },
+    (_, i) => `sitemap-movie-${i + 1}.xml`,
+  );
 
   const allSitemaps = [...staticSitemaps, ...movieSitemaps];
 
