@@ -90,9 +90,8 @@ export function VideoPlayer({
   const onTimeUpdateRef = useRef(onTimeUpdate);
   const onErrorRef = useRef(onError);
   const lastSaveRef = useRef(0);
-  const [adMode, setAdMode] = useState<AdRemovalMode>(
-    useAdRemoval ? "client" : "off"
-  );
+  // TODO: tạm tắt ad removal — bật lại: useAdRemoval ? "client" : "off"
+  const [adMode, setAdMode] = useState<AdRemovalMode>("off");
 
   onTimeUpdateRef.current = onTimeUpdate;
   onErrorRef.current = onError;
