@@ -1,21 +1,18 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { getStreamProxyUrl } from "./get-stream-proxy-url";
-import { AdFreePlaylistLoader } from "./ad-free-hls-loader";
-import { DirectCDNFragmentLoader } from "./direct-cdn-fragment-loader";
+import { createAdFreePlaylistLoader } from "./ad-free-hls-loader";
 
 type HlsType = typeof import("hls.js").default;
 
 /**
  * Tạo HLS handler cho Artplayer.
- * - adRemovalMode = "client": dùng custom pLoader (client-side ad removal, segments từ CDN)
- * - adRemovalMode = "server": dùng server proxy URL (cũ, segments qua server)
+ * - adRemovalMode = "client": wrap default loader, clean M3U8 client-side (100% client, không cần server)
  * - adRemovalMode = "off": phát trực tiếp, không cắt quảng cáo
  */
 function createM3u8Handler(
   Hls: HlsType,
-  adRemovalMode: "client" | "server" | "off",
+  adRemovalMode: "client" | "off",
   onError?: (error: unknown) => void,
   onFatalSoFallback?: () => void
 ) {
@@ -25,11 +22,10 @@ function createM3u8Handler(
         xhrSetup: (xhr) => { xhr.withCredentials = false; },
       };
 
-      // Client-side ad removal: custom loaders fetch trực tiếp từ CDN
-      // → bypass server proxy (server nước ngoài bị CDN chặn)
+      // Client-side ad removal: wrap default XHR loader → intercept M3U8 response → clean ads
+      // Dùng cùng XHR transport mặc định (đã hoạt động ở mode "off")
       if (adRemovalMode === "client") {
-        hlsConfig.pLoader = AdFreePlaylistLoader as never;
-        hlsConfig.fLoader = DirectCDNFragmentLoader as never;
+        hlsConfig.pLoader = createAdFreePlaylistLoader(Hls) as never;
       }
 
       const hls = new Hls(hlsConfig);
@@ -68,12 +64,11 @@ export interface VideoPlayerProps {
 const TIME_UPDATE_THROTTLE_MS = 3000;
 
 /**
- * Fallback levels:
- * 1. "client" — client-side ad removal, segments trực tiếp từ CDN
- * 2. "server" — server proxy (cũ), segments qua /api/stream
- * 3. "off"    — phát trực tiếp, không xử lý
+ * Fallback: client → off
+ * 1. "client" — client-side ad removal, wrap default XHR loader
+ * 2. "off"    — phát trực tiếp, không xử lý
  */
-type AdRemovalMode = "client" | "server" | "off";
+type AdRemovalMode = "client" | "off";
 
 export function VideoPlayer({
   m3u8Url,
@@ -90,17 +85,12 @@ export function VideoPlayer({
   const onTimeUpdateRef = useRef(onTimeUpdate);
   const onErrorRef = useRef(onError);
   const lastSaveRef = useRef(0);
-  // TODO: tạm tắt ad removal — bật lại: useAdRemoval ? "client" : "off"
-  const [adMode, setAdMode] = useState<AdRemovalMode>("off");
+  const [adMode, setAdMode] = useState<AdRemovalMode>(
+    useAdRemoval ? "client" : "off"
+  );
 
   onTimeUpdateRef.current = onTimeUpdate;
   onErrorRef.current = onError;
-
-  // Xác định stream URL dựa trên mode
-  const streamUrl =
-    adMode === "server"
-      ? getStreamProxyUrl(m3u8Url)
-      : m3u8Url; // "client" và "off" đều dùng URL gốc (client mode xử lý qua pLoader)
 
   useEffect(() => {
     if (!containerRef.current || !m3u8Url) return;
@@ -118,16 +108,14 @@ export function VideoPlayer({
 
       const art = new Artplayer({
         container,
-        url: streamUrl,
+        url: m3u8Url,
         type: "m3u8",
         poster,
         lang: "vi",
         customType: {
           m3u8: createM3u8Handler(Hls, currentMode, (e) => onErrorRef.current?.(e), () => {
-            // Fallback chain: client → server → off
+            // Fallback: client → off
             if (currentMode === "client") {
-              setAdMode("server");
-            } else if (currentMode === "server") {
               setAdMode("off");
             }
           }),
@@ -187,7 +175,7 @@ export function VideoPlayer({
       destroyed = true;
       destroyRef.current?.();
     };
-  }, [streamUrl, m3u8Url, poster, adMode]);
+  }, [m3u8Url, poster, adMode]);
 
   return (
     <div className={`relative z-0 isolate ${className}`}>

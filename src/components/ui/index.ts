@@ -38,7 +38,7 @@ export {
 } from "./table";
 export { Tabs, TabsList, TabsTrigger, TabsContent } from "./tabs";
 export { ThemeToggle } from "./theme-toggle";
-export { VideoPlayer, getStreamProxyUrl } from "./video-player";
+export { VideoPlayer } from "./video-player";
 export type { VideoPlayerProps } from "./video-player";
 export {
   SectionBanner,
