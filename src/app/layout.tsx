@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: "%s | Rồ Phim",
   },
   description:
-    "Khám phá kho phim khổng lồ tại Rồ Phim. Xem ngay phim mới Vietsub 4K/Full HD miễn phí. Thưởng thức phim bộ, phim lẻ, phim chiếu rạp không quảng cáo. Cập nhật hàng ngày!",
+    "Khám phá kho phim khổng lồ tại Rồ Phim (rophimm.org). Xem ngay phim mới Vietsub 4K/Full HD miễn phí. Thưởng thức phim bộ, phim lẻ, phim chiếu rạp không quảng cáo. Cập nhật hàng ngày!",
   keywords: [
     "phim hay",
     "xem phim online",
@@ -38,6 +38,11 @@ export const metadata: Metadata = {
     "phim chiếu rạp",
     "phim miễn phí",
     "Rồ Phim",
+    "Rổ Phim",
+    "rophimm",
+    "rophim",
+    "ro phim",
+    "rophimm.org",
   ],
   authors: [{ name: "Rồ Phim" }],
   creator: "Rồ Phim",
@@ -48,14 +53,14 @@ export const metadata: Metadata = {
     siteName: "Rồ Phim",
     title: "Phim Hay | Rồ Phim | Xem Phim Online HD 4K Không Quảng Cáo",
     description:
-      "Khám phá kho phim khổng lồ tại Rồ Phim. Xem ngay phim mới Vietsub 4K/Full HD miễn phí, không quảng cáo.",
+      "Khám phá kho phim khổng lồ tại Rồ Phim (rophimm.org). Xem ngay phim mới Vietsub 4K/Full HD miễn phí, không quảng cáo.",
     images: [{ url: "https://rophimm.org/logo.png", width: 512, height: 512, alt: "Rồ Phim" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Phim Hay | Rồ Phim | Xem Phim Online HD 4K Không Quảng Cáo",
     description:
-      "Khám phá kho phim khổng lồ tại Rồ Phim. Xem ngay phim mới Vietsub 4K/Full HD miễn phí, không quảng cáo.",
+      "Khám phá kho phim khổng lồ tại Rồ Phim (rophimm.org). Xem ngay phim mới Vietsub 4K/Full HD miễn phí, không quảng cáo.",
     images: ["https://rophimm.org/logo.png"],
   },
   robots: {
