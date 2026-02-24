@@ -40,7 +40,7 @@ export function Footer() {
               <span
                 className="text-xl font-bold tracking-tight"
                 style={{
-                  background: "linear-gradient(135deg, #f97316, #ea580c, #dc2626)",
+                  background: "linear-gradient(135deg, #FF6A00, #FF3D00)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                 }}

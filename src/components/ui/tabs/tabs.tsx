@@ -107,7 +107,7 @@ export function TabsTrigger({
         <motion.span
           layoutId="tabs-indicator"
           className="absolute inset-0 rounded-md shadow-[var(--shadow-sm)]"
-          style={{ background: "linear-gradient(135deg, #f97316, #ea580c, #dc2626)" }}
+          style={{ background: "linear-gradient(135deg, #FF6A00, #FF3D00)" }}
           transition={{ type: "spring", stiffness: 400, damping: 30 }}
         />
       )}

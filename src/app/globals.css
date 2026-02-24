@@ -15,14 +15,14 @@
   --foreground-muted: #404040;
   --foreground-subtle: #525252;
 
-  /* Accent — cam / đỏ cam (theo logo) */
-  --accent: #ea580c;
-  --accent-hover: #f97316;
-  --gradient-accent: linear-gradient(135deg, #dc2626 0%, #ea580c 40%, #f97316 100%);
-  --gradient-accent-hover: linear-gradient(135deg, #ef4444 0%, #f97316 50%, #fb923c 100%);
-  --gradient-accent-soft: linear-gradient(135deg, rgba(234, 88, 12, 0.1) 0%, rgba(249, 115, 22, 0.08) 100%);
-  --accent-soft: rgba(234, 88, 12, 0.15);
-  --accent-orange: #f97316;
+  /* Accent — cam chính #FF6A00 / cam đậm #E65100 */
+  --accent: #FF6A00;
+  --accent-hover: #FF8533;
+  --gradient-accent: linear-gradient(135deg, #FF3D00 0%, #FF6A00 100%);
+  --gradient-accent-hover: linear-gradient(135deg, #FF6A00 0%, #FF8533 100%);
+  --gradient-accent-soft: linear-gradient(135deg, rgba(255, 106, 0, 0.1) 0%, rgba(255, 106, 0, 0.08) 100%);
+  --accent-soft: rgba(255, 106, 0, 0.15);
+  --accent-orange: #FF6A00;
 
   /* Border — đen nhạt */
   --border: rgba(0, 0, 0, 0.1);
@@ -104,28 +104,28 @@ html.theme-dark {
   --glass-bg: linear-gradient(145deg, rgba(22, 22, 22, 0.9) 0%, rgba(15, 15, 15, 0.85) 100%);
   --glass-bg-solid: rgba(18, 18, 18, 0.92);
   --glass-bg-heavy: rgba(12, 12, 12, 0.88);
-  --glass-border: rgba(249, 115, 22, 0.15);
-  --glass-highlight: rgba(249, 115, 22, 0.08);
+  --glass-border: rgba(255, 106, 0, 0.15);
+  --glass-highlight: rgba(255, 106, 0, 0.08);
   --secondary-bg: linear-gradient(180deg, #1a1a1a 0%, #141414 100%);
   --secondary-bg-solid: #1a1a1a;
   --secondary-hover: #252525;
-  /* Cam sáng trên nền đen (theo logo) */
-  --accent: #f97316;
-  --accent-hover: #fb923c;
-  --gradient-accent: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #fb923c 100%);
-  --gradient-accent-hover: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
-  --gradient-accent-soft: linear-gradient(135deg, rgba(249, 115, 22, 0.12) 0%, rgba(234, 88, 12, 0.08) 100%);
-  --accent-soft: rgba(249, 115, 22, 0.2);
-  --accent-orange: #fb923c;
+  /* Cam chính #FF6A00 trên nền đen */
+  --accent: #FF6A00;
+  --accent-hover: #FF8533;
+  --gradient-accent: linear-gradient(135deg, #E65100 0%, #FF6A00 50%, #FF8533 100%);
+  --gradient-accent-hover: linear-gradient(135deg, #FF6A00 0%, #FF8533 100%);
+  --gradient-accent-soft: linear-gradient(135deg, rgba(255, 106, 0, 0.12) 0%, rgba(230, 81, 0, 0.08) 100%);
+  --accent-soft: rgba(255, 106, 0, 0.2);
+  --accent-orange: #FF8533;
   --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.6);
   /* Card — đen + viền cam nhạt */
   --card-bg: linear-gradient(180deg, rgba(28, 28, 28, 0.98) 0%, rgba(20, 20, 20, 0.99) 50%, rgba(14, 14, 14, 1) 100%);
-  --card-border: rgba(249, 115, 22, 0.2);
+  --card-border: rgba(255, 106, 0, 0.2);
   --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 0, 0, 0.2);
-  --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(249, 115, 22, 0.25);
-  --card-highlight: inset 0 1px 0 rgba(249, 115, 22, 0.12);
+  --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 106, 0, 0.25);
+  --card-highlight: inset 0 1px 0 rgba(255, 106, 0, 0.12);
 }
 
 html.theme-dark .glass-subtle {
@@ -144,12 +144,12 @@ html.theme-light {
   --secondary-bg: linear-gradient(180deg, #e8e6e2 0%, #ddd9d4 100%);
   --secondary-bg-solid: #e0dcd6;
   --secondary-hover: #d0ccc6;
-  --accent: #ea580c;
-  --accent-hover: #f97316;
-  --gradient-accent: linear-gradient(135deg, #dc2626 0%, #ea580c 40%, #f97316 100%);
-  --gradient-accent-hover: linear-gradient(135deg, #ef4444 0%, #f97316 50%, #fb923c 100%);
-  --accent-soft: rgba(234, 88, 12, 0.15);
-  --accent-orange: #f97316;
+  --accent: #FF6A00;
+  --accent-hover: #FF8533;
+  --gradient-accent: linear-gradient(135deg, #FF3D00 0%, #FF6A00 100%);
+  --gradient-accent-hover: linear-gradient(135deg, #FF6A00 0%, #FF8533 100%);
+  --accent-soft: rgba(255, 106, 0, 0.15);
+  --accent-orange: #FF6A00;
   --glass-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.82) 0%, rgba(248, 246, 242, 0.72) 100%);
   --glass-bg-solid: rgba(252, 250, 246, 0.85);
   --glass-bg-heavy: rgba(245, 242, 236, 0.7);

@@ -62,7 +62,7 @@ export function MovieStatusBlock({
             ? "bg-[var(--accent-soft)] text-[var(--foreground)]"
             : "bg-[var(--secondary-bg-solid)] text-[var(--foreground-muted)]"
       } ${className}`}
-      style={isCompleted ? { background: "linear-gradient(135deg, #f97316, #ea580c, #dc2626)" } : undefined}
+      style={isCompleted ? { background: "linear-gradient(135deg, #FF6A00, #FF3D00)" } : undefined}
       data-status={status.toLowerCase()}
     >
       {isOngoing && <SmallSpinner />}
