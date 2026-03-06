@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Không tìm thấy trang",
+  description: "Trang bạn đang tìm kiếm không tồn tại hoặc đã được di chuyển.",
+  robots: { index: false, follow: true },
+};
 
 export default function NotFound() {
   return (
