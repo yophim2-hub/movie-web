@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { SectionSeeMoreLink } from "./section-see-more-link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import type { MovieListItem } from "@/types/movie-list";
@@ -152,12 +153,7 @@ export function SectionPosterThumb({
             </button>
           </div>
         ) : (
-          <Link
-            href={seeMoreHref ?? basePath}
-            className="shrink-0 text-xs font-medium text-[var(--accent)] hover:text-[var(--accent-hover)] sm:text-sm"
-          >
-            {seeMoreLabel}
-          </Link>
+          <SectionSeeMoreLink href={seeMoreHref ?? basePath} label={seeMoreLabel} />
         )}
       </div>
 

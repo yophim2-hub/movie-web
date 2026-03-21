@@ -16,3 +16,4 @@ export { SectionByDisplayType } from "./section-by-display-type";
 export type { SectionByDisplayTypeProps, SectionDisplayType, SectionHeaderVariant } from "./section-by-display-type";
 export { SectionLoadingSkeleton } from "./section-loading-skeleton";
 export type { SectionLoadingSkeletonProps } from "./section-loading-skeleton";
+export { SectionSeeMoreLink } from "./section-see-more-link";

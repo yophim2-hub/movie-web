@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { SectionSeeMoreLink } from "@/components/ui/section-renderers/section-see-more-link";
 import { Navigation } from "swiper/modules";
 import { MovieThumbCard } from "@/components/ui/movie-thumb-card";
 import type { MovieListItem } from "@/types/movie-list";
@@ -88,19 +88,14 @@ export function MovieThumbCarousel({
           </div>
         )}
         {!useNavigation && seeMoreHref && (
-          <Link
-            href={seeMoreHref}
-            className="shrink-0 text-xs font-medium text-[var(--accent)] hover:text-[var(--accent-hover)] sm:text-sm"
-          >
-            {seeMoreLabel}
-          </Link>
+          <SectionSeeMoreLink href={seeMoreHref} label={seeMoreLabel} />
         )}
       </div>
       <div className="min-w-0 overflow-hidden">
         <Swiper
           modules={useNavigation ? [Navigation] : []}
           spaceBetween={8}
-          slidesPerView={2}
+          slidesPerView={1.5}
           {...(useNavigation && {
             navigation: {
               prevEl: `.${prevClass}`,

@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import type { RefObject, ReactNode } from "react";
+import { SectionSeeMoreLink } from "./section-see-more-link";
 import { Pagination } from "@/components/ui";
 import { MoviePosterCard } from "../movie-poster-card";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -141,12 +141,10 @@ export function SectionGridList({
                 </button>
               </div>
             ) : (
-              <Link
+              <SectionSeeMoreLink
                 href={seeMoreHref ?? basePath}
-                className="shrink-0 text-xs font-medium text-[var(--accent)] hover:text-[var(--accent-hover)] sm:text-sm"
-              >
-                {seeMoreLabel}
-              </Link>
+                label={seeMoreLabel}
+              />
             ))}
         </div>
       )}

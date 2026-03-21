@@ -54,7 +54,7 @@ export function SectionTopList({
         <Swiper
           modules={[Navigation]}
           spaceBetween={8}
-          slidesPerView={3}
+          slidesPerView={1.5}
           navigation={{ prevEl: `.${prevClass}`, nextEl: `.${nextClass}` }}
           breakpoints={{
             640: { slidesPerView: 4, spaceBetween: 16 },
@@ -71,13 +71,13 @@ export function SectionTopList({
                 </div>
                 <div className="flex min-w-0 items-start gap-2 sm:gap-4">
                   <span
-                    className="shrink-0 text-[2rem] font-black italic text-[var(--accent)] drop-shadow-sm sm:text-[2.5rem]"
+                    className="shrink-0 text-[3rem] font-black italic leading-none text-[var(--accent)] drop-shadow-sm sm:text-[2.5rem]"
                     style={{ transform: "skewX(-10deg)", lineHeight: 1 }}
                   >
                     {index + 1}
                   </span>
-                  <div className="info min-w-0 flex-1 space-y-0.5">
-                    <h4 className="item-title lim-1 min-w-0 text-[12px] font-medium leading-tight sm:text-[13px]">
+                  <div className="info min-w-0 flex-1 space-y-1 sm:space-y-0.5">
+                    <h4 className="item-title lim-1 min-w-0 text-[15px] font-medium leading-snug sm:text-[13px] sm:leading-tight">
                       <Link
                         href={`${basePath}/${item.slug}`}
                         title={item.name}
@@ -86,7 +86,7 @@ export function SectionTopList({
                         {item.name}
                       </Link>
                     </h4>
-                    <h4 className="alias-title lim-1 min-w-0 text-[11px] leading-tight text-[var(--accent)] sm:text-[12px]">
+                    <h4 className="alias-title lim-1 min-w-0 text-[13px] leading-snug text-[var(--accent)] sm:text-[12px] sm:leading-tight">
                       <Link
                         href={`${basePath}/${item.slug}`}
                         title={formatOriginName(item.origin_name)}

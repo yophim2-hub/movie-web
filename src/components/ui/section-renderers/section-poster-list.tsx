@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { MoviePosterCard } from "../movie-poster-card";
+import { SectionSeeMoreLink } from "./section-see-more-link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import type { MovieListItem } from "@/types/movie-list";
@@ -64,12 +64,7 @@ export function SectionPosterList({
             </button>
           </div>
         ) : (
-          <Link
-            href={seeMoreHref ?? basePath}
-            className="shrink-0 text-xs font-medium text-[var(--accent)] hover:text-[var(--accent-hover)] sm:text-sm"
-          >
-            {seeMoreLabel}
-          </Link>
+          <SectionSeeMoreLink href={seeMoreHref ?? basePath} label={seeMoreLabel} />
         )}
       </div>
       <div className="min-w-0 overflow-hidden">
