@@ -8,6 +8,16 @@ const nextConfig: NextConfig = {
       { protocol: "http", hostname: "phimimg.com", pathname: "/**" },
     ],
   },
+  /** URL rác (/& , /$ …) → 404 trên GSC; redirect về / (không dùng middleware) */
+  async redirects() {
+    return [
+      { source: "/%26", destination: "/", permanent: true },
+      { source: "/%24", destination: "/", permanent: true },
+      { source: "/%3F", destination: "/", permanent: true },
+      { source: "/&", destination: "/", permanent: true },
+      { source: "/$", destination: "/", permanent: true },
+    ];
+  },
   async rewrites() {
     return [
       {
