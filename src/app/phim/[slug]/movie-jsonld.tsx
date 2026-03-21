@@ -57,6 +57,26 @@ function safeToIsoDate(value: string | undefined): string | undefined {
   return d.toISOString();
 }
 
+/**
+ * Google VideoObject yêu cầu uploadDate (ISO 8601). Luôn trả về chuỗi hợp lệ, không throw.
+ */
+function resolveVideoUploadIsoDate(item: {
+  created?: { time?: string };
+  modified?: { time?: string };
+  year?: number;
+}): string {
+  const fromCreated = safeToIsoDate(item.created?.time);
+  if (fromCreated) return fromCreated;
+  const fromModified = safeToIsoDate(item.modified?.time);
+  if (fromModified) return fromModified;
+  const y = item.year;
+  if (y != null && Number.isFinite(Number(y)) && Number(y) > 0) {
+    const d = new Date(Number(y), 0, 1);
+    if (!Number.isNaN(d.getTime())) return d.toISOString();
+  }
+  return new Date().toISOString();
+}
+
 export async function MovieJsonLd({ slug }: { slug: string }) {
   try {
     const res = await fetchMovieDetail(slug);
@@ -75,18 +95,14 @@ export async function MovieJsonLd({ slug }: { slug: string }) {
     const datePublished = safeToIsoDate(item.created?.time);
     const dateModified = safeToIsoDate(item.modified?.time);
 
-    /** ISO date for VideoObject.uploadDate (required by Google for trailer schema) */
-    const videoUploadDate =
-      datePublished ??
-      (item.year
-        ? new Date(item.year, 0, 1).toISOString()
-        : new Date().toISOString());
+    /** Bắt buộc cho VideoObject (trailer): uploadDate + datePublished đồng bộ */
+    const videoUploadDate = resolveVideoUploadIsoDate(item);
 
-    const trailerEmbedUrl = item.trailer_url
-      ? normalizeTrailerEmbedUrl(item.trailer_url)
+    const trailerEmbedUrl = item.trailer_url?.trim()
+      ? normalizeTrailerEmbedUrl(item.trailer_url.trim())
       : "";
-    const trailerThumbUrl = item.trailer_url
-      ? trailerThumbnailUrl(item.trailer_url, thumbUrl)
+    const trailerThumbUrl = item.trailer_url?.trim()
+      ? trailerThumbnailUrl(item.trailer_url.trim(), thumbUrl)
       : thumbUrl;
 
     const movieSchema: Record<string, unknown> = {
@@ -128,13 +144,14 @@ export async function MovieJsonLd({ slug }: { slug: string }) {
           worstRating: 0,
         },
       }),
-      ...(item.trailer_url && {
+      ...(item.trailer_url?.trim() && {
         trailer: {
           "@type": "VideoObject",
           name: `Trailer - ${item.name}`,
           description,
           thumbnailUrl: trailerThumbUrl,
           uploadDate: videoUploadDate,
+          datePublished: videoUploadDate,
           embedUrl: trailerEmbedUrl,
         },
       }),
