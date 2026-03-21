@@ -25,6 +25,38 @@ function stripHtml(html: string): string {
   return html.replace(/<[^>]*>/g, "").trim();
 }
 
+/** YouTube video id from watch, embed, short, or youtu.be URLs */
+function extractYoutubeVideoId(url: string): string | null {
+  const trimmed = url.trim();
+  const m =
+    /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/.exec(
+      trimmed
+    );
+  return m?.[1] ?? null;
+}
+
+/** Prefer /embed/ URL — Google Video rich results expect a player URL, not /watch */
+function normalizeTrailerEmbedUrl(url: string): string {
+  const id = extractYoutubeVideoId(url);
+  if (id) return `https://www.youtube.com/embed/${id}`;
+  return url;
+}
+
+/** Thumbnail Google can crawl reliably for YouTube trailers */
+function trailerThumbnailUrl(trailerUrl: string, fallbackThumb: string): string {
+  const id = extractYoutubeVideoId(trailerUrl);
+  /** hqdefault is always present; maxresdefault can 404 and fail validation */
+  if (id) return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+  return fallbackThumb;
+}
+
+function safeToIsoDate(value: string | undefined): string | undefined {
+  if (!value?.trim()) return undefined;
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return undefined;
+  return d.toISOString();
+}
+
 export async function MovieJsonLd({ slug }: { slug: string }) {
   try {
     const res = await fetchMovieDetail(slug);
@@ -34,16 +66,14 @@ export async function MovieJsonLd({ slug }: { slug: string }) {
     const isSeries = item.type === "series";
     const posterUrl = buildImageUrl(item.poster_url);
     const thumbUrl = buildImageUrl(item.thumb_url || item.poster_url);
-    const description = item.content
-      ? stripHtml(item.content).slice(0, 200)
-      : item.origin_name || item.name;
+    const descriptionRaw = item.content
+      ? stripHtml(item.content).slice(0, 200).trim()
+      : "";
+    const description =
+      descriptionRaw || item.origin_name || item.name || "Trailer";
     const duration = parseDuration(item.time);
-    const datePublished = item.created?.time
-      ? new Date(item.created.time).toISOString()
-      : undefined;
-    const dateModified = item.modified?.time
-      ? new Date(item.modified.time).toISOString()
-      : undefined;
+    const datePublished = safeToIsoDate(item.created?.time);
+    const dateModified = safeToIsoDate(item.modified?.time);
 
     /** ISO date for VideoObject.uploadDate (required by Google for trailer schema) */
     const videoUploadDate =
@@ -51,6 +81,13 @@ export async function MovieJsonLd({ slug }: { slug: string }) {
       (item.year
         ? new Date(item.year, 0, 1).toISOString()
         : new Date().toISOString());
+
+    const trailerEmbedUrl = item.trailer_url
+      ? normalizeTrailerEmbedUrl(item.trailer_url)
+      : "";
+    const trailerThumbUrl = item.trailer_url
+      ? trailerThumbnailUrl(item.trailer_url, thumbUrl)
+      : thumbUrl;
 
     const movieSchema: Record<string, unknown> = {
       "@context": "https://schema.org",
@@ -96,9 +133,9 @@ export async function MovieJsonLd({ slug }: { slug: string }) {
           "@type": "VideoObject",
           name: `Trailer - ${item.name}`,
           description,
-          thumbnailUrl: thumbUrl,
+          thumbnailUrl: trailerThumbUrl,
           uploadDate: videoUploadDate,
-          embedUrl: item.trailer_url,
+          embedUrl: trailerEmbedUrl,
         },
       }),
     };
