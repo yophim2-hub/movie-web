@@ -45,6 +45,13 @@ export async function MovieJsonLd({ slug }: { slug: string }) {
       ? new Date(item.modified.time).toISOString()
       : undefined;
 
+    /** ISO date for VideoObject.uploadDate (required by Google for trailer schema) */
+    const videoUploadDate =
+      datePublished ??
+      (item.year
+        ? new Date(item.year, 0, 1).toISOString()
+        : new Date().toISOString());
+
     const movieSchema: Record<string, unknown> = {
       "@context": "https://schema.org",
       "@type": isSeries ? "TVSeries" : "Movie",
@@ -88,6 +95,9 @@ export async function MovieJsonLd({ slug }: { slug: string }) {
         trailer: {
           "@type": "VideoObject",
           name: `Trailer - ${item.name}`,
+          description,
+          thumbnailUrl: thumbUrl,
+          uploadDate: videoUploadDate,
           embedUrl: item.trailer_url,
         },
       }),
