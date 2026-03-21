@@ -53,23 +53,23 @@ export function SectionTopList({
       <div className="min-w-0 overflow-hidden">
         <Swiper
           modules={[Navigation]}
-          spaceBetween={16}
+          spaceBetween={8}
           slidesPerView={3}
           navigation={{ prevEl: `.${prevClass}`, nextEl: `.${nextClass}` }}
           breakpoints={{
-            640: { slidesPerView: 4 },
-            768: { slidesPerView: 5 },
-            1024: { slidesPerView: 6 },
-            1280: { slidesPerView: 8 },
+            640: { slidesPerView: 4, spaceBetween: 16 },
+            768: { slidesPerView: 5, spaceBetween: 16 },
+            1024: { slidesPerView: 6, spaceBetween: 16 },
+            1280: { slidesPerView: 8, spaceBetween: 16 },
           }}
         >
           {items.map((item, index) => (
             <SwiperSlide key={item._id} className="!h-auto">
-              <div className="flex w-full flex-col gap-3">
+              <div className="flex w-full flex-col gap-2 sm:gap-3">
                 <div className="[&_.info]:hidden">
                   <MoviePosterCard item={item} basePath={basePath} className="w-full max-w-full" />
                 </div>
-                <div className="flex min-w-0 items-start gap-4">
+                <div className="flex min-w-0 items-start gap-2 sm:gap-4">
                   <span
                     className="shrink-0 text-[2rem] font-black italic text-[var(--accent)] drop-shadow-sm sm:text-[2.5rem]"
                     style={{ transform: "skewX(-10deg)", lineHeight: 1 }}

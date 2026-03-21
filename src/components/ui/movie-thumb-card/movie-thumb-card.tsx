@@ -30,7 +30,7 @@ export function MovieThumbCard({
   className = "",
 }: Readonly<MovieThumbCardProps>) {
   const href = `${basePath}/${item.slug}`;
-  const imgSrc = buildImageUrl(item.poster_url || item.thumb_url);
+  const imgSrc = buildImageUrl(item.thumb_url || item.poster_url);
   const title = item.name;
   const alias = item.origin_name || "";
   const pin = pinLabel ?? item.episode_current ?? "";

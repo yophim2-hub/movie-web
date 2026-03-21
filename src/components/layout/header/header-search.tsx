@@ -102,7 +102,7 @@ export function HeaderSearch({
     <div
       ref={searchWrapRef}
       id="search"
-      className={`relative z-20 max-w-[280px] flex-1 transition-[var(--duration-normal)] sm:max-w-[320px] ${className} ${
+      className={`relative z-20 max-w-[280px] flex-1 transition-[var(--duration-normal)] sm:max-w-[320px] lg:max-w-[min(100%,400px)] xl:max-w-[min(100%,420px)] ${className} ${
         open ? "block w-full lg:flex" : "flex w-0 lg:flex lg:w-auto lg:flex-1"
       }`}
     >
@@ -110,10 +110,10 @@ export function HeaderSearch({
         action="/tim-kiem"
         method="get"
         onSubmit={handleSearchSubmit}
-        className="search-elements flex h-8 w-full min-w-0 items-center gap-1.5 rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--secondary-bg-solid)] px-2 py-1.5 focus-within:border-[var(--accent)] focus-within:ring-1 focus-within:ring-[var(--accent)]"
+        className="search-elements flex h-8 w-full min-w-0 items-center gap-1.5 rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--secondary-bg-solid)] px-2 py-1.5 focus-within:border-[var(--accent)] focus-within:ring-1 focus-within:ring-[var(--accent)] lg:h-11 lg:gap-2 lg:px-3 lg:py-2"
       >
         <div className="search-icon shrink-0">
-          <SearchIcon className="h-3.5 w-3.5 text-[var(--foreground-muted)]" />
+          <SearchIcon className="h-3.5 w-3.5 text-[var(--foreground-muted)] lg:h-4 lg:w-4" />
         </div>
         <input
           ref={searchInputRef}
@@ -125,7 +125,7 @@ export function HeaderSearch({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           onFocus={() => setSearchFocused(true)}
-          className="search-input min-w-0 flex-1 bg-transparent text-sm text-[var(--foreground)] placeholder:text-[var(--foreground-muted)] focus:outline-none"
+          className="search-input min-w-0 flex-1 bg-transparent text-sm text-[var(--foreground)] placeholder:text-[var(--foreground-muted)] focus:outline-none lg:text-[15px]"
         />
         {searchQuery.length > 0 && (
           <button

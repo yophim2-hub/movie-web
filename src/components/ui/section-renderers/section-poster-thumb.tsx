@@ -69,7 +69,7 @@ function PosterThumbCard({
         </div>
       </Link>
       {/* Dưới: poster bên trái + thông tin bên phải */}
-      <div className="flex gap-3 p-2">
+      <div className="flex gap-2 p-2 sm:gap-3">
         <Link
           href={href}
           className="v-thumbnail shrink-0 overflow-hidden rounded-[var(--radius-button)] bg-[var(--secondary-bg-solid)]"
@@ -165,12 +165,12 @@ export function SectionPosterThumb({
         <div className="min-w-0 overflow-hidden">
           <Swiper
             modules={[Navigation]}
-            spaceBetween={16}
+            spaceBetween={8}
             slidesPerView={1}
             navigation={{ prevEl: `.${prevClass}`, nextEl: `.${nextClass}` }}
             breakpoints={{
-              640: { slidesPerView: 2 },
-              1024: { slidesPerView: 4 },
+              640: { slidesPerView: 2, spaceBetween: 16 },
+              1024: { slidesPerView: 4, spaceBetween: 16 },
             }}
           >
             {items.map((item) => (
@@ -181,7 +181,7 @@ export function SectionPosterThumb({
           </Swiper>
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 md:grid-cols-4 md:gap-4 lg:grid-cols-5">
           {items.map((item) => (
             <PosterThumbCard key={item._id} item={item} basePath={basePath} />
           ))}

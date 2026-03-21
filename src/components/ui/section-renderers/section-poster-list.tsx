@@ -75,16 +75,16 @@ export function SectionPosterList({
       <div className="min-w-0 overflow-hidden">
         <Swiper
           modules={useNavigation ? [Navigation] : []}
-          spaceBetween={16}
+          spaceBetween={8}
           slidesPerView={3}
           {...(useNavigation && {
             navigation: { prevEl: `.${prevClass}`, nextEl: `.${nextClass}` },
           })}
           breakpoints={{
-            640: { slidesPerView: 4 },
-            768: { slidesPerView: 5 },
-            1024: { slidesPerView: 6 },
-            1280: { slidesPerView: 8 },
+            640: { slidesPerView: 4, spaceBetween: 16 },
+            768: { slidesPerView: 5, spaceBetween: 16 },
+            1024: { slidesPerView: 6, spaceBetween: 16 },
+            1280: { slidesPerView: 8, spaceBetween: 16 },
           }}
         >
           {items.map((item) => (

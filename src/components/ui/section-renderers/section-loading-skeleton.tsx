@@ -51,7 +51,7 @@ export function SectionLoadingSkeleton({
           </div>
         )}
         {isGrid ? (
-          <div className="grid grid-cols-3 gap-4 lg:grid-cols-8">
+          <div className="grid grid-cols-3 gap-2 sm:gap-3 lg:grid-cols-8 lg:gap-4">
             {Array.from({ length: count }, (_, i) => (
               <SkeletonBox
                 key={i}
@@ -60,7 +60,7 @@ export function SectionLoadingSkeleton({
             ))}
           </div>
         ) : (
-          <div className="flex gap-3 overflow-hidden sm:gap-4">
+          <div className="flex gap-2 overflow-hidden sm:gap-4">
             {Array.from({ length: count }, (_, i) =>
               isPoster ? (
                 <SkeletonBox
@@ -86,7 +86,7 @@ export function SectionLoadingSkeleton({
         <SkeletonBox className="h-6 w-32 rounded-[var(--radius-button)]" />
         <SkeletonBox className="h-4 w-16 rounded-[var(--radius-button)]" />
       </div>
-      <div className="flex gap-3 overflow-hidden sm:gap-4">
+      <div className="flex gap-2 overflow-hidden sm:gap-4">
         {Array.from({ length: 10 }, (_, i) => (
           <SkeletonBox
             key={i}

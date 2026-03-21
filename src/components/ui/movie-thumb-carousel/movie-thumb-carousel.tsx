@@ -99,7 +99,7 @@ export function MovieThumbCarousel({
       <div className="min-w-0 overflow-hidden">
         <Swiper
           modules={useNavigation ? [Navigation] : []}
-          spaceBetween={16}
+          spaceBetween={8}
           slidesPerView={2}
           {...(useNavigation && {
             navigation: {
@@ -108,9 +108,9 @@ export function MovieThumbCarousel({
             },
           })}
           breakpoints={{
-            640: { slidesPerView: 3 },
-            1024: { slidesPerView: 4 },
-            1280: { slidesPerView: 5 },
+            640: { slidesPerView: 3, spaceBetween: 16 },
+            1024: { slidesPerView: 4, spaceBetween: 16 },
+            1280: { slidesPerView: 5, spaceBetween: 16 },
           }}
         >
           {items.map((item) => (

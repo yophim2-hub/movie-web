@@ -46,7 +46,7 @@ export interface SectionGridListProps {
 }
 
 /** Grid 3 cột (mobile) / 8 cột (lg) — dùng cho cả mode section và mode trang (pagination). */
-const gridListClass = "grid grid-cols-3 gap-4 lg:grid-cols-8";
+const gridListClass = "grid grid-cols-3 gap-2 sm:gap-3 lg:grid-cols-8 lg:gap-4";
 
 /** Section grid poster. Hỗ trợ mode section (header + grid/Swiper) hoặc mode trang (grid 3/8 cột + Pagination). */
 export function SectionGridList({
@@ -86,14 +86,14 @@ export function SectionGridList({
       <div className="min-w-0 overflow-hidden">
         <Swiper
           modules={[Navigation]}
-          spaceBetween={16}
+          spaceBetween={8}
           slidesPerView={3}
           navigation={{ prevEl: `.${prevClass}`, nextEl: `.${nextClass}` }}
           breakpoints={{
-            640: { slidesPerView: 4 },
-            768: { slidesPerView: 5 },
-            1024: { slidesPerView: 6 },
-            1280: { slidesPerView: 8 },
+            640: { slidesPerView: 4, spaceBetween: 16 },
+            768: { slidesPerView: 5, spaceBetween: 16 },
+            1024: { slidesPerView: 6, spaceBetween: 16 },
+            1280: { slidesPerView: 8, spaceBetween: 16 },
           }}
         >
           {items.map((item) => (
