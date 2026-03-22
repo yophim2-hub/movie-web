@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Montserrat } from "next/font/google";
 import { Header, Footer } from "@/components/layout";
 import { JsonLd } from "@/components/seo";
@@ -72,14 +72,28 @@ export const metadata: Metadata = {
   },
 };
 
+/** viewportFit=cover: iOS dùng theme-color / status bar đúng vùng safe-area */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+};
+
 const themeScript = `
 (function() {
+  var dark = '#191b24', light = '#fafaf8';
   var t = localStorage.getItem('theme');
   if (t !== 'dark' && t !== 'light') {
     t = 'dark';
     localStorage.setItem('theme', t);
   }
   document.documentElement.classList.add('theme-' + t);
+  var tc = document.getElementById('theme-color-meta');
+  if (tc) tc.setAttribute('content', t === 'dark' ? dark : light);
+  var st = document.getElementById('apple-status-bar-style');
+  if (st) st.setAttribute('content', t === 'dark' ? 'black-translucent' : 'default');
+  document.documentElement.style.colorScheme = t === 'dark' ? 'dark' : 'light';
 })();
 `;
 
@@ -91,6 +105,16 @@ export default function RootLayout({
   return (
     <html lang="vi" suppressHydrationWarning>
       <head>
+        <meta
+          name="theme-color"
+          content="#191b24"
+          id="theme-color-meta"
+        />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+          id="apple-status-bar-style"
+        />
         <script
           dangerouslySetInnerHTML={{ __html: themeScript }}
           suppressHydrationWarning

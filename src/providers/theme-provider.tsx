@@ -8,6 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { syncMobileChromeFromTheme } from "@/lib/theme-chrome";
 
 const STORAGE_KEY = "theme";
 
@@ -25,6 +26,7 @@ function applyTheme(theme: Theme) {
   html.classList.remove("theme-light", "theme-dark");
   html.classList.add(`theme-${theme}`);
   localStorage.setItem(STORAGE_KEY, theme);
+  syncMobileChromeFromTheme(theme);
 }
 
 interface ThemeContextValue {
