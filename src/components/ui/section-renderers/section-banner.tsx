@@ -82,11 +82,11 @@ export function SectionBanner({
             spaceBetween={6}
             slidesPerView="auto"
             freeMode
-            className="thumbs-banner !overflow-hidden [&_.swiper-slide-thumb-active>div]:border-[var(--accent)] [&_.swiper-slide-thumb-active>div]:ring-2 [&_.swiper-slide-thumb-active>div]:ring-[var(--accent)]/50 [&_.swiper-slide-thumb-active>div]:scale-[1.02] [&_.swiper-slide-thumb-active>div]:shadow-md"
+            className="thumbs-banner !overflow-hidden [&_.swiper-slide-thumb-active>div]:scale-[1.02] [&_.swiper-slide-thumb-active>div]:shadow-md"
           >
             {items.map((item) => (
               <SwiperSlide key={item._id} className="!w-14 !flex-shrink-0 sm:!w-16 cursor-pointer">
-                <div className="relative aspect-video w-full overflow-hidden rounded-[var(--radius-button)] border-2 border-white/30 shadow-lg transition-all duration-200 hover:border-[var(--accent)] hover:scale-[1.02]">
+                <div className="relative aspect-video w-full overflow-hidden rounded-[var(--radius-button)] border-0 ring-0 shadow-lg transition-all duration-200 hover:scale-[1.02]">
                   <Image
                     src={buildImageUrl(item.poster_url || item.thumb_url)}
                     alt={item.name}
@@ -141,7 +141,7 @@ function BannerSlideContent({
   const categories = item.category ?? [];
 
   return (
-    <div className="slide-elements relative w-full overflow-hidden rounded-[var(--radius-panel)] bg-[var(--secondary-bg-solid)]">
+    <div className="slide-elements relative w-full overflow-hidden rounded-[var(--radius-panel)] border-0 ring-0 bg-[var(--secondary-bg-solid)]">
       <Link
         href={href}
         className="slide-url absolute inset-0 z-[2]"
