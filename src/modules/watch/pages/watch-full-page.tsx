@@ -1,6 +1,7 @@
 "use client";
 
-import { WatchContent, WatchSkeleton } from "../components";
+import { WatchContent } from "./watch-content";
+import { WatchSkeleton } from "./watch-skeleton";
 import { PageLayout } from "@/components/layout";
 import { useMovieDetail } from "@/hooks";
 import Link from "next/link";

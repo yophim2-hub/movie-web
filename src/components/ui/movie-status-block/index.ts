@@ -1,1 +1,6 @@
-export { MovieStatusBlock, type MovieStatusBlockProps } from "./movie-status-block";
+export {
+  MovieStatusBlock,
+  getMovieStatusProgressText,
+  type MovieStatusBlockProps,
+  type MovieStatusProgressInput,
+} from "./movie-status-block";

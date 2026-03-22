@@ -5,6 +5,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useId,
   useMemo,
   useState,
 } from "react";
@@ -12,6 +13,8 @@ import {
 interface TabsContextValue {
   value: string;
   setValue: (v: string) => void;
+  /** layoutId duy nhất mỗi <Tabs> — tránh trùng Framer Motion trên cùng trang. */
+  layoutIndicatorId: string;
 }
 
 const TabsContext = createContext<TabsContextValue | null>(null);
@@ -37,6 +40,7 @@ export function Tabs({
   children,
   className = "",
 }: Readonly<TabsProps>) {
+  const layoutIndicatorId = useId();
   const [internalValue, setInternalValue] = useState(defaultValue);
   const isControlled = controlledValue !== undefined;
   const value = isControlled ? controlledValue : internalValue;
@@ -50,8 +54,8 @@ export function Tabs({
   );
 
   const contextValue = useMemo(
-    () => ({ value, setValue }),
-    [value, setValue]
+    () => ({ value, setValue, layoutIndicatorId }),
+    [value, setValue, layoutIndicatorId]
   );
 
   return (
@@ -88,7 +92,7 @@ export function TabsTrigger({
   children,
   className = "",
 }: Readonly<TabsTriggerProps>) {
-  const { value: selected, setValue } = useTabsContext();
+  const { value: selected, setValue, layoutIndicatorId } = useTabsContext();
   const isSelected = selected === value;
 
   return (
@@ -105,7 +109,7 @@ export function TabsTrigger({
     >
       {isSelected && (
         <motion.span
-          layoutId="tabs-indicator"
+          layoutId={layoutIndicatorId}
           className="absolute inset-0 rounded-md shadow-[var(--shadow-sm)]"
           style={{ background: "linear-gradient(135deg, #FF6A00, #FF3D00)" }}
           transition={{ type: "spring", stiffness: 400, damping: 30 }}

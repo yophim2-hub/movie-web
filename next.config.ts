@@ -26,6 +26,15 @@ const nextConfig: NextConfig = {
         source: String.raw`/sitemap-movie-:id(\d+).xml`,
         destination: "/api/sitemap-movie/:id",
       },
+      /**
+       * Proxy PhimAPI cùng origin → tránh lỗi Axios "Network Error" khi gọi thẳng
+       * https://phimapi.com từ trình duyệt (CORS / chặn domain / mạng cục bộ).
+       * Trình duyệt gọi `/api/phim-proxy/...`; server (layout, sitemap) vẫn gọi trực tiếp.
+       */
+      {
+        source: "/api/phim-proxy/:path*",
+        destination: "https://phimapi.com/:path*",
+      },
     ];
   },
 };

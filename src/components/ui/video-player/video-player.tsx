@@ -59,6 +59,8 @@ export interface VideoPlayerProps {
   initialTime?: number;
   /** Gọi khi tiến độ phát thay đổi (lưu đang xem dở) */
   onTimeUpdate?: (currentTime: number, duration: number) => void;
+  /** Tự phát khi sẵn sàng (mặc định bật). Cần muted để hầu hết trình duyệt/mobile cho phép autoplay. */
+  autoPlay?: boolean;
 }
 
 const TIME_UPDATE_THROTTLE_MS = 3000;
@@ -78,12 +80,14 @@ export function VideoPlayer({
   onError,
   initialTime = 0,
   onTimeUpdate,
+  autoPlay = true,
 }: Readonly<VideoPlayerProps>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const artRef = useRef<{ destroy: (v: boolean) => void; video?: HTMLVideoElement } | null>(null);
   const destroyRef = useRef<(() => void) | null>(null);
   const onTimeUpdateRef = useRef(onTimeUpdate);
   const onErrorRef = useRef(onError);
+  const autoPlayRef = useRef(autoPlay);
   const lastSaveRef = useRef(0);
   const [adMode, setAdMode] = useState<AdRemovalMode>(
     useAdRemoval ? "client" : "off"
@@ -91,6 +95,7 @@ export function VideoPlayer({
 
   onTimeUpdateRef.current = onTimeUpdate;
   onErrorRef.current = onError;
+  autoPlayRef.current = autoPlay;
 
   useEffect(() => {
     if (!containerRef.current || !m3u8Url) return;
@@ -99,6 +104,7 @@ export function VideoPlayer({
     const container = containerRef.current;
     const startTime = Math.max(0, Number(initialTime) || 0);
     const currentMode = adMode;
+    const wantAutoPlay = autoPlayRef.current;
 
     void (async () => {
       const Artplayer = (await import("artplayer")).default;
@@ -112,11 +118,17 @@ export function VideoPlayer({
         type: "m3u8",
         poster,
         lang: "vi",
+        autoplay: wantAutoPlay,
+        playsInline: true,
+        // Autoplay có tiếng thường bị chặn; muted → phát được, người xem bật tiếng trên control
+        muted: wantAutoPlay,
         customType: {
           m3u8: createM3u8Handler(Hls, currentMode, (e) => onErrorRef.current?.(e), () => {
-            // Fallback: client → off
+            // Fallback: client → off (defer: tránh setState đồng bộ trong init player trước khi mount xong)
             if (currentMode === "client") {
-              setAdMode("off");
+              queueMicrotask(() => {
+                setAdMode("off");
+              });
             }
           }),
         },
@@ -136,6 +148,10 @@ export function VideoPlayer({
         if (startTime > 0) {
           const seek = (art as unknown as { seek?: ((t: number) => void) }).seek;
           if (typeof seek === "function") seek(startTime);
+        }
+        if (wantAutoPlay) {
+          const play = (art as unknown as { play?: () => Promise<void> }).play;
+          if (typeof play === "function") void play().catch(() => {});
         }
       });
 
@@ -179,7 +195,10 @@ export function VideoPlayer({
 
   return (
     <div className={`relative z-0 isolate ${className}`}>
-      <div ref={containerRef} className="aspect-video w-full bg-black rounded-[var(--radius-card)] overflow-hidden" />
+      <div
+        ref={containerRef}
+        className="aspect-video w-full overflow-hidden rounded-none bg-black lg:rounded-[var(--radius-card)]"
+      />
     </div>
   );
 }

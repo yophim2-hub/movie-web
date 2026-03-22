@@ -1,4 +1,1 @@
-/**
- * Interfaces / types for movie-detail module.
- * Detail types from @/types/movie-detail.
- */
+export type { MovieDetailViewModel } from "./movie-detail-view.model";

@@ -1,4 +1,5 @@
-/**
- * Interfaces for watch (xem-phim) module.
- * Episode types from @/types/movie-detail.
- */
+export type {
+  WatchContentMovie,
+  WatchContentProps,
+  WatchLayout,
+} from "./watch-content.model";

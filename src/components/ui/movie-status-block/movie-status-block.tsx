@@ -2,6 +2,41 @@
 
 import { formatStatus } from "@/lib/movie-labels";
 
+export interface MovieStatusProgressInput {
+  readonly status: string;
+  readonly episodeCurrent?: string;
+  readonly episodeTotal?: string;
+}
+
+/** Chuỗi hiển thị trạng thái/tiến độ (dùng chung với `MovieStatusBlock`). */
+export function getMovieStatusProgressText({
+  status,
+  episodeCurrent,
+  episodeTotal,
+}: MovieStatusProgressInput): string {
+  const label = formatStatus(status);
+  const hasEpisodeProgress =
+    (episodeCurrent != null && episodeCurrent !== "") || (episodeTotal != null && episodeTotal !== "");
+
+  const currentLower = episodeCurrent?.toLowerCase() ?? "";
+  const isFullText = currentLower.includes("hoàn tất") || currentLower.includes("full");
+  const cleanCurrent = episodeCurrent?.replace(/^Tập\s*/i, "").trim();
+
+  let progressText = label;
+  if (hasEpisodeProgress) {
+    if (isFullText) {
+      progressText = episodeCurrent!;
+    } else if (cleanCurrent && episodeTotal) {
+      progressText = `Tập ${cleanCurrent} / ${episodeTotal}`;
+    } else if (cleanCurrent) {
+      progressText = `Tập ${cleanCurrent}`;
+    } else {
+      progressText = `Tổng ${episodeTotal} tập`;
+    }
+  }
+  return progressText;
+}
+
 export interface MovieStatusBlockProps {
   /** Mã trạng thái: ongoing, completed, trailer, upcoming */
   readonly status: string;
@@ -28,30 +63,9 @@ export function MovieStatusBlock({
   episodeTotal,
   className = "",
 }: MovieStatusBlockProps) {
-  const label = formatStatus(status);
   const isOngoing = status.toLowerCase() === "ongoing";
   const isCompleted = status.toLowerCase() === "completed";
-  const hasEpisodeProgress =
-    (episodeCurrent != null && episodeCurrent !== "") || (episodeTotal != null && episodeTotal !== "");
-
-  // "Hoàn Tất (32/32)" → đã chứa tổng tập, không cần thêm episodeTotal
-  const currentLower = episodeCurrent?.toLowerCase() ?? "";
-  const isFullText = currentLower.includes("hoàn tất") || currentLower.includes("full");
-  // Loại bỏ prefix "Tập" nếu API đã trả về sẵn (tránh "Tập Tập ...")
-  const cleanCurrent = episodeCurrent?.replace(/^Tập\s*/i, "").trim();
-
-  let progressText = label;
-  if (hasEpisodeProgress) {
-    if (isFullText) {
-      progressText = episodeCurrent!;
-    } else if (cleanCurrent && episodeTotal) {
-      progressText = `Tập ${cleanCurrent} / ${episodeTotal}`;
-    } else if (cleanCurrent) {
-      progressText = `Tập ${cleanCurrent}`;
-    } else {
-      progressText = `Tổng ${episodeTotal} tập`;
-    }
-  }
+  const progressText = getMovieStatusProgressText({ status, episodeCurrent, episodeTotal });
 
   return (
     <div

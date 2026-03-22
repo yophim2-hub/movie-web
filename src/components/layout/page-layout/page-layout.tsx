@@ -12,7 +12,7 @@ export function PageLayout({
   className = "",
 }: Readonly<PageLayoutProps>) {
   return (
-    <div className={`min-w-0 w-full px-6 py-20 sm:px-8 sm:py-24 ${className}`}>
+    <div className={`min-w-0 w-full px-2 py-20 sm:px-8 sm:py-24 ${className}`}>
       {children}
     </div>
   );

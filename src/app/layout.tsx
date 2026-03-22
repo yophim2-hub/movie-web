@@ -72,11 +72,15 @@ export const metadata: Metadata = {
   },
 };
 
-/** viewportFit=cover: iOS dùng theme-color / status bar đúng vùng safe-area */
+/**
+ * viewportFit=cover: iOS dùng theme-color / status bar đúng vùng safe-area
+ * maximumScale=1 + userScalable=false: tránh Safari iOS tự zoom khi focus ô input (font < 16px)
+ */
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 5,
+  maximumScale: 1,
+  userScalable: false,
   viewportFit: "cover",
 };
 

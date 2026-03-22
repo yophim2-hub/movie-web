@@ -39,6 +39,10 @@ export interface EpisodeListProps {
   readonly maxGridCols?: 4 | 8;
   /** Slug tập đang xem (trang xem-phim): thẻ tập trùng slug sẽ được highlight. */
   readonly activeEpisodeSlug?: string;
+  /**
+   * variant "grid" | "watch": bỏ khung nền panel và tiêu đề (tab Tập / sidebar xem phim).
+   */
+  readonly plain?: boolean;
 }
 
 const RANGE_THRESHOLD_DEFAULT = 100;
@@ -63,6 +67,7 @@ interface EpisodeListWatchProps {
   readonly activeEpisodeSlug?: string;
   readonly title: string;
   readonly className: string;
+  readonly plain: boolean;
 }
 
 function EpisodeListWatch({
@@ -84,31 +89,41 @@ function EpisodeListWatch({
   activeEpisodeSlug,
   title,
   className,
+  plain,
 }: EpisodeListWatchProps) {
   const horizontalItems = useRanges ? baseItems : items;
   const isSingleMovie = episodes.every((s) => (s.server_data?.length ?? 0) <= 1);
+  const singleList = (
+    <div className="flex flex-col gap-2">
+      {episodes.map((s, i) => (
+        <SingleMovieCard
+          key={`${s.server_name}-${i}`}
+          server={s}
+          posterUrl={posterUrl}
+          movieName={movieName}
+          movieSlug={movieSlug}
+          fullOnly={fullOnly}
+          isActive={i === activeIndex}
+        />
+      ))}
+    </div>
+  );
   return (
     <div className={`flex min-h-0 min-w-0 flex-col gap-4 ${className}`.trim()}>
       {isSingleMovie ? (
-        <div className="min-w-0 flex-1 overflow-y-auto overscroll-contain rounded-[var(--radius-panel)] bg-[var(--secondary-bg-solid)] p-3">
-          <h3 className="mb-2 text-sm font-semibold text-[var(--foreground)]">Chọn bản xem</h3>
-          <div className="flex flex-col gap-2">
-            {episodes.map((s, i) => (
-              <SingleMovieCard
-                key={`${s.server_name}-${i}`}
-                server={s}
-                posterUrl={posterUrl}
-                movieName={movieName}
-                movieSlug={movieSlug}
-                fullOnly={fullOnly}
-                isActive={i === activeIndex}
-              />
-            ))}
+        plain ? (
+          <div className="min-w-0 flex-1 overflow-y-auto overscroll-contain">{singleList}</div>
+        ) : (
+          <div className="min-w-0 flex-1 overflow-y-auto overscroll-contain rounded-[var(--radius-panel)] bg-[var(--secondary-bg-solid)] p-3">
+            <h3 className="mb-2 text-sm font-semibold text-[var(--foreground)]">Chọn bản xem</h3>
+            {singleList}
           </div>
-        </div>
+        )
       ) : (
         <div className="flex min-h-0 min-w-0 flex-1 flex-col">
-          <h3 className="mb-2 shrink-0 text-sm font-semibold text-[var(--foreground)]">{title}</h3>
+          {!plain && (
+            <h3 className="mb-2 shrink-0 text-sm font-semibold text-[var(--foreground)]">{title}</h3>
+          )}
           {hasMultipleServers && (
             <div className="mb-2 shrink-0 flex flex-wrap gap-1">
               {episodes.map((s, i) => (
@@ -148,7 +163,7 @@ function EpisodeListWatch({
               </div>
             </div>
           )}
-          <div className="grid grid-cols-3 gap-1.5 sm:grid-cols-4">
+          <div className="grid grid-cols-4 gap-1.5">
             {horizontalItems.map((ep) => (
               <EpisodeCard
                 key={ep.slug}
@@ -179,6 +194,7 @@ export function EpisodeList({
   fullOnly = false,
   maxGridCols = 8,
   activeEpisodeSlug,
+  plain = false,
 }: EpisodeListProps) {
   const [activeServerIndex, setActiveServerIndex] = useState(0);
   const [collapsed, setCollapsed] = useState(true);
@@ -230,45 +246,54 @@ export function EpisodeList({
         activeEpisodeSlug={activeEpisodeSlug}
         title={title}
         className={className}
+        plain={plain}
       />
     );
   }
 
   if (variant === "grid" && isSingleMovie) {
+    const grid = (
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {episodes.map((s, i) => (
+          <SingleMovieCard
+            key={`${s.server_name}-${i}`}
+            server={s}
+            posterUrl={posterUrl}
+            movieName={movieName}
+            movieSlug={movieSlug}
+            fullOnly={fullOnly}
+          />
+        ))}
+      </div>
+    );
     return (
       <div className={`min-w-0 ${className}`.trim()}>
-        <div className="rounded-[var(--radius-panel)] bg-[var(--secondary-bg-solid)] p-4">
-          <div className="mb-3 flex flex-wrap items-center gap-2">
-            <h3 className="text-sm font-semibold text-[var(--foreground)]">
-              {title}
-            </h3>
+        {plain ? (
+          grid
+        ) : (
+          <div className="rounded-[var(--radius-panel)] bg-[var(--secondary-bg-solid)] p-4">
+            <div className="mb-3 flex flex-wrap items-center gap-2">
+              <h3 className="text-sm font-semibold text-[var(--foreground)]">{title}</h3>
+            </div>
+            {grid}
           </div>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {episodes.map((s, i) => (
-              <SingleMovieCard
-                key={`${s.server_name}-${i}`}
-                server={s}
-                posterUrl={posterUrl}
-                movieName={movieName}
-                movieSlug={movieSlug}
-                fullOnly={fullOnly}
-              />
-            ))}
-          </div>
-        </div>
+        )}
       </div>
     );
   }
 
   if (variant === "grid") {
+    const panelClass = plain
+      ? "min-w-0"
+      : "min-w-0 rounded-[var(--radius-panel)] bg-[var(--secondary-bg-solid)] p-4";
     return (
       <div className={`min-w-0 ${className}`.trim()}>
-        <div className="min-w-0 rounded-[var(--radius-panel)] bg-[var(--secondary-bg-solid)] p-4">
-          <div className="mb-3 flex flex-wrap items-center gap-2">
-            <h3 className="text-sm font-semibold text-[var(--foreground)]">
-              {title}
-            </h3>
-          </div>
+        <div className={panelClass}>
+          {!plain && (
+            <div className="mb-3 flex flex-wrap items-center gap-2">
+              <h3 className="text-sm font-semibold text-[var(--foreground)]">{title}</h3>
+            </div>
+          )}
           {hasMultipleServers && (
           <div className={`flex flex-wrap gap-1 ${useRanges ? "mb-3" : "mb-0"}`}>
             {episodes.map((s, i) => (
@@ -324,8 +349,8 @@ export function EpisodeList({
               <div
                 className={
                   maxGridCols === 4
-                    ? "grid min-w-0 grid-cols-3 gap-2 sm:grid-cols-4"
-                    : "grid min-w-0 grid-cols-3 gap-2 sm:grid-cols-6 md:grid-cols-8"
+                    ? "grid min-w-0 grid-cols-4 gap-2"
+                    : "grid min-w-0 grid-cols-4 gap-2 sm:grid-cols-6 md:grid-cols-8"
                 }
               >
                 {visibleItems.map((ep) => (
