@@ -3,6 +3,7 @@ import { Geist_Mono, Montserrat } from "next/font/google";
 import { Header, Footer } from "@/components/layout";
 import { JsonLd } from "@/components/seo";
 import { QueryProvider } from "@/providers/query-provider";
+import { PhimApiCacheProvider } from "@/modules/admin-pages/providers/phim-api-cache-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { ToastAndProgress } from "@/providers/toast-and-progress";
 import { WatchHistoryProvider } from "@/store/watch-history";
@@ -163,14 +164,16 @@ export default function RootLayout({
       </head>
       <body className={`${geistMono.variable} ${montserrat.variable} antialiased min-h-screen`}>
         <QueryProvider>
-          <ThemeProvider>
-            <WatchHistoryProvider>
-              <Header />
-              <main>{children}</main>
-              <Footer />
-              <ToastAndProgress />
-            </WatchHistoryProvider>
-          </ThemeProvider>
+          <PhimApiCacheProvider>
+            <ThemeProvider>
+              <WatchHistoryProvider>
+                <Header />
+                <main>{children}</main>
+                <Footer />
+                <ToastAndProgress />
+              </WatchHistoryProvider>
+            </ThemeProvider>
+          </PhimApiCacheProvider>
         </QueryProvider>
       </body>
     </html>

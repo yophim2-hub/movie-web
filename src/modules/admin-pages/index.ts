@@ -4,6 +4,8 @@
 
 export { PageConfigEditor } from "./components";
 export { useAdminPageConfigs } from "./hooks";
+export { adminPageConfigQueryKey } from "./lib/admin-config-query-key";
+export { PhimApiCacheProvider, usePhimApiCache } from "./providers/phim-api-cache-provider";
 export type {
   AdminPageId,
   AdminPageIdAny,

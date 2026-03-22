@@ -4,9 +4,11 @@ import { useState, useRef, useEffect } from "react";
 import { useMovieList } from "@/hooks/use-movie-list";
 import { useLatestMovieList } from "@/hooks/use-latest-movie-list";
 import type { AdminSection } from "@/modules/admin-pages/interfaces";
+import { movieDetailToListItem } from "@/modules/admin-pages/utils/movie-detail-to-list-item";
 import type { MovieListItem } from "@/types/movie-list";
 import { SectionByDisplayType, SectionLoadingSkeleton } from "@/components/ui/section-renderers";
 import { keepPreviousData } from "@tanstack/react-query";
+import { usePhimApiCache } from "@/modules/admin-pages/providers/phim-api-cache-provider";
 
 export interface SectionRendererProps {
   section: AdminSection;
@@ -17,7 +19,8 @@ export interface SectionRendererProps {
 
 /**
  * Render một section: gọi API theo filter, hiển thị theo displayType.
- * Chỉ hỗ trợ type "movie-list". Pinned chưa hỗ trợ.
+ * Nếu section có `cachedMovieList` (lưu từ admin): dùng snapshot, không gọi API list.
+ * Type "movie-list": API theo filter hoặc `cachedMovieList`. Type "pinned": `savedMovies` (chi tiết phim đã lưu).
  */
 export function SectionRenderer({
   section,
@@ -25,6 +28,7 @@ export function SectionRenderer({
   seeMoreHref,
   className = "",
 }: Readonly<SectionRendererProps>) {
+  const { staleTimeMs, gcTimeMs } = usePhimApiCache();
   const isGridList = section.displayType === "grid-list";
   const [page, setPage] = useState(1);
   const listRef = useRef<HTMLDivElement>(null);
@@ -32,6 +36,8 @@ export function SectionRenderer({
   const f = section.filter ?? {};
   const typeList = f.typeList ?? "phim-le";
   const isHomeOrNoType = !f.typeList;
+  const cachedItems = section.cachedMovieList;
+  const useStaticList = Boolean(cachedItems && cachedItems.length > 0);
 
   const { data: listData, isFetching, isError } = useMovieList(
     {
@@ -45,29 +51,61 @@ export function SectionRenderer({
       year: f.year,
     },
     {
-      enabled: section.type === "movie-list" && !isHomeOrNoType,
+      enabled: section.type === "movie-list" && !isHomeOrNoType && !useStaticList,
+      staleTime: staleTimeMs,
+      gcTime: gcTimeMs,
       placeholderData: isGridList ? keepPreviousData : undefined,
     }
   );
 
   const { data: latestData, isFetching: isLatestLoading } = useLatestMovieList(
     { page: 1 },
-    { enabled: section.type === "movie-list" && isHomeOrNoType }
+    {
+      enabled: section.type === "movie-list" && isHomeOrNoType && !useStaticList,
+      staleTime: staleTimeMs,
+      gcTime: gcTimeMs,
+    }
   );
 
-  const loading = isFetching || isLatestLoading;
-  const items: MovieListItem[] = isHomeOrNoType
-    ? ((latestData?.items ?? []) as MovieListItem[])
-    : (listData?.data?.items ?? []);
+  const loading = useStaticList ? false : isFetching || isLatestLoading;
+
+  let items: MovieListItem[] = [];
+  if (useStaticList) {
+    items = cachedItems!;
+  } else if (isHomeOrNoType) {
+    items = (latestData?.items ?? []) as MovieListItem[];
+  } else {
+    items = listData?.data?.items ?? [];
+  }
 
   const paginationData = listData?.data?.params?.pagination;
-  const totalPages = paginationData?.totalPages ?? 1;
+  const totalPages = useStaticList ? 1 : (paginationData?.totalPages ?? 1);
 
   useEffect(() => {
     if (page > 1 && listRef.current) {
       listRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [page]);
+
+  if (section.type === "pinned") {
+    const pinnedItems = section.savedMovies.map(movieDetailToListItem);
+    if (pinnedItems.length === 0) {
+      return null;
+    }
+    return (
+      <div className={className}>
+        <SectionByDisplayType
+          title={section.title}
+          items={pinnedItems}
+          displayType={section.displayType}
+          basePath={basePath}
+          headerVariant={section.headerVariant}
+          seeMoreHref={seeMoreHref ?? basePath}
+          seeMoreLabel="Xem thêm"
+        />
+      </div>
+    );
+  }
 
   if (section.type !== "movie-list") {
     return null;
@@ -82,7 +120,7 @@ export function SectionRenderer({
     );
   }
 
-  if (isError) {
+  if (!useStaticList && isError) {
     return (
       <div
         className={`rounded-lg border border-[var(--border)] bg-red-500/10 p-4 text-[13px] text-red-600 ${className}`}
@@ -104,12 +142,14 @@ export function SectionRenderer({
         seeMoreLabel="Xem thêm"
         {...(isGridList && {
           listRef,
-          isLoading: isFetching,
+          isLoading: useStaticList ? false : isFetching,
           pagination: {
-            currentPage: page,
+            currentPage: useStaticList ? 1 : page,
             totalPages,
             getPageHref: () => "#",
-            onPageChange: (p: number) => setPage(p),
+            onPageChange: (p: number) => {
+              if (!useStaticList) setPage(p);
+            },
           },
         })}
       />

@@ -1,6 +1,7 @@
 /**
  * Admin config API client — gọi API đọc/ghi cấu hình từ file.
  * Gửi X-Admin-Secret nếu có ADMIN_SECRET (env) để bảo mật khi chạy prod.
+ * Cache do React Query quản lý (query key admin-page-config).
  */
 
 export interface AdminConfigPayload {
@@ -27,41 +28,17 @@ function getHeaders(): HeadersInit {
   return headers;
 }
 
-let _configCache: { data: AdminConfigPayload; ts: number } | null = null;
-let _inflight: Promise<AdminConfigPayload> | null = null;
-const CACHE_TTL = 5 * 60 * 1000; // 5 phút
-
 export async function fetchAdminConfig(): Promise<AdminConfigPayload> {
-  if (_configCache && Date.now() - _configCache.ts < CACHE_TTL) {
-    return _configCache.data;
+  const res = await fetch("/api/admin/config", {
+    method: "GET",
+    headers: getHeaders(),
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    if (res.status === 401) throw new Error("Unauthorized");
+    throw new Error(`Failed to fetch config: ${res.status}`);
   }
-  // Dedup: nếu đang fetch thì chờ kết quả chung
-  if (_inflight) return _inflight;
-
-  _inflight = (async () => {
-    try {
-      const res = await fetch("/api/admin/config", {
-        method: "GET",
-        headers: getHeaders(),
-        cache: "no-store",
-      });
-      if (!res.ok) {
-        if (res.status === 401) throw new Error("Unauthorized");
-        throw new Error(`Failed to fetch config: ${res.status}`);
-      }
-      const data = (await res.json()) as AdminConfigPayload;
-      _configCache = { data, ts: Date.now() };
-      return data;
-    } finally {
-      _inflight = null;
-    }
-  })();
-
-  return _inflight;
-}
-
-export function invalidateAdminConfigCache() {
-  _configCache = null;
+  return (await res.json()) as AdminConfigPayload;
 }
 
 export async function saveAdminConfig(payload: AdminConfigPayload): Promise<void> {
@@ -74,5 +51,4 @@ export async function saveAdminConfig(payload: AdminConfigPayload): Promise<void
     if (res.status === 401) throw new Error("Unauthorized");
     throw new Error(`Failed to save config: ${res.status}`);
   }
-  invalidateAdminConfigCache();
 }

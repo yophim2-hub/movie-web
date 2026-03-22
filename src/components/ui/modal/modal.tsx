@@ -26,9 +26,10 @@ const overlayTransition = {
   ease: [0.25, 1, 0.5, 1] as [number, number, number, number],
 };
 
+/** Chỉ fade — tránh scale/translate trên panel (Safari/iOS scroll trong modal bị giật khi tổ tiên có transform). */
 const panelTransition = {
-  duration: 0.3,
-  ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+  duration: 0.2,
+  ease: [0.25, 1, 0.5, 1] as [number, number, number, number],
 };
 
 export function Modal({
@@ -72,14 +73,14 @@ export function Modal({
     <AnimatePresence>
       {open && (
         <div
-          className="flex items-center justify-center p-4"
+          className="flex min-h-0 items-center justify-center overflow-y-auto p-4"
           style={{ position: "fixed", inset: 0, zIndex }}
           role="dialog"
           aria-modal="true"
           aria-labelledby={title ? "modal-title" : undefined}
         >
           <motion.div
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -87,10 +88,10 @@ export function Modal({
             onClick={closeOnOverlayClick ? onClose : undefined}
           />
           <motion.div
-            className={`relative z-10 mx-auto flex w-full max-w-md flex-col overflow-hidden rounded-[var(--radius-sheet)] border border-[var(--border)] bg-[var(--glass-bg)] shadow-[var(--shadow-lg)] backdrop-blur-xl ${panelClassName}`}
-            initial={{ opacity: 0, scale: 0.96, y: 8 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: 8 }}
+            className={`relative z-10 mx-auto flex min-h-0 w-full max-w-md flex-col overflow-hidden rounded-[var(--radius-sheet)] border border-[var(--border)] bg-[var(--glass-bg-solid)] shadow-[var(--shadow-lg)] ${panelClassName}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={panelTransition}
             onClick={(e) => e.stopPropagation()}
           >
@@ -104,7 +105,9 @@ export function Modal({
                 </h2>
               </div>
             )}
-            <div className="min-h-0 flex-1 overflow-auto p-6">{children}</div>
+            <div className="min-h-0 flex-1 touch-pan-y overflow-y-auto overscroll-y-contain p-6 [-webkit-overflow-scrolling:touch]">
+              {children}
+            </div>
           </motion.div>
         </div>
       )}

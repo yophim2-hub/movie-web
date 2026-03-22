@@ -1,10 +1,23 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import {
+  useState,
+  useCallback,
+  useMemo,
+  useEffect,
+  useRef,
+} from "react";
 import { useAdminPageConfigs } from "../hooks";
+import { usePhimApiCache } from "../providers/phim-api-cache-provider";
+import { AdminPhimCacheToolbar } from "./admin-phim-cache-toolbar";
 import { useCategories, useCountries } from "@/hooks";
+import { keepPreviousData } from "@tanstack/react-query";
 import { useSearchMovies } from "@/hooks/use-search-movies";
-import { useLatestMovieList } from "@/hooks/use-latest-movie-list";
+import { useMovieList } from "@/hooks/use-movie-list";
+import { useMovieDetail } from "@/hooks/use-movie-detail";
+import { SectionByDisplayType } from "@/components/ui/section-renderers";
+import type { MovieListItem, MovieListType } from "@/types/movie-list";
+import type { MovieDetail } from "@/types/movie-detail";
 import type {
   AdminPageIdAny,
   AdminFilterSetting,
@@ -18,8 +31,7 @@ import {
   SECTION_DISPLAY_TYPES,
   SECTION_HEADER_VARIANTS,
 } from "../interfaces";
-import type { MovieListType, SortField, SortType } from "@/types/movie-list";
-import { MOVIE_LIST_TYPES, SORT_FIELDS, SORT_TYPES } from "@/types/movie-list";
+import { movieDetailToListItem } from "../utils/movie-detail-to-list-item";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,46 +44,27 @@ import {
 } from "@/components/ui/table";
 import { Modal } from "@/components/ui/modal";
 import { SectionPreview } from "./section-renderers";
-
-const SORT_LABELS: Record<string, string> = {
-  "modified.time": "Mới cập nhật",
-  _id: "ID",
-  year: "Năm",
-};
-
-const SORT_TYPE_LABELS: Record<SortType, string> = {
-  desc: "Giảm dần",
-  asc: "Tăng dần",
-};
+import { SectionListCachePanel } from "./section-list-cache-panel";
+import {
+  SectionEditDisplayAndFilterPanel,
+  MovieListFilterTwoRows,
+  DISPLAY_TYPE_LABELS,
+  HEADER_VARIANT_LABELS,
+  DISPLAY_TYPES_WITH_HEADER,
+} from "./section-edit-display-and-filter";
 
 const SECTION_TYPE_LABELS: Record<AdminSectionType, string> = {
   "movie-list": "Danh sách (API)",
   pinned: "Phim ghim",
 };
 
-const DISPLAY_TYPE_LABELS: Record<SectionDisplayType, string> = {
-  banner: "Banner (lớn)",
-  "banner-small": "Banner (nhỏ)",
-  "poster-list": "Danh sách poster",
-  "thumb-list": "Danh sách thumb",
-  "grid-list": "Danh sách grid",
-  "poster-thumb": "Danh sách poster + thumb",
-  "top-list": "Top / bảng xếp hạng",
-};
-
-const HEADER_VARIANT_LABELS: Record<SectionHeaderVariant, string> = {
-  "see-more": "Xem thêm",
-  navigation: "Nút điều hướng (< >)",
-};
-
-/** Loại hiển thị có chọn Loại header (Xem thêm / Nút điều hướng). grid-list không có. */
-const DISPLAY_TYPES_WITH_HEADER: SectionDisplayType[] = [
-  "poster-list",
-  "thumb-list",
-  "poster-thumb",
-];
+const EMPTY_TAXONOMY: { _id: string; name: string; slug: string }[] = [];
+const EMPTY_SECTIONS: AdminSection[] = [];
+/** Modal chọn phim ghim: limit cố định khi gọi API list/search (không còn ô Limit trên UI). */
+const BROWSE_PINNED_LIST_LIMIT = 24;
 
 export function PageConfigEditor() {
+  const { staleTimeMs, gcTimeMs } = usePhimApiCache();
   const {
     configs,
     pageList,
@@ -84,23 +77,31 @@ export function PageConfigEditor() {
     updateSection,
     removeSection,
     moveSection,
-    addSavedMovieToSection,
-    removeSavedMovieFromSection,
     reload,
   } = useAdminPageConfigs();
-  const { data: categoriesData } = useCategories();
-  const categories = categoriesData ?? [];
-  const { data: countriesData } = useCountries();
-  const countries = countriesData ?? [];
+  const { data: categoriesData } = useCategories({
+    staleTime: staleTimeMs,
+    gcTime: gcTimeMs,
+  });
+  const categories = categoriesData ?? EMPTY_TAXONOMY;
+  const { data: countriesData } = useCountries({
+    staleTime: staleTimeMs,
+    gcTime: gcTimeMs,
+  });
+  const countries = countriesData ?? EMPTY_TAXONOMY;
 
   const [selectedPageId, setSelectedPageId] = useState<AdminPageIdAny | null>(null);
   const [editingSectionId, setEditingSectionId] = useState<string | null>(null);
   const [addPageFormOpen, setAddPageFormOpen] = useState(false);
   const [editingPageId, setEditingPageId] = useState<string | null>(null);
+  /** Tăng sau mỗi lần lưu section thành công — SectionEditForm đồng bộ draft từ server. */
+  const [sectionSaveRevision, setSectionSaveRevision] = useState(0);
 
   const config = selectedPageId ? configs[selectedPageId] : null;
-  const sections = config?.sections ?? [];
-  const sortedSections = [...sections].sort((a, b) => a.order - b.order);
+  const sortedSections = useMemo(() => {
+    const list = config?.sections ?? EMPTY_SECTIONS;
+    return [...list].sort((a, b) => a.order - b.order);
+  }, [config]);
   const editingSection = editingSectionId
     ? sortedSections.find((s) => s.id === editingSectionId)
     : null;
@@ -112,7 +113,7 @@ export function PageConfigEditor() {
       title: "Section mới",
       type: "movie-list",
       filter: {},
-      savedMovieIds: [],
+      savedMovies: [],
     });
     setEditingSectionId(id);
   }, [selectedPageId, addSection]);
@@ -124,6 +125,16 @@ export function PageConfigEditor() {
       if (editingSectionId === sectionId) setEditingSectionId(null);
     },
     [selectedPageId, removeSection, editingSectionId]
+  );
+
+  const handleSaveSectionDraft = useCallback(
+    async (draft: AdminSection) => {
+      if (!selectedPageId) return;
+      const { id: sectionId, ...patch } = draft;
+      await updateSection(selectedPageId, sectionId, patch);
+      setSectionSaveRevision((r) => r + 1);
+    },
+    [selectedPageId, updateSection]
   );
 
   if (isLoading) {
@@ -147,6 +158,7 @@ export function PageConfigEditor() {
 
   return (
     <div className="space-y-6">
+      <AdminPhimCacheToolbar />
       {/* Bảng quản lý trang */}
       <section className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--secondary-bg-solid)]/50 p-4">
         <div className="mb-3 flex items-center justify-between">
@@ -333,8 +345,13 @@ export function PageConfigEditor() {
                               return `Filter: ${typePart}${sec.filter?.category || "—"} / ${sec.filter?.country || "—"} / limit ${sec.filter?.limit ?? 24}`;
                             })()
                           : ""}
-                        {sec.savedMovieIds.length > 0
-                          ? ` · ${sec.savedMovieIds.length} phim`
+                        {sec.savedMovies.length > 0
+                          ? ` · ${sec.savedMovies.length} phim`
+                          : ""}
+                        {sec.type === "movie-list" &&
+                        sec.cachedMovieList &&
+                        sec.cachedMovieList.length > 0
+                          ? ` · cache ${sec.cachedMovieList.length} phim`
                           : ""}
                       </TableCell>
                       <TableCell className="text-right">
@@ -390,23 +407,12 @@ export function PageConfigEditor() {
               zIndex={60}
             >
               <SectionEditForm
-                pageId={selectedPageId}
+                key={editingSection.id}
                 section={editingSection}
+                sectionSaveRevision={sectionSaveRevision}
                 categories={categories}
                 countries={countries}
-                onUpdate={(patch) =>
-                  updateSection(selectedPageId, editingSection.id, patch).catch(console.error)
-                }
-                onAddMovie={(movieId) =>
-                  addSavedMovieToSection(selectedPageId, editingSection.id, movieId).catch(console.error)
-                }
-                onRemoveMovie={(movieId) =>
-                  removeSavedMovieFromSection(
-                    selectedPageId,
-                    editingSection.id,
-                    movieId
-                  ).catch(console.error)
-                }
+                onSaveDraft={handleSaveSectionDraft}
                 onClose={() => setEditingSectionId(null)}
               />
             </Modal>
@@ -435,32 +441,86 @@ function buildSectionTestUrl(section: AdminSection): string {
   return `/danh-sach?${params.toString()}`;
 }
 
+function mergeSectionPatch(
+  d: AdminSection,
+  patch: Partial<Omit<AdminSection, "id">>
+): AdminSection {
+  const { filter: fPatch, ...rest } = patch;
+  const next: AdminSection = { ...d, ...rest };
+  if (fPatch !== undefined) {
+    next.filter = { ...(d.filter ?? {}), ...fPatch };
+  }
+  return next;
+}
+
 function SectionEditForm({
   section,
+  sectionSaveRevision,
   categories,
   countries,
-  onUpdate,
-  onAddMovie,
-  onRemoveMovie,
+  onSaveDraft,
   onClose,
 }: Readonly<{
-  pageId: AdminPageIdAny;
   section: AdminSection;
+  sectionSaveRevision: number;
   categories: { _id: string; name: string; slug: string }[];
   countries: { _id: string; name: string; slug: string }[];
-  onUpdate: (patch: Partial<Omit<AdminSection, "id">>) => void;
-  onAddMovie: (movieId: string) => void;
-  onRemoveMovie: (movieId: string) => void;
+  onSaveDraft: (draft: AdminSection) => Promise<void>;
   onClose: () => void;
 }>) {
+  const [draft, setDraft] = useState<AdminSection>(() => section);
   const [showTestPreview, setShowTestPreview] = useState(false);
-  const updateFilter = useCallback(
-    (patch: Partial<AdminFilterSetting>) => {
-      const current = section.filter ?? {};
-      onUpdate({ filter: { ...current, ...patch } });
-    },
-    [section.filter, onUpdate]
-  );
+  const [pinnedPickerOpen, setPinnedPickerOpen] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const sectionRef = useRef(section);
+  sectionRef.current = section;
+
+  /** Chỉ đồng bộ draft sau khi Lưu (revision tăng). Không phụ thuộc `section` theo reference — mỗi lần persist/re-render parent tạo object mới và sẽ gây reset form / giật. */
+  useEffect(() => {
+    if (sectionSaveRevision === 0) return;
+    setDraft(sectionRef.current);
+  }, [sectionSaveRevision]);
+
+  const patchDraft = useCallback((patch: Partial<Omit<AdminSection, "id">>) => {
+    setDraft((d) => mergeSectionPatch(d, patch));
+  }, []);
+
+  const updateFilter = useCallback((fp: Partial<AdminFilterSetting>) => {
+    setDraft((d) => ({
+      ...d,
+      filter: { ...(d.filter ?? {}), ...fp },
+    }));
+  }, []);
+
+  const addPinnedMovie = useCallback((movie: MovieDetail) => {
+    setDraft((d) => ({
+      ...d,
+      savedMovies: d.savedMovies.some((m) => m._id === movie._id)
+        ? d.savedMovies
+        : [...d.savedMovies, movie],
+    }));
+  }, []);
+
+  const removePinnedMovie = useCallback((movieId: string) => {
+    setDraft((d) => ({
+      ...d,
+      savedMovies: d.savedMovies.filter((m) => m._id !== movieId),
+    }));
+  }, []);
+
+  const handleSave = useCallback(async () => {
+    setSaveError(null);
+    setIsSaving(true);
+    try {
+      await onSaveDraft(draft);
+    } catch (e) {
+      setSaveError(e instanceof Error ? e.message : "Lưu thất bại");
+    } finally {
+      setIsSaving(false);
+    }
+  }, [draft, onSaveDraft]);
 
   return (
     <>
@@ -472,17 +532,17 @@ function SectionEditForm({
           </h4>
           <FilterRow label="Tiêu đề">
             <Input
-              value={section.title}
-              onChange={(e) => onUpdate({ title: e.target.value })}
+              value={draft.title}
+              onChange={(e) => patchDraft({ title: e.target.value })}
               placeholder="VD: Phim mới cập nhật"
               className="max-w-[280px]"
             />
           </FilterRow>
           <FilterRow label="Kiểu">
             <select
-              value={section.type}
+              value={draft.type}
               onChange={(e) =>
-                onUpdate({ type: e.target.value as AdminSectionType })
+                patchDraft({ type: e.target.value as AdminSectionType })
               }
               className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
             >
@@ -490,185 +550,68 @@ function SectionEditForm({
               <option value="pinned">Phim ghim</option>
             </select>
           </FilterRow>
-          <FilterRow label="Loại hiển thị">
-            <select
-              value={section.displayType ?? ""}
-              onChange={(e) =>
-                onUpdate({
-                  displayType: (e.target.value || undefined) as SectionDisplayType | undefined,
-                })
-              }
-              className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] min-w-[180px]"
-            >
-              <option value="">Mặc định</option>
-              {SECTION_DISPLAY_TYPES.map((t) => (
-                <option key={t} value={t}>
-                  {DISPLAY_TYPE_LABELS[t]}
-                </option>
-              ))}
-            </select>
-          </FilterRow>
-          {section.displayType &&
-            DISPLAY_TYPES_WITH_HEADER.includes(section.displayType) && (
-              <FilterRow label="Loại header">
-                <select
-                  value={section.headerVariant ?? "see-more"}
-                  onChange={(e) =>
-                    onUpdate({
-                      headerVariant: e.target.value as SectionHeaderVariant,
-                    })
-                  }
-                  className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] min-w-[180px]"
-                >
-                  {SECTION_HEADER_VARIANTS.map((v) => (
-                    <option key={v} value={v}>
-                      {HEADER_VARIANT_LABELS[v]}
-                    </option>
-                  ))}
-                </select>
-              </FilterRow>
-            )}
         </section>
 
-        {section.type === "movie-list" && (
-          <>
-            {/* 2. Filter (nguồn dữ liệu + sắp xếp & giới hạn) */}
-            <section className="space-y-4 rounded-lg border border-[var(--border)] bg-[var(--secondary-bg-solid)]/30 p-4">
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-[var(--foreground-muted)]">
-                Filter
-              </h4>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                <span className="shrink-0 text-[13px] text-[var(--foreground-muted)]">Loại phim</span>
-                <select
-                  value={section.filter?.typeList ?? ""}
-                  onChange={(e) =>
-                    updateFilter({
-                      typeList: (e.target.value || undefined) as MovieListType | undefined,
-                    })
-                  }
-                  className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] min-w-[140px]"
-                >
-                  <option value="">Mặc định (theo trang)</option>
-                  {MOVIE_LIST_TYPES.map((t) => (
-                    <option key={t} value={t}>
-                      {ADMIN_PAGE_LABELS[t]}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                <span className="shrink-0 text-[13px] text-[var(--foreground-muted)]">Thể loại</span>
-                <select
-                  value={section.filter?.category ?? ""}
-                  onChange={(e) =>
-                    updateFilter({ category: e.target.value || undefined })
-                  }
-                  className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] min-w-[120px]"
-                >
-                  <option value="">Tất cả</option>
-                  {categories.map((c) => (
-                    <option key={c._id} value={c.slug}>
-                      {c.name}
-                    </option>
-                  ))}
-                </select>
-                <span className="shrink-0 text-[13px] text-[var(--foreground-muted)]">Quốc gia</span>
-                <select
-                  value={section.filter?.country ?? ""}
-                  onChange={(e) =>
-                    updateFilter({ country: e.target.value || undefined })
-                  }
-                  className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] min-w-[120px]"
-                >
-                  <option value="">Tất cả</option>
-                  {countries.map((c) => (
-                    <option key={c._id} value={c.slug}>
-                      {c.name}
-                    </option>
-                  ))}
-                </select>
-                <span className="shrink-0 text-[13px] text-[var(--foreground-muted)]">Năm</span>
-                <input
-                  type="number"
-                  min={1900}
-                  max={2030}
-                  placeholder="VD: 2024"
-                  value={section.filter?.year ?? ""}
-                  onChange={(e) => {
-                    const v = e.target.value.trim();
-                    updateFilter({
-                      year: v ? Math.min(2030, Math.max(1900, Number(v))) : undefined,
-                    });
-                  }}
-                  className="min-w-[10rem] w-36 rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
-                />
-              </div>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                <span className="shrink-0 text-[13px] text-[var(--foreground-muted)]">Sắp xếp</span>
-                <select
-                value={section.filter?.sortField ?? ""}
-                onChange={(e) =>
-                  updateFilter({
-                    sortField: (e.target.value || undefined) as SortField | undefined,
-                  })
-                }
-                className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] min-w-[120px]"
-              >
-                <option value="">Mặc định</option>
-                {SORT_FIELDS.map((f) => (
-                  <option key={f} value={f}>
-                    {SORT_LABELS[f] ?? f}
-                  </option>
-                ))}
-              </select>
-              <select
-                value={section.filter?.sortType ?? ""}
-                onChange={(e) =>
-                  updateFilter({
-                    sortType: (e.target.value || undefined) as SortType | undefined,
-                  })
-                }
-                className="rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] min-w-[90px]"
-              >
-                <option value="">—</option>
-                {SORT_TYPES.map((t) => (
-                  <option key={t} value={t}>
-                    {SORT_TYPE_LABELS[t]}
-                  </option>
-                ))}
-              </select>
-              <span className="shrink-0 text-[13px] text-[var(--foreground-muted)]">Limit</span>
-              <input
-                type="number"
-                min={8}
-                max={64}
-                value={section.filter?.limit ?? 24}
-                onChange={(e) =>
-                  updateFilter({
-                    limit: Math.min(
-                      64,
-                      Math.max(8, Number(e.target.value) || 24)
-                    ),
-                  })
-                }
-                className="w-16 rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
-              />
-              </div>
-            </section>
-          </>
+        <SectionEditDisplayAndFilterPanel
+          displayType={draft.displayType}
+          headerVariant={draft.headerVariant}
+          onPatchDisplay={(patch) => patchDraft(patch)}
+          filter={draft.filter ?? {}}
+          onUpdateFilter={updateFilter}
+          categories={categories}
+          countries={countries}
+          showMovieListFilters={draft.type === "movie-list"}
+        />
+
+        {draft.type === "movie-list" && (
+          <SectionListCachePanel section={draft} onUpdate={patchDraft} />
         )}
 
-        {/* 4. Phim đã chọn — chỉ hiển thị khi Kiểu = Phim ghim */}
-        {section.type === "pinned" && (
-          <section className="space-y-3 rounded-lg border border-[var(--border)] bg-[var(--secondary-bg-solid)]/30 p-4">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-[var(--foreground-muted)]">
-              Phim đã chọn
-            </h4>
-            <AddMovieBlockForSection
-              savedIds={section.savedMovieIds}
-              onAdd={onAddMovie}
-              onRemove={onRemoveMovie}
-            />
+        {/* 4. Phim ghim — nút mở modal bảng + lọc */}
+        {draft.type === "pinned" && (
+          <section className="rounded-lg border border-[var(--border)] bg-[var(--secondary-bg-solid)]/30 p-4">
+            <button
+              type="button"
+              onClick={() => setPinnedPickerOpen(true)}
+              className="w-full rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-left transition-colors hover:border-[var(--accent)] hover:bg-[var(--secondary-bg-solid)]/50 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+            >
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--foreground-muted)]">
+                Phim đã chọn
+              </span>
+              <p className="mt-1 text-[14px] font-medium text-[var(--foreground)]">
+                {draft.savedMovies.length === 0
+                  ? "Chưa có phim — bấm để mở bảng chọn"
+                  : `${draft.savedMovies.length} phim đã ghim — bấm để sửa hoặc thêm`}
+              </p>
+            </button>
+
+            <Modal
+              open={pinnedPickerOpen}
+              onClose={() => setPinnedPickerOpen(false)}
+              title="Chọn phim ghim — bảng và lọc"
+              panelClassName="!max-w-3xl !max-h-[min(88vh,720px)] !flex !flex-col"
+              zIndex={70}
+            >
+              <div className="space-y-4">
+                <AddMovieBlockForSection
+                  browseEnabled={pinnedPickerOpen}
+                  savedMovies={draft.savedMovies}
+                  sectionTitle={draft.title}
+                  sectionDisplayType={draft.displayType}
+                  sectionHeaderVariant={draft.headerVariant}
+                  categories={categories}
+                  countries={countries}
+                  onAdd={addPinnedMovie}
+                  onRemove={removePinnedMovie}
+                  onPatchSectionDisplay={(patch) => patchDraft(patch)}
+                />
+                <div className="flex justify-end border-t border-[var(--border)] pt-4">
+                  <Button variant="secondary" size="sm" type="button" onClick={() => setPinnedPickerOpen(false)}>
+                    Đóng
+                  </Button>
+                </div>
+              </div>
+            </Modal>
           </section>
         )}
       </div>
@@ -686,13 +629,27 @@ function SectionEditForm({
           variant="ghost"
           size="sm"
           className="text-[12px] text-[var(--foreground-muted)]"
-          onClick={() => window.open(buildSectionTestUrl(section), "_blank", "noopener,noreferrer")}
+          onClick={() => window.open(buildSectionTestUrl(draft), "_blank", "noopener,noreferrer")}
         >
           Mở trang (tab mới)
         </Button>
-        <Button variant="secondary" size="sm" onClick={onClose} className="ml-auto">
-          Đóng
-        </Button>
+        <div className="ml-auto flex flex-wrap items-center justify-end gap-2">
+          {saveError && (
+            <span className="max-w-[220px] text-[12px] text-red-600">{saveError}</span>
+          )}
+          <Button
+            variant="primary"
+            size="sm"
+            type="button"
+            disabled={isSaving}
+            onClick={() => void handleSave()}
+          >
+            {isSaving ? "Đang lưu…" : "Lưu"}
+          </Button>
+          <Button variant="secondary" size="sm" type="button" onClick={onClose}>
+            Đóng
+          </Button>
+        </div>
       </div>
 
       {/* Preview theo Loại hiển thị — hiện bên dưới khi bấm Xem thử */}
@@ -701,7 +658,7 @@ function SectionEditForm({
           <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-[var(--foreground-muted)]">
             Preview
           </h4>
-          <SectionPreview section={section} />
+          <SectionPreview section={draft} />
         </div>
       )}
     </>
@@ -723,151 +680,516 @@ function FilterRow({
   );
 }
 
+function PinnedMoviePreviewModal({
+  open,
+  onClose,
+  candidate,
+  sectionTitle,
+  sectionDisplayType,
+  sectionHeaderVariant,
+  alreadySaved,
+  onConfirm,
+}: Readonly<{
+  open: boolean;
+  onClose: () => void;
+  candidate: { _id: string; slug: string; name: string; provisionalItem: MovieListItem } | null;
+  sectionTitle: string;
+  sectionDisplayType?: SectionDisplayType;
+  sectionHeaderVariant?: SectionHeaderVariant;
+  alreadySaved: boolean;
+  onConfirm: (
+    detail: MovieDetail,
+    displayPatch?: { displayType?: SectionDisplayType; headerVariant?: SectionHeaderVariant }
+  ) => void;
+}>) {
+  const { staleTimeMs, gcTimeMs } = usePhimApiCache();
+  const slug = candidate?.slug ?? "";
+  const missingSlug = Boolean(open && candidate && slug.length === 0);
+  const { data, isLoading, isError, refetch, isFetching } = useMovieDetail(slug, {
+    enabled: open && slug.length > 0,
+    staleTime: staleTimeMs,
+    gcTime: gcTimeMs,
+  });
+
+  const detailItem = data?.data?.item;
+  const resolved = Boolean(detailItem);
+  const loadingDetail = open && slug.length > 0 && (isLoading || isFetching) && !detailItem;
+
+  const defaultDisplay = sectionDisplayType ?? "banner";
+  const defaultHeader = sectionHeaderVariant ?? "see-more";
+
+  const [previewDisplay, setPreviewDisplay] = useState<SectionDisplayType>(defaultDisplay);
+  const [previewHeader, setPreviewHeader] = useState<SectionHeaderVariant>(defaultHeader);
+
+  const previewItems: MovieListItem[] = useMemo(() => {
+    if (!candidate) return [];
+    if (detailItem) return [movieDetailToListItem(detailItem)];
+    return [candidate.provisionalItem];
+  }, [candidate, detailItem]);
+
+  const showHeaderVariant =
+    previewDisplay && DISPLAY_TYPES_WITH_HEADER.includes(previewDisplay);
+
+  const handleConfirm = () => {
+    if (!candidate || !detailItem) return;
+    const displayPatch =
+      previewDisplay !== defaultDisplay || previewHeader !== defaultHeader
+        ? { displayType: previewDisplay, headerVariant: previewHeader }
+        : undefined;
+    onConfirm(detailItem, displayPatch);
+    onClose();
+  };
+
+  return (
+    <Modal
+      open={open && candidate !== null}
+      onClose={onClose}
+      title={alreadySaved ? "Phim đã ghim — xem trước" : "Xem trước & ghim phim"}
+      panelClassName="!max-w-4xl !w-full !max-h-[min(92vh,880px)] !flex !flex-col"
+      zIndex={80}
+    >
+      {candidate ? (
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-stretch">
+          <div className="mx-auto w-full max-w-[400px] shrink-0 overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--background)] shadow-inner">
+            <p className="bg-[var(--secondary-bg-solid)] px-2 py-2 text-center text-[11px] font-medium uppercase tracking-wide text-[var(--foreground-muted)]">
+              Khung mobile (theo loại hiển thị)
+            </p>
+            <div className="max-h-[min(58vh,520px)] overflow-x-hidden overflow-y-auto">
+              {missingSlug && (
+                <p className="px-4 py-8 text-center text-[13px] text-[var(--foreground-muted)]">
+                  Chưa có slug phim trong phiên làm việc — không gọi được API chi tiết. Hãy tìm phim theo tên và
+                  chọn lại, hoặc xóa chip rồi ghim lại để lưu slug.
+                </p>
+              )}
+              {!missingSlug && isError && (
+                <div className="space-y-3 p-4 text-center">
+                  <p className="text-[13px] text-red-600">Không tải được chi tiết phim (API /phim).</p>
+                  <Button variant="secondary" size="sm" type="button" onClick={() => refetch()}>
+                    Thử lại
+                  </Button>
+                </div>
+              )}
+              {!missingSlug && !isError && loadingDetail && (
+                <p className="px-4 py-10 text-center text-[13px] text-[var(--foreground-muted)]">
+                  Đang gọi API chi tiết phim…
+                </p>
+              )}
+              {!missingSlug && !isError && !loadingDetail && previewItems.length > 0 && (
+                <div className="p-1">
+                  <SectionByDisplayType
+                    title={sectionTitle}
+                    items={previewItems}
+                    displayType={previewDisplay}
+                    basePath="/phim"
+                    headerVariant={showHeaderVariant ? previewHeader : "see-more"}
+                    seeMoreHref="/phim"
+                    seeMoreLabel="Xem thêm"
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="min-w-0 flex-1 space-y-4">
+            <div>
+              <p className="text-[12px] text-[var(--foreground-muted)]">Phim chọn</p>
+              <p className="text-[15px] font-semibold text-[var(--foreground)]">{candidate.name}</p>
+              {resolved && detailItem && (
+                <p className="mt-1 text-[12px] text-[var(--foreground-muted)]">
+                  {detailItem.origin_name ? `${detailItem.origin_name} · ` : ""}
+                  {detailItem.year ? `Năm ${detailItem.year}` : ""}
+                </p>
+              )}
+            </div>
+
+            <div className="space-y-3 rounded-lg border border-[var(--border)] bg-[var(--secondary-bg-solid)]/30 p-4">
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-[var(--foreground-muted)]">
+                Loại hiển thị (section)
+              </h4>
+              <FilterRow label="Dạng mobile">
+                <select
+                  value={previewDisplay}
+                  onChange={(e) =>
+                    setPreviewDisplay(e.target.value as SectionDisplayType)
+                  }
+                  className="min-w-[200px] rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                >
+                  {SECTION_DISPLAY_TYPES.map((t) => (
+                    <option key={t} value={t}>
+                      {DISPLAY_TYPE_LABELS[t]}
+                    </option>
+                  ))}
+                </select>
+              </FilterRow>
+              {showHeaderVariant && (
+                <FilterRow label="Header">
+                  <select
+                    value={previewHeader}
+                    onChange={(e) =>
+                      setPreviewHeader(e.target.value as SectionHeaderVariant)
+                    }
+                    className="min-w-[200px] rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                  >
+                    {SECTION_HEADER_VARIANTS.map((v) => (
+                      <option key={v} value={v}>
+                        {HEADER_VARIANT_LABELS[v]}
+                      </option>
+                    ))}
+                  </select>
+                </FilterRow>
+              )}
+              <p className="text-[12px] text-[var(--foreground-muted)]">
+                {alreadySaved
+                  ? "Bấm \"Xong\" để ghi loại hiển thị / header vào bản nháp. Bấm Lưu ở form section để lưu cấu hình."
+                  : "Bấm \"Ghim phim\" để thêm phim và cập nhật loại hiển thị / header trên bản nháp. Bấm Lưu ở form section để lưu cấu hình."}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-2 pt-1">
+              <Button variant="secondary" size="sm" type="button" onClick={onClose}>
+                Hủy
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                type="button"
+                disabled={!resolved}
+                onClick={handleConfirm}
+              >
+                {alreadySaved ? "Xong" : "Ghim phim"}
+              </Button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </Modal>
+  );
+}
+
+const PHIMIMG_CDN_BASE = "https://phimimg.com";
+
+/** API list/search trả poster/thumb thường là path (upload/...), cần ghép CDN giống MovieCoverCard / header-search. */
+function movieListItemImageSrc(posterUrl: string, thumbUrl: string): string {
+  const raw = (posterUrl || thumbUrl).trim();
+  if (!raw) return "";
+  if (raw.startsWith("http://") || raw.startsWith("https://")) return raw;
+  return `${PHIMIMG_CDN_BASE}/${raw.replace(/^\//, "")}`;
+}
+
+function PinnedMovieTableThumb({ item }: Readonly<{ item: MovieListItem }>) {
+  const [broken, setBroken] = useState(false);
+  const url = movieListItemImageSrc(item.poster_url, item.thumb_url);
+  if (!url || broken) {
+    return (
+      <div
+        className="h-12 w-10 shrink-0 rounded bg-[var(--secondary-bg-solid)]"
+        aria-hidden
+      />
+    );
+  }
+  return (
+    // eslint-disable-next-line @next/next/no-img-element -- admin thumb từ CDN, không cần Image tối ưu
+    <img
+      src={url}
+      alt=""
+      className="h-12 w-10 shrink-0 rounded object-cover bg-[var(--secondary-bg-solid)]"
+      loading="lazy"
+      onError={() => setBroken(true)}
+    />
+  );
+}
+
 function AddMovieBlockForSection({
-  savedIds,
+  browseEnabled,
+  savedMovies,
+  sectionTitle,
+  sectionDisplayType,
+  sectionHeaderVariant,
+  categories,
+  countries,
   onAdd,
   onRemove,
+  onPatchSectionDisplay,
 }: Readonly<{
-  savedIds: string[];
-  onAdd: (movieId: string) => void;
+  browseEnabled: boolean;
+  savedMovies: MovieDetail[];
+  sectionTitle: string;
+  sectionDisplayType?: SectionDisplayType;
+  sectionHeaderVariant?: SectionHeaderVariant;
+  categories: { _id: string; name: string; slug: string }[];
+  countries: { _id: string; name: string; slug: string }[];
+  onAdd: (movie: MovieDetail) => void;
   onRemove: (movieId: string) => void;
+  onPatchSectionDisplay: (patch: {
+    displayType?: SectionDisplayType;
+    headerVariant?: SectionHeaderVariant;
+  }) => void;
 }>) {
   const [keyword, setKeyword] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [nameById, setNameById] = useState<Record<string, string>>({});
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [browseTypeList, setBrowseTypeList] = useState<MovieListType>("phim-le");
+  const [browseCategory, setBrowseCategory] = useState("");
+  const [browseCountry, setBrowseCountry] = useState("");
+  const [browseYear, setBrowseYear] = useState<number | "">("");
+  const [pickCandidate, setPickCandidate] = useState<{
+    _id: string;
+    slug: string;
+    name: string;
+    provisionalItem: MovieListItem;
+  } | null>(null);
+  const { staleTimeMs, gcTimeMs } = usePhimApiCache();
+
+  const savedIds = useMemo(() => savedMovies.map((m) => m._id), [savedMovies]);
 
   const hasSearchKeyword = keyword.trim().length >= 2;
 
-  const { data: searchData, isFetching: isSearching } = useSearchMovies(
-    { keyword: keyword.trim(), page: 1, limit: 15 },
-    { enabled: hasSearchKeyword }
-  );
-  const searchItems = searchData?.data?.items ?? [];
-
-  const { data: latestData, isFetching: isLatestLoading } = useLatestMovieList(
-    { page: 1 },
-    { enabled: isOpen && !hasSearchKeyword }
-  );
-  const latestItems = latestData?.items ?? [];
-
-  const items = hasSearchKeyword
-    ? searchItems
-    : latestItems.map((item) => ({ _id: item._id, name: item.name, year: item.year }));
-  const isFetching = hasSearchKeyword ? isSearching : isLatestLoading;
-
-  const handleSelect = useCallback(
-    (movieId: string, name: string) => {
-      if (savedIds.includes(movieId)) return;
-      onAdd(movieId);
-      setNameById((prev) => ({ ...prev, [movieId]: name }));
-      setKeyword("");
-    },
-    [savedIds, onAdd]
+  const browseFilterSnapshot = useMemo(
+    () => ({
+      typeList: browseTypeList,
+      category: browseCategory || undefined,
+      country: browseCountry || undefined,
+      year: browseYear === "" ? undefined : browseYear,
+    }),
+    [browseTypeList, browseCategory, browseCountry, browseYear]
   );
 
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
+  const applyBrowseFilterPatch = useCallback((p: Partial<AdminFilterSetting>) => {
+    if (p.typeList !== undefined) {
+      setBrowseTypeList((p.typeList as MovieListType) ?? "phim-le");
     }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    if (p.category !== undefined) setBrowseCategory(p.category ?? "");
+    if (p.country !== undefined) setBrowseCountry(p.country ?? "");
+    if (p.year !== undefined) setBrowseYear(p.year === undefined ? "" : p.year);
   }, []);
 
-  const showDropdown = isOpen;
-  const listboxId = "section-movie-listbox";
+  const movieListParams = useMemo(
+    () => ({
+      typeList: browseTypeList,
+      page: 1,
+      limit: BROWSE_PINNED_LIST_LIMIT,
+      ...(browseCategory ? { category: browseCategory } : {}),
+      ...(browseCountry ? { country: browseCountry } : {}),
+      ...(browseYear !== "" && browseYear != null ? { year: Number(browseYear) } : {}),
+    }),
+    [browseTypeList, browseCategory, browseCountry, browseYear]
+  );
+
+  const searchQueryParams = useMemo(
+    () => ({
+      keyword: keyword.trim(),
+      page: 1,
+      limit: BROWSE_PINNED_LIST_LIMIT,
+      ...(browseCategory ? { category: browseCategory } : {}),
+      ...(browseCountry ? { country: browseCountry } : {}),
+      ...(browseYear !== "" && browseYear != null ? { year: Number(browseYear) } : {}),
+    }),
+    [keyword, browseCategory, browseCountry, browseYear]
+  );
+
+  const { data: searchData, isFetching: isSearching } = useSearchMovies(searchQueryParams, {
+    enabled: browseEnabled && hasSearchKeyword,
+    staleTime: staleTimeMs,
+    gcTime: gcTimeMs,
+    placeholderData: keepPreviousData,
+  });
+  const rawSearch = searchData?.data?.items;
+  const searchItems: MovieListItem[] = Array.isArray(rawSearch) ? rawSearch : [];
+
+  const { data: movieListData, isFetching: isMovieListLoading } = useMovieList(movieListParams, {
+    enabled: browseEnabled && !hasSearchKeyword,
+    staleTime: staleTimeMs,
+    gcTime: gcTimeMs,
+    placeholderData: keepPreviousData,
+  });
+  const browseListItems: MovieListItem[] =
+    movieListData?.status && Array.isArray(movieListData.data?.items) ? movieListData.data.items : [];
+
+  const listRows: MovieListItem[] = hasSearchKeyword ? searchItems : browseListItems;
+  const isFetching = hasSearchKeyword ? isSearching : isMovieListLoading;
+  const showTableSkeletonLoading = isFetching && listRows.length === 0;
+
+  const openPickModal = useCallback(
+    (listItem: MovieListItem) => {
+      if (savedIds.includes(listItem._id)) return;
+      setPickCandidate({
+        _id: listItem._id,
+        slug: listItem.slug,
+        name: listItem.name,
+        provisionalItem: listItem,
+      });
+    },
+    [savedIds]
+  );
+
+  const openSavedMovieModal = useCallback(
+    (id: string) => {
+      const m = savedMovies.find((x) => x._id === id);
+      if (!m) return;
+      setPickCandidate({
+        _id: m._id,
+        slug: m.slug,
+        name: m.name,
+        provisionalItem: movieDetailToListItem(m),
+      });
+    },
+    [savedMovies]
+  );
+
+  const handleConfirmPin = useCallback(
+    (
+      detail: MovieDetail,
+      displayPatch?: { displayType?: SectionDisplayType; headerVariant?: SectionHeaderVariant }
+    ) => {
+      if (displayPatch) {
+        onPatchSectionDisplay(displayPatch);
+      }
+      if (!savedIds.includes(detail._id)) {
+        onAdd(detail);
+      }
+    },
+    [savedIds, onAdd, onPatchSectionDisplay]
+  );
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-[360px]">
-      <div
-        role="combobox"
-        aria-expanded={isOpen}
-        aria-haspopup="listbox"
-        aria-controls={listboxId}
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === "Escape") setIsOpen(false);
-        }}
-        className="min-h-[80px] rounded-[var(--radius-button)] border border-[var(--border)] bg-[var(--background)] px-3 py-2 shadow-sm focus-within:ring-2 focus-within:ring-[var(--accent)] focus-within:border-[var(--accent)]"
-        onClick={() => setIsOpen(true)}
-      >
-        <div className="flex flex-wrap gap-1.5">
-          {savedIds.map((id) => (
-            <span
-              key={id}
-              className="inline-flex items-center gap-1 rounded-md bg-[var(--secondary-bg-solid)] px-2 py-0.5 text-[13px] text-[var(--foreground)]"
-            >
-              {nameById[id] ?? id}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onRemove(id);
-                  setNameById((prev) => {
-                    const next = { ...prev };
-                    delete next[id];
-                    return next;
-                  });
-                }}
-                className="ml-0.5 rounded p-0.5 hover:bg-[var(--border)] hover:text-red-600"
-                aria-label="Xóa"
-              >
-                ×
-              </button>
-            </span>
-          ))}
-          <input
-            type="search"
-            placeholder={savedIds.length === 0 ? "Chọn phim hoặc tìm theo tên..." : "Tìm thêm phim..."}
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-            onFocus={() => setIsOpen(true)}
-            className="min-w-[140px] flex-1 border-0 bg-transparent py-1 text-[13px] text-[var(--foreground)] placeholder:text-[var(--foreground-muted)] focus:outline-none focus:ring-0"
+    <>
+      <div className="space-y-4">
+        <div>
+          <p className="mb-2 text-[12px] font-semibold uppercase tracking-wide text-[var(--foreground-muted)]">
+            Đã ghim
+          </p>
+          <div className="flex min-h-[44px] flex-wrap gap-1.5 rounded-[var(--radius-button)] border border-dashed border-[var(--border)] bg-[var(--background)]/50 px-3 py-2">
+            {savedMovies.length === 0 ? (
+              <span className="self-center text-[13px] text-[var(--foreground-muted)]">Chưa chọn phim</span>
+            ) : (
+              savedMovies.map((m) => (
+                <span
+                  key={m._id}
+                  className="inline-flex max-w-full items-center gap-0.5 rounded-md bg-[var(--secondary-bg-solid)] px-2 py-0.5 text-[13px] text-[var(--foreground)]"
+                >
+                  <button
+                    type="button"
+                    className="min-w-0 max-w-[200px] truncate text-left hover:underline"
+                    onClick={() => openSavedMovieModal(m._id)}
+                  >
+                    {m.name}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onRemove(m._id);
+                    }}
+                    className="ml-0.5 shrink-0 rounded p-0.5 hover:bg-[var(--border)] hover:text-red-600"
+                    aria-label="Xóa"
+                  >
+                    ×
+                  </button>
+                </span>
+              ))
+            )}
+          </div>
+        </div>
+
+        <div className="rounded-lg border border-[var(--border)] bg-[var(--secondary-bg-solid)]/30 p-4">
+          <MovieListFilterTwoRows
+            heading="Bộ lọc (danh sách và tìm kiếm)"
+            filter={browseFilterSnapshot}
+            onUpdateFilter={applyBrowseFilterPatch}
+            categories={categories}
+            countries={countries}
+            allowEmptyTypeList={false}
           />
         </div>
-      </div>
-      {showDropdown && (
-        <div
-          id={listboxId}
-          role="listbox"
-          className="absolute top-full left-0 z-50 mt-1 max-h-56 w-full overflow-auto rounded-[var(--radius-panel)] border border-[var(--border)] bg-[var(--glass-bg)] shadow-lg backdrop-blur-xl"
-        >
-          {isFetching && (
-            <p className="px-3 py-3 text-center text-[13px] text-[var(--foreground-muted)]">
-              Đang tải...
-            </p>
-          )}
-          {!isFetching && items.length === 0 && (
-            <p className="px-3 py-3 text-[13px] text-[var(--foreground-muted)]">
-              {hasSearchKeyword ? "Không tìm thấy phim." : "Chưa có dữ liệu."}
-            </p>
-          )}
-          {!isFetching && items.length > 0 && (
-            <ul className="py-1">
-              {items.map((item) => {
-                const selected = savedIds.includes(item._id);
-                return (
-                  <li key={item._id} role="option" aria-selected={selected}>
-                    <button
-                      type="button"
-                      onClick={() => handleSelect(item._id, item.name)}
-                      disabled={selected}
-                      className="w-full px-3 py-2 text-left text-[13px] hover:bg-[var(--secondary-bg-solid)] disabled:opacity-50 disabled:hover:bg-transparent"
-                    >
-                      {item.name}
-                      {item.year ? ` (${item.year})` : ""}
-                      {selected ? " ✓" : ""}
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
+
+        <div>
+          <label className="mb-1.5 block text-[12px] font-semibold uppercase tracking-wide text-[var(--foreground-muted)]">
+            Tìm theo tên
+          </label>
+          <Input
+            type="search"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            placeholder="Từ 2 ký tự trở lên: tìm /tim-kiem (cùng bộ lọc). Để trống: danh sách /danh-sach theo Loại phim + lọc."
+            className="w-full max-w-none"
+          />
         </div>
-      )}
-    </div>
+
+        <div className="max-h-[min(50vh,380px)] overflow-auto rounded-[var(--radius-panel)] border border-[var(--border)]">
+          {isFetching && listRows.length > 0 && (
+            <p className="border-b border-[var(--border)] bg-[var(--secondary-bg-solid)]/40 px-3 py-1.5 text-center text-[12px] text-[var(--foreground-muted)]">
+              Đang tải danh sách mới…
+            </p>
+          )}
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-14">Ảnh</TableHead>
+                <TableHead>Tên phim</TableHead>
+                <TableHead className="w-20">Năm</TableHead>
+                <TableHead className="w-[120px] text-right">Thao tác</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {showTableSkeletonLoading && (
+                <TableRow>
+                  <TableCell colSpan={4} className="py-8 text-center text-[13px] text-[var(--foreground-muted)]">
+                    Đang tải…
+                  </TableCell>
+                </TableRow>
+              )}
+              {!showTableSkeletonLoading && listRows.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={4} className="py-8 text-center text-[13px] text-[var(--foreground-muted)]">
+                    {hasSearchKeyword ? "Không tìm thấy phim." : "Chưa có dữ liệu."}
+                  </TableCell>
+                </TableRow>
+              )}
+              {listRows.length > 0 &&
+                listRows.map((item) => {
+                  const selected = savedIds.includes(item._id);
+                  return (
+                    <TableRow key={item._id}>
+                      <TableCell className="w-14 p-2 align-middle">
+                        <PinnedMovieTableThumb item={item} />
+                      </TableCell>
+                      <TableCell className="max-w-[220px] truncate font-medium text-[var(--foreground)]">
+                        {item.name}
+                      </TableCell>
+                      <TableCell className="text-[13px] text-[var(--foreground-muted)]">
+                        {item.year ?? "—"}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        {selected ? (
+                          <span className="text-[12px] text-[var(--foreground-muted)]">Đã ghim</span>
+                        ) : (
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            size="sm"
+                            onClick={() => openPickModal(item)}
+                          >
+                            Chọn
+                          </Button>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+
+      <PinnedMoviePreviewModal
+        key={pickCandidate?._id ?? "pinned-pick-idle"}
+        open={pickCandidate !== null}
+        onClose={() => setPickCandidate(null)}
+        candidate={pickCandidate}
+        sectionTitle={sectionTitle}
+        sectionDisplayType={sectionDisplayType}
+        sectionHeaderVariant={sectionHeaderVariant}
+        alreadySaved={pickCandidate ? savedIds.includes(pickCandidate._id) : false}
+        onConfirm={handleConfirmPin}
+      />
+    </>
   );
 }
 

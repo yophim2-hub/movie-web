@@ -4,10 +4,12 @@
 
 import type {
   MovieListType,
+  MovieListItem,
   SortField,
   SortType,
   SortLang,
 } from "@/types/movie-list";
+import type { MovieDetail } from "@/types/movie-detail";
 
 /** Các trang có thể cấu hình (home + các danh sách theo typeList) */
 export const ADMIN_PAGE_IDS = [
@@ -73,12 +75,19 @@ export interface AdminSection {
   type: AdminSectionType;
   /** Filter API cho type "movie-list". */
   filter: AdminFilterSetting;
-  /** ID phim (_id) — dùng cho "pinned" hoặc bổ sung cho "movie-list". */
-  savedMovieIds: string[];
+  /** Phim đã chọn (full item API chi tiết) — dùng cho "pinned". */
+  savedMovies: MovieDetail[];
   /** Loại hiển thị: banner, danh sách poster / thumb / grid / poster+thumb. */
   displayType?: SectionDisplayType;
   /** Loại header khi dùng poster-list / grid-list / thumb-list / poster-thumb: "Xem thêm" hoặc nút < >. Mặc định see-more. */
   headerVariant?: SectionHeaderVariant;
+  /**
+   * Snapshot danh sách phim lưu trong config (admin bấm "Lưu cache danh sách").
+   * Khi có phần tử: trang public render từ đây, không gọi API list.
+   */
+  cachedMovieList?: MovieListItem[];
+  /** Thời điểm lưu cache (ISO 8601), hiển thị trong admin. */
+  cachedMovieListSavedAt?: string;
 }
 
 /**
@@ -90,7 +99,7 @@ export interface AdminPageConfig {
   /** Slug cho custom page (routing) */
   slug?: string;
   filter: AdminFilterSetting;
-  savedMovieIds: string[];
+  savedMovies: MovieDetail[];
   /** Các section trong trang (carousel/block), có thể sắp xếp. */
   sections: AdminSection[];
   /** SEO: meta title (thẻ title). */

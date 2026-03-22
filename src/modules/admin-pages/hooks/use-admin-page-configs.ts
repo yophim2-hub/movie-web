@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useCallback } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type {
   AdminPageIdAny,
   AdminFilterSetting,
@@ -8,6 +9,7 @@ import type {
   AdminSection,
   AdminCustomPageMeta,
 } from "../interfaces";
+import type { MovieDetail } from "@/types/movie-detail";
 import {
   mergeFromApiPayload,
   toApiPayload,
@@ -26,64 +28,92 @@ import {
   applyRemoveSavedMovieFromSection,
 } from "../store/admin-page-api-store";
 import { fetchAdminConfig, saveAdminConfig } from "@/lib/admin-config-api";
+import { adminPageConfigQueryKey } from "../lib/admin-config-query-key";
+import { usePhimApiCache } from "../providers/phim-api-cache-provider";
+
+type AdminConfigQueryData = {
+  configs: Record<string, AdminPageConfig>;
+  customPages: AdminCustomPageMeta[];
+};
 
 export function useAdminPageConfigs() {
-  const [configs, setConfigs] = useState<Record<string, AdminPageConfig>>({});
-  const [customPages, setCustomPages] = useState<AdminCustomPageMeta[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const queryClient = useQueryClient();
+  const { staleTimeMs, gcTimeMs } = usePhimApiCache();
 
-  const pageList = getPageListFromCustomPages(customPages);
-
-  const persist = useCallback(
-    async (newConfigs: Record<string, AdminPageConfig>, newCustomPages: AdminCustomPageMeta[]) => {
-      try {
-        const payload = toApiPayload(newConfigs);
-        await saveAdminConfig(payload);
-        setConfigs(newConfigs);
-        setCustomPages(newCustomPages);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Lưu thất bại");
-        throw err;
-      }
-    },
-    []
-  );
-
-  const reload = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
+  const query = useQuery({
+    queryKey: adminPageConfigQueryKey,
+    staleTime: staleTimeMs,
+    gcTime: gcTimeMs,
+    refetchOnWindowFocus: false,
+    queryFn: async (): Promise<AdminConfigQueryData> => {
       const payload = await fetchAdminConfig();
       const merged = mergeFromApiPayload(
         payload.pageConfigs as Record<string, AdminPageConfig>,
         payload.customPages
       );
-      setConfigs(merged);
-      setCustomPages(payload.customPages);
       if (Object.keys(payload.pageConfigs).length === 0 && payload.customPages.length === 0) {
         const savePayload = toApiPayload(merged);
         await saveAdminConfig(savePayload);
-        setCustomPages(savePayload.customPages);
+        return {
+          configs: merged,
+          customPages: savePayload.customPages,
+        };
       }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Tải thất bại");
-      // Luôn hiển thị data mặc định khi API lỗi
-      const defaults = mergeFromApiPayload({}, []);
-      setConfigs(defaults);
-      setCustomPages([]);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+      return {
+        configs: merged,
+        customPages: payload.customPages,
+      };
+    },
+  });
 
-  useEffect(() => {
-    reload();
-  }, [reload]);
+  const configs: Record<string, AdminPageConfig> =
+    query.data?.configs ?? (query.isError ? mergeFromApiPayload({}, []) : {});
+  const customPages = query.data?.customPages ?? [];
+  const pageList = getPageListFromCustomPages(customPages);
+
+  let error: string | null = null;
+  if (query.isError) {
+    error = query.error instanceof Error ? query.error.message : "Tải thất bại";
+  }
+
+  const setQueryData = useCallback(
+    (next: AdminConfigQueryData) => {
+      queryClient.setQueryData(adminPageConfigQueryKey, next);
+    },
+    [queryClient]
+  );
+
+  const persist = useCallback(
+    async (newConfigs: Record<string, AdminPageConfig>, newCustomPages: AdminCustomPageMeta[]) => {
+      const payload = toApiPayload(newConfigs);
+      const previous = queryClient.getQueryData<AdminConfigQueryData>(adminPageConfigQueryKey);
+      setQueryData({ configs: newConfigs, customPages: newCustomPages });
+      await new Promise<void>((resolve) => {
+        setTimeout(resolve, 0);
+      });
+      try {
+        await saveAdminConfig(payload);
+      } catch (e) {
+        if (previous !== undefined) {
+          queryClient.setQueryData(adminPageConfigQueryKey, previous);
+        }
+        throw e;
+      }
+    },
+    [queryClient, setQueryData]
+  );
+
+  const reload = useCallback(async () => {
+    await queryClient.invalidateQueries({ queryKey: adminPageConfigQueryKey });
+  }, [queryClient]);
 
   const addCustomPage = useCallback(
     async (params: { slug: string; label: string; seoTitle?: string; seoDescription?: string }) => {
-      const { configs: next, customPages: nextCustom, newId } = applyAddCustomPage(configs, customPages, params);
+      const { configs: next, customPages: nextCustom, newId } = applyAddCustomPage(
+        configs,
+        customPages,
+        params
+      );
       await persist(next, nextCustom);
       return newId;
     },
@@ -92,7 +122,12 @@ export function useAdminPageConfigs() {
 
   const updateCustomPage = useCallback(
     async (id: string, patch: { slug?: string; label?: string; seoTitle?: string; seoDescription?: string }) => {
-      const { configs: next, customPages: nextCustom } = applyUpdateCustomPage(configs, customPages, id, patch);
+      const { configs: next, customPages: nextCustom } = applyUpdateCustomPage(
+        configs,
+        customPages,
+        id,
+        patch
+      );
       await persist(next, nextCustom);
     },
     [configs, customPages, persist]
@@ -115,8 +150,8 @@ export function useAdminPageConfigs() {
   );
 
   const addSavedMovie = useCallback(
-    async (pageId: AdminPageIdAny, movieId: string) => {
-      const { configs: next } = applyAddSavedMovie(configs, customPages, pageId, movieId);
+    async (pageId: AdminPageIdAny, movie: MovieDetail) => {
+      const { configs: next } = applyAddSavedMovie(configs, customPages, pageId, movie);
       await persist(next, customPages);
     },
     [configs, customPages, persist]
@@ -132,7 +167,12 @@ export function useAdminPageConfigs() {
 
   const addSection = useCallback(
     async (pageId: AdminPageIdAny, section: Omit<AdminSection, "id" | "order">): Promise<string> => {
-      const { configs: next, customPages: nextCustom, newSectionId } = applyAddSection(configs, customPages, pageId, section);
+      const { configs: next, customPages: nextCustom, newSectionId } = applyAddSection(
+        configs,
+        customPages,
+        pageId,
+        section
+      );
       await persist(next, nextCustom);
       return newSectionId;
     },
@@ -164,8 +204,14 @@ export function useAdminPageConfigs() {
   );
 
   const addSavedMovieToSection = useCallback(
-    async (pageId: AdminPageIdAny, sectionId: string, movieId: string) => {
-      const { configs: next } = applyAddSavedMovieToSection(configs, customPages, pageId, sectionId, movieId);
+    async (pageId: AdminPageIdAny, sectionId: string, movie: MovieDetail) => {
+      const { configs: next } = applyAddSavedMovieToSection(
+        configs,
+        customPages,
+        pageId,
+        sectionId,
+        movie
+      );
       await persist(next, customPages);
     },
     [configs, customPages, persist]
@@ -173,7 +219,13 @@ export function useAdminPageConfigs() {
 
   const removeSavedMovieFromSection = useCallback(
     async (pageId: AdminPageIdAny, sectionId: string, movieId: string) => {
-      const { configs: next } = applyRemoveSavedMovieFromSection(configs, customPages, pageId, sectionId, movieId);
+      const { configs: next } = applyRemoveSavedMovieFromSection(
+        configs,
+        customPages,
+        pageId,
+        sectionId,
+        movieId
+      );
       await persist(next, customPages);
     },
     [configs, customPages, persist]
@@ -182,7 +234,7 @@ export function useAdminPageConfigs() {
   return {
     configs,
     pageList,
-    isLoading,
+    isLoading: query.isPending,
     error,
     addCustomPage,
     updateCustomPage,

@@ -7,18 +7,655 @@
         "page": 1,
         "limit": 24
       },
-      "savedMovieIds": [],
+      "savedMovies": [],
       "sections": [
         {
           "id": "160ef1e6-eaa7-4996-bd85-0dc1bd589f56",
           "order": 0,
           "title": "Banner trang chủ",
-          "type": "movie-list",
+          "type": "pinned",
           "filter": {
             "page": 1,
             "limit": 10
           },
-          "savedMovieIds": [],
+          "savedMovies": [
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1598494",
+                "season": null,
+                "vote_average": 0,
+                "vote_count": 0
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-20T20:42:47.000Z"
+              },
+              "modified": {
+                "time": "2026-03-20T20:53:51.000Z"
+              },
+              "_id": "7b81c4f46d031aa280f8293efa226a9b",
+              "name": "Thiên Đường Máu",
+              "slug": "thien-duong-mau",
+              "origin_name": "Bloody Haven",
+              "content": "Thiên Đường Máu là phim điện ảnh đầu tiên về nạn lừa đảo người Việt ra nước ngoài. Tin lời hứa &quot;việc nhẹ lương cao&quot;, không ít thanh niên bị đưa đến những &quot;đặc khu&quot;, nơi họ trải qua cảnh giam lỏng và bị ép buộc phải gọi điện để lừa ngược lại chính đồng bào mình. Nhiều người trong số đó đã tìm cách đào thoát khỏi địa ngục mà họ đã trót dấn thân vào",
+              "type": "single",
+              "status": "completed",
+              "poster_url": "https://phimimg.com/upload/vod/20260320-1/c68d804cbd9fbd4026e3c387d7736095.jpg",
+              "thumb_url": "https://phimimg.com/upload/vod/20260320-1/e7ef2b7b1b6b0b235f8c8999b98a7d8a.jpg",
+              "is_copyright": false,
+              "sub_docquyen": false,
+              "chieurap": true,
+              "trailer_url": "https://www.youtube.com/watch?v=46ASchtBIbE",
+              "time": "99 phút",
+              "episode_current": "Full",
+              "episode_total": "1",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "notify": "",
+              "showtimes": "",
+              "year": 2025,
+              "view": 0,
+              "actor": [
+                "Quang Tuấn",
+                "Quách Ngọc Ngoan",
+                "Hoài Lâm",
+                "Thanh Hương",
+                "Sỹ Toàn"
+              ],
+              "director": [
+                "Hoàng Tuấn Cường"
+              ],
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "f6ce1ae8b39af9d38d653b8a0890adb8",
+                  "name": "Việt Nam",
+                  "slug": "viet-nam"
+                }
+              ],
+              "episodes": [
+                {
+                  "server_name": "#Hà Nội (Vietsub)",
+                  "server_data": [
+                    {
+                      "name": "Full",
+                      "slug": "full",
+                      "filename": "Thiên Đường Máu - Bloody Haven - 2025 - 1080p - Vietsub - Full",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260320/02bq9QLy/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260320/02bq9QLy/index.m3u8"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "111110",
+                "season": 3,
+                "vote_average": 8.1,
+                "vote_count": 1500
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-10T15:48:16.000Z"
+              },
+              "modified": {
+                "time": "2026-03-10T16:22:48.000Z"
+              },
+              "_id": "f40ed67587440c64e5b3881297d5c827",
+              "name": "Đảo Hải Tặc (Live Action) (Phần 2)",
+              "slug": "dao-hai-tac-live-action-phan-2",
+              "origin_name": "ONE PIECE (Live Action) (Season 2)",
+              "content": "Với chiếc mũ rơm và nhóm bạn đủ thành phần, hải tặc trẻ Monkey D. Luffy có hành trình săn kho báu hoành tráng trong bản chuyển thể người đóng này của bộ manga nổi tiếng.",
+              "type": "series",
+              "status": "completed",
+              "poster_url": "https://phimimg.com/upload/vod/20260310-1/2a2baa14e21a3f633e7f06aed2f53dd6.jpg",
+              "thumb_url": "https://phimimg.com/upload/vod/20260310-1/99863628ed38dea725060efb5cad611e.jpg",
+              "is_copyright": false,
+              "sub_docquyen": false,
+              "chieurap": false,
+              "trailer_url": "https://www.youtube.com/watch?v=S-XxKVxZ2fU",
+              "time": "52 phút/tập",
+              "episode_current": "Hoàn Tất (8/8)",
+              "episode_total": "8",
+              "quality": "FHD",
+              "lang": "Vietsub + Lồng Tiếng",
+              "notify": "",
+              "showtimes": "",
+              "year": 2026,
+              "view": 0,
+              "actor": [
+                "Iñaki Godoy",
+                "Emily Rudd",
+                "Mackenyu",
+                "Jacob Gibson",
+                "Jeff Ward",
+                "Taz Skylar"
+              ],
+              "director": [
+                "Đang cập nhật"
+              ],
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "66c78b23908113d478d8d85390a244b4",
+                  "name": "Phiêu Lưu",
+                  "slug": "phieu-luu"
+                },
+                {
+                  "id": "0bcf4077916678de9b48c89221fcf8ae",
+                  "name": "Khoa Học",
+                  "slug": "khoa-hoc"
+                },
+                {
+                  "id": "68564911f00849030f9c9c144ea1b931",
+                  "name": "Viễn Tưởng",
+                  "slug": "vien-tuong"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ],
+              "episodes": [
+                {
+                  "server_name": "#Hà Nội (Vietsub)",
+                  "server_data": [
+                    {
+                      "name": "Tập 01",
+                      "slug": "tap-01",
+                      "filename": "Đảo Hải Tặc (Live Action) (Phần 2) - ONE PIECE (Live Action) (Season 2) - 2026 - 1080p - Vietsub - Tập 01",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260310/465INgkr/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260310/465INgkr/index.m3u8"
+                    },
+                    {
+                      "name": "Tập 02",
+                      "slug": "tap-02",
+                      "filename": "Đảo Hải Tặc (Live Action) (Phần 2) - ONE PIECE (Live Action) (Season 2) - 2026 - 1080p - Vietsub - Tập 02",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260310/yUZMhOBj/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260310/yUZMhOBj/index.m3u8"
+                    },
+                    {
+                      "name": "Tập 03",
+                      "slug": "tap-03",
+                      "filename": "Đảo Hải Tặc (Live Action) (Phần 2) - ONE PIECE (Live Action) (Season 2) - 2026 - 1080p - Vietsub - Tập 03",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260310/LphVDKMJ/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260310/LphVDKMJ/index.m3u8"
+                    },
+                    {
+                      "name": "Tập 04",
+                      "slug": "tap-04",
+                      "filename": "Đảo Hải Tặc (Live Action) (Phần 2) - ONE PIECE (Live Action) (Season 2) - 2026 - 1080p - Vietsub - Tập 04",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260310/CzZT8a8b/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260310/CzZT8a8b/index.m3u8"
+                    },
+                    {
+                      "name": "Tập 05",
+                      "slug": "tap-05",
+                      "filename": "Đảo Hải Tặc (Live Action) (Phần 2) - ONE PIECE (Live Action) (Season 2) - 2026 - 1080p - Vietsub - Tập 05",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260310/cQWAiHJe/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260310/cQWAiHJe/index.m3u8"
+                    },
+                    {
+                      "name": "Tập 06",
+                      "slug": "tap-06",
+                      "filename": "Đảo Hải Tặc (Live Action) (Phần 2) - ONE PIECE (Live Action) (Season 2) - 2026 - 1080p - Vietsub - Tập 06",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260310/WivHcakJ/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260310/WivHcakJ/index.m3u8"
+                    },
+                    {
+                      "name": "Tập 07",
+                      "slug": "tap-07",
+                      "filename": "Đảo Hải Tặc (Live Action) (Phần 2) - ONE PIECE (Live Action) (Season 2) - 2026 - 1080p - Vietsub - Tập 07",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260310/dWmDi5pY/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260310/dWmDi5pY/index.m3u8"
+                    },
+                    {
+                      "name": "Tập 08",
+                      "slug": "tap-08",
+                      "filename": "Đảo Hải Tặc (Live Action) (Phần 2) - ONE PIECE (Live Action) (Season 2) - 2026 - 1080p - Vietsub - Tập 08",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260310/agsgz2Hf/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260310/agsgz2Hf/index.m3u8"
+                    }
+                  ]
+                },
+                {
+                  "server_name": "#Hà Nội (Lồng Tiếng)",
+                  "server_data": [
+                    {
+                      "name": "Tập 01",
+                      "slug": "tap-01",
+                      "filename": "Đảo Hải Tặc (Live Action) (Phần 2) - ONE PIECE (Live Action) (Season 2) - 2026 - 1080p - Lồng Tiếng - Tập 01",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260310/SoC4c3vL/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260310/SoC4c3vL/index.m3u8"
+                    },
+                    {
+                      "name": "Tập 02",
+                      "slug": "tap-02",
+                      "filename": "Đảo Hải Tặc (Live Action) (Phần 2) - ONE PIECE (Live Action) (Season 2) - 2026 - 1080p - Lồng Tiếng - Tập 02",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260310/957vcfZX/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260310/957vcfZX/index.m3u8"
+                    },
+                    {
+                      "name": "Tập 03",
+                      "slug": "tap-03",
+                      "filename": "Đảo Hải Tặc (Live Action) (Phần 2) - ONE PIECE (Live Action) (Season 2) - 2026 - 1080p - Lồng Tiếng - Tập 03",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260310/dYOI3whq/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260310/dYOI3whq/index.m3u8"
+                    },
+                    {
+                      "name": "Tập 04",
+                      "slug": "tap-04",
+                      "filename": "Đảo Hải Tặc (Live Action) (Phần 2) - ONE PIECE (Live Action) (Season 2) - 2026 - 1080p - Lồng Tiếng - Tập 04",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260310/6enj9dqo/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260310/6enj9dqo/index.m3u8"
+                    },
+                    {
+                      "name": "Tập 05",
+                      "slug": "tap-05",
+                      "filename": "Đảo Hải Tặc (Live Action) (Phần 2) - ONE PIECE (Live Action) (Season 2) - 2026 - 1080p - Lồng Tiếng - Tập 05",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260310/KdAXWHml/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260310/KdAXWHml/index.m3u8"
+                    },
+                    {
+                      "name": "Tập 06",
+                      "slug": "tap-06",
+                      "filename": "Đảo Hải Tặc (Live Action) (Phần 2) - ONE PIECE (Live Action) (Season 2) - 2026 - 1080p - Lồng Tiếng - Tập 06",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260310/oeBtcysY/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260310/oeBtcysY/index.m3u8"
+                    },
+                    {
+                      "name": "Tập 07",
+                      "slug": "tap-07",
+                      "filename": "Đảo Hải Tặc (Live Action) (Phần 2) - ONE PIECE (Live Action) (Season 2) - 2026 - 1080p - Lồng Tiếng - Tập 07",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260310/ip2OVgDR/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260310/ip2OVgDR/index.m3u8"
+                    },
+                    {
+                      "name": "Tập 08",
+                      "slug": "tap-08",
+                      "filename": "Đảo Hải Tặc (Live Action) (Phần 2) - ONE PIECE (Live Action) (Season 2) - 2026 - 1080p - Lồng Tiếng - Tập 08",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260310/ACXV4OJy/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260310/ACXV4OJy/index.m3u8"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1137179",
+                "season": null,
+                "vote_average": 7.5,
+                "vote_count": 2
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2025-05-21T13:52:13.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T16:11:27.000Z"
+              },
+              "_id": "94a69f0a7d3171579ee7d8e089ad900b",
+              "name": "Yadang: Ba Mặt Lật Kèo",
+              "slug": "yadang-ba-mat-lat-keo",
+              "origin_name": "Yadang: The Snitch",
+              "content": "&quot;Từ giờ trở đi, bạn là kẻ chỉ điểm của tôi.&quot; Là “cầu nối” giữa thế giới ngầm và các cơ quan thực thi pháp luật, những kẻ chỉ điểm chuyên nghiệp được gọi là &quot;yadang&quot; - người cung cấp thông tin bí mật về thế giới ma túy cho các công tố viên và cảnh sát. Khi một kẻ chỉ điểm ma túy “báo tin” về một bữa tiệc có sự tham dự của các VIP nổi tiếng và vô tình vướng vào một âm mưu nguy hiểm, hắn phải làm mọi thứ trong khả năng của mình không chỉ để sống sót,mà còn để phục thù",
+              "type": "single",
+              "status": "completed",
+              "poster_url": "https://phimimg.com/upload/vod/20250521-1/540a1f1974e8cd349856482e6322e969.jpg",
+              "thumb_url": "https://phimimg.com/upload/vod/20250521-1/85b3235b9cf393959f5c58ef3980976f.jpg",
+              "is_copyright": false,
+              "sub_docquyen": false,
+              "chieurap": true,
+              "trailer_url": "https://www.youtube.com/watch?v=AhvXh0Rv0_c",
+              "time": "123 phút",
+              "episode_current": "Full",
+              "episode_total": "1",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "notify": "",
+              "showtimes": "",
+              "year": 2025,
+              "view": 0,
+              "actor": [
+                "Kang Ha-neul",
+                "Yoo Hai-jin",
+                "Park Hae-jun",
+                "Ryu Kyung-soo",
+                "Chae Won-been",
+                "You Seong-joo",
+                "Kim Keum-soon",
+                "Lim Sung-kyun",
+                "Cho Wan-ki",
+                "Kwak Ja-hyung",
+                "Yoon Tae-soo",
+                "Yoon Hyun-gil",
+                "Park Ji-hong",
+                "Woo Ji-hyeon",
+                "Hong Seo-jun",
+                "Kwon Hyuk",
+                "Jeong Do-won",
+                "Kang Ji-woon",
+                "Su"
+              ],
+              "director": [
+                "Hwang Byeng-gug"
+              ],
+              "category": [
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ],
+              "episodes": [
+                {
+                  "server_name": "#Hà Nội (Vietsub)",
+                  "server_data": [
+                    {
+                      "name": "Full",
+                      "slug": "full",
+                      "filename": "Yadang: Ba Mặt Lật Kèo - Yadang: The Snitch - 2025 - 1080p - Vietsub - Full",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20250826/C8DVA1hl/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20250826/C8DVA1hl/index.m3u8"
+                    }
+                  ]
+                },
+                {
+                  "server_name": "#Hà Nội (Thuyết Minh)",
+                  "server_data": [
+                    {
+                      "name": "Full",
+                      "slug": "full",
+                      "filename": "Yadang: Ba Mặt Lật Kèo - Yadang: The Snitch - 2025 - 1080p - Thuyết Minh - Full",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260320/UpqvsVyx/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260320/UpqvsVyx/index.m3u8"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1418302",
+                "season": null,
+                "vote_average": 4,
+                "vote_count": 3
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-07T15:39:13.000Z"
+              },
+              "modified": {
+                "time": "2026-03-07T17:57:17.000Z"
+              },
+              "_id": "1bc967477f11983ba1d41e2167ae575b",
+              "name": "Bé Ghệ Ma Cưng",
+              "slug": "be-ghe-ma-cung",
+              "origin_name": "My Boo 2",
+              "content": "Khép lại những trang hồi ức của &quot;My Boo&quot;, Jo trở về tiếp quản ngôi nhà cổ - nơi từng chứng kiến cuộc gặp gỡ định mệnh giữa anh và bé ma Anong, linh hồn vẫn luôn vương vấn sau những bức tường cũ kỹ. Tình yêu của họ từng chớm nở rực rỡ nhưng lại kết thúc với sự cách biệt âm dương. Tưởng chừng mọi chuyện đã ngủ yên dưới lớp bụi thời gian, cho đến khi một kẻ lạ mặt đầy bí ẩn xuất hiện. Hắn trao cho Jo cơ hội ngược dòng luân hồi, để anh tận mắt chứng kiến những tiền kiếp xa xăm mà mình và Anong từng chung bước. Kiếp yêu đầu tiên, Anong là một nữ chiến binh quả cảm. Kiếp yêu thứ hai, họ lại kề vai sát cánh giữa những vụ án tâm linh đầy rẫy hiểm nguy. Dẫu thời đại xoay vần, hình hài thay đổi, họ vẫn tìm thấy nhau, vẫn yêu và cùng nhau đối diện với định mệnh nghiệt ngã. Bởi giữa Jo và Anong là một sợi dây nhân duyên bền chặt, đan dệt qua hàng thế kỷ, kết nối họ xuyên qua mọi kiếp nhân sinh.",
+              "type": "single",
+              "status": "completed",
+              "poster_url": "https://phimimg.com/upload/vod/20260307-1/f57a7c5f0ba19967a920749a1c72f3d5.jpg",
+              "thumb_url": "https://phimimg.com/upload/vod/20260307-1/305c10bf355ea15dec5300283524b3f6.jpg",
+              "is_copyright": false,
+              "sub_docquyen": false,
+              "chieurap": true,
+              "trailer_url": "https://www.youtube.com/watch?v=MznH6QxjjZo",
+              "time": "117 phút",
+              "episode_current": "Full",
+              "episode_total": "1",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "notify": "",
+              "showtimes": "",
+              "year": 2025,
+              "view": 0,
+              "actor": [
+                "Sutthirak Subvijitra",
+                "Maylada Susri",
+                "Timethai",
+                "Chaleumpol Tikumpornteerawong",
+                "Tatchaya Supatanyasatit",
+                "Puang Kaewprasert",
+                "Fon Thanasoonthorn",
+                "Itkron Pungkiatrussamee",
+                "Narttida Pitakwararat",
+                "Punyawee Jungcharoen",
+                "Kittiphong Boonprakhom",
+                "Arunphong Naraphan",
+                ""
+              ],
+              "director": [
+                "Khomkrit Treewimol"
+              ],
+              "category": [
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "ba6fd52e5a3aca80eaaf1a3b50a182db",
+                  "name": "Hài Hước",
+                  "slug": "hai-huoc"
+                },
+                {
+                  "id": "4db8d7d4b9873981e3eeb76d02997d58",
+                  "name": "Kinh Dị",
+                  "slug": "kinh-di"
+                }
+              ],
+              "country": [
+                {
+                  "id": "cefbf1640a17bad1e13c2f6f2a811a2d",
+                  "name": "Thái Lan",
+                  "slug": "thai-lan"
+                }
+              ],
+              "episodes": [
+                {
+                  "server_name": "#Hà Nội (Vietsub)",
+                  "server_data": [
+                    {
+                      "name": "Full",
+                      "slug": "full",
+                      "filename": "Bé Ghệ Ma Cưng - My Boo 2 - 2025 - 1080p - Vietsub - Full",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260307/UtTPgshJ/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260307/UtTPgshJ/index.m3u8"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "650524",
+                "season": null,
+                "vote_average": 6.4,
+                "vote_count": 13
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-02-24T13:49:06.000Z"
+              },
+              "modified": {
+                "time": "2026-02-27T23:16:29.000Z"
+              },
+              "_id": "adfacb714c53751aee5b8fefeb8426ce",
+              "name": "Tầm Tần Ký",
+              "slug": "tam-tan-ky-2025",
+              "origin_name": "Back To The Past",
+              "content": "Sau khi Tần Thuỷ Hoàng đã thống nhất 6 nước, màn tái ngộ sau nhiều thập kỷ và cuộc xuyên không đi vào lịch sử hứa hẹn sẽ tạo nên cơn địa chấn tại rạp Việt. Một án oan từ nhiều năm trước đã châm ngòi cho cuộc khủng hoảng làm thay đổi vận mệnh lịch sử! Ken (do Miêu Kiều Vĩ thủ vai) thề sẽ xuyên không trở về thời nhà Tần để xưng vương, bù đắp cho cuộc đời đã bị cướp mất vì oan ngục. Ở thời Tần, gia đình Hạng Thiếu Long (do Cổ Thiên Lạc thủ vai) tuy đã lui về ẩn cư, nhưng mọi hành động vẫn không thể qua mắt đồ đệ của mình – Tần Vương (do Lâm Phong thủ vai). Đúng lúc Tần Vương tưởng rằng mình đã thống nhất lục quốc, xưng bá thiên hạ, thì bất ngờ đối mặt với cuộc tập kích của Ken.",
+              "type": "single",
+              "status": "completed",
+              "poster_url": "https://phimimg.com/upload/vod/20260224-1/5cc9d98eda5f989e06eb0fe1f6a2f64c.jpg",
+              "thumb_url": "https://phimimg.com/upload/vod/20260224-1/4ea4fdf8207637bc536915f13b873475.jpg",
+              "is_copyright": false,
+              "sub_docquyen": false,
+              "chieurap": true,
+              "trailer_url": "https://www.youtube.com/watch?v=O22WwXOhb5w",
+              "time": "107 phút",
+              "episode_current": "Full",
+              "episode_total": "1",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "notify": "",
+              "showtimes": "",
+              "year": 2025,
+              "view": 0,
+              "actor": [
+                "Cổ Thiên Lạc",
+                "Lâm Phong",
+                "Bạch Bách Hà",
+                "Tuyên Huyên",
+                "Quách Thiện Ni",
+                "Đằng Lệ Minh",
+                "Miêu Kiều Vỹ",
+                "Trương Kế Thông",
+                "Chu Bá Hào",
+                "Ngô Việt",
+                "Hồng Thiên Minh",
+                "Chris Collins",
+                "Lưu Khải Trí",
+                "Đặng Nhất Quân",
+                "Michelle Saram",
+                "Âu Thụy Vỹ",
+                "Hoàng Văn Tiêu",
+                "Trần Quốc Bằng"
+              ],
+              "director": [
+                "Nguyên Khuê",
+                "Lê Diệu Tường"
+              ],
+              "category": [
+                {
+                  "id": "0bcf4077916678de9b48c89221fcf8ae",
+                  "name": "Khoa Học",
+                  "slug": "khoa-hoc"
+                },
+                {
+                  "id": "68564911f00849030f9c9c144ea1b931",
+                  "name": "Viễn Tưởng",
+                  "slug": "vien-tuong"
+                },
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "ba6fd52e5a3aca80eaaf1a3b50a182db",
+                  "name": "Hài Hước",
+                  "slug": "hai-huoc"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "a0cd53c9875b96640ac264ca81996f9f",
+                  "name": "Hồng Kông",
+                  "slug": "hong-kong"
+                },
+                {
+                  "id": "3e075636c731fe0f889c69e0bf82c083",
+                  "name": "Trung Quốc",
+                  "slug": "trung-quoc"
+                }
+              ],
+              "episodes": [
+                {
+                  "server_name": "#Hà Nội (Vietsub)",
+                  "server_data": [
+                    {
+                      "name": "Full",
+                      "slug": "full",
+                      "filename": "Tầm Tần Ký - Back To The Past - 2025 - 1080p - Vietsub - Full",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260224/bEUn0VCU/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260224/bEUn0VCU/index.m3u8"
+                    }
+                  ]
+                },
+                {
+                  "server_name": "#Hà Nội (Thuyết Minh)",
+                  "server_data": [
+                    {
+                      "name": "Full",
+                      "slug": "full",
+                      "filename": "Tầm Tần Ký - Back To The Past - 2025 - 1080p - Thuyết Minh - Full",
+                      "link_embed": "https://player.phimapi.com/player/?url=https://s6.kkphimplayer6.com/20260227/LijqAKGb/index.m3u8",
+                      "link_m3u8": "https://s6.kkphimplayer6.com/20260227/LijqAKGb/index.m3u8"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
           "displayType": "banner"
         },
         {
@@ -31,10 +668,1343 @@
             "page": 1,
             "limit": 24,
             "sortField": "modified.time",
-            "sortType": "desc"
+            "sortType": "desc",
+            "category": "hanh-dong"
           },
-          "savedMovieIds": [],
-          "displayType": "poster-list"
+          "savedMovies": [],
+          "displayType": "poster-list",
+          "cachedMovieList": [
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1110034",
+                "season": null,
+                "vote_average": 6.7,
+                "vote_count": 7
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-12T21:44:37.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T17:40:31.000Z"
+              },
+              "_id": "cf787e7b5f9346fe81658c708ca68c61",
+              "name": "Quái Vật Biển",
+              "slug": "quai-vat-bien",
+              "origin_name": "Kraken",
+              "type": "single",
+              "poster_url": "upload/vod/20260312-1/699b844e5899165ab432691b0831c1ef.jpg",
+              "thumb_url": "upload/vod/20260312-1/8a9099f79c783115a7e4dc4b32d72189.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "94 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "4db8d7d4b9873981e3eeb76d02997d58",
+                  "name": "Kinh Dị",
+                  "slug": "kinh-di"
+                },
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "638f494a6d33cf5760f6e95c8beb612a",
+                  "name": "Na Uy",
+                  "slug": "na-uy"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1265609",
+                "season": null,
+                "vote_average": 6.696,
+                "vote_count": 69
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-07T17:01:22.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T16:12:02.000Z"
+              },
+              "_id": "46bf8132ed264dd0192d219f8be3be51",
+              "name": "Cỗ Máy Chiến Tranh",
+              "slug": "co-may-chien-tranh-2026",
+              "origin_name": "War Machine",
+              "type": "single",
+              "poster_url": "upload/vod/20260307-1/79e6cf0f5f3d384a01de55d892106017.jpg",
+              "thumb_url": "upload/vod/20260307-1/974409f15172f4c9cf939eb22cc900f4.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "109 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "0bcf4077916678de9b48c89221fcf8ae",
+                  "name": "Khoa Học",
+                  "slug": "khoa-hoc"
+                },
+                {
+                  "id": "68564911f00849030f9c9c144ea1b931",
+                  "name": "Viễn Tưởng",
+                  "slug": "vien-tuong"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "435a85571578e419ed511257881a1e75",
+                  "name": "Úc",
+                  "slug": "uc"
+                },
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1071640",
+                "season": null,
+                "vote_average": 6,
+                "vote_count": 1
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-12T21:16:56.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T16:10:01.000Z"
+              },
+              "_id": "689e29456db0e6f0b9a03e1e6c42b231",
+              "name": "Đội Xung Kích",
+              "slug": "doi-xung-kich",
+              "origin_name": "Ultimate Revenge",
+              "type": "single",
+              "poster_url": "upload/vod/20260312-1/0fdbc2c70f74510ea73963f330e97a1c.jpg",
+              "thumb_url": "upload/vod/20260312-1/de86fb530a3c11f32d2f439e890134e3.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "110 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                }
+              ],
+              "country": [
+                {
+                  "id": "a0cd53c9875b96640ac264ca81996f9f",
+                  "name": "Hồng Kông",
+                  "slug": "hong-kong"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1179684",
+                "season": null,
+                "vote_average": 5.9,
+                "vote_count": 10
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-12T21:19:37.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T16:09:32.000Z"
+              },
+              "_id": "85e5e0842d745041f29f57f0f3c7a92c",
+              "name": "Amsterdamned II",
+              "slug": "amsterdamned-ii",
+              "origin_name": "Amsterdamned II",
+              "type": "single",
+              "poster_url": "upload/vod/20260312-1/fa5fcba06c41d60a870f5b84da5141dc.jpg",
+              "thumb_url": "upload/vod/20260312-1/a96239bcc6faf6fbbb7618c883588f2d.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "110 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "41487913363f08e29ea07f6fdfb49a41",
+                  "name": "Hà Lan",
+                  "slug": "ha-lan"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1563616",
+                "season": null,
+                "vote_average": 7.2,
+                "vote_count": 7
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-12T21:24:24.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T16:09:00.000Z"
+              },
+              "_id": "1bbf59e4a46f5f5bd392ab8f9fc72fb8",
+              "name": "Khóa Học",
+              "slug": "khoa-hoc",
+              "origin_name": "The Race / Cursa",
+              "type": "single",
+              "poster_url": "upload/vod/20260312-1/dc3313409b7f03f161ca12f9e93b188a.jpg",
+              "thumb_url": "upload/vod/20260312-1/edc16c3fbe8b1677b41c0b6acfdff913.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "97 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "66c78b23908113d478d8d85390a244b4",
+                  "name": "Phiêu Lưu",
+                  "slug": "phieu-luu"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "2fe255994986c448c81c6c5b79b7348b",
+                  "name": "Quốc Gia Khác",
+                  "slug": "quoc-gia-khac"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1634301",
+                "season": null,
+                "vote_average": 7,
+                "vote_count": 3
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-12T21:36:45.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T16:08:26.000Z"
+              },
+              "_id": "3ee8a2374ccd73f8df678c0e9e6b6a91",
+              "name": "Vanaveera",
+              "slug": "vanaveera",
+              "origin_name": "Vanaveera",
+              "type": "single",
+              "poster_url": "upload/vod/20260312-1/97050187b9fb9a3026d289ceb297a6b9.jpg",
+              "thumb_url": "upload/vod/20260312-1/4375e5065c1c244c6e4ce9c526e4203d.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "105 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                }
+              ],
+              "country": [
+                {
+                  "id": "32d2319752dd165daba82f59878c6afb",
+                  "name": "Ấn Độ",
+                  "slug": "an-do"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1617412",
+                "season": null,
+                "vote_average": 6,
+                "vote_count": 1
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-12T21:39:10.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T16:08:01.000Z"
+              },
+              "_id": "5c737c9054455690570a9f7eac5dc198",
+              "name": "Lazarus: Thức Tỉnh",
+              "slug": "lazarus-thuc-tinh",
+              "origin_name": "Lazarus: The Awakening",
+              "type": "single",
+              "poster_url": "upload/vod/20260312-1/fd2a888297aea0068798a45ab2fb0da0.jpg",
+              "thumb_url": "upload/vod/20260312-1/a8dd3af3edce995cf44d04a0d30cdc09.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "87 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "68564911f00849030f9c9c144ea1b931",
+                  "name": "Viễn Tưởng",
+                  "slug": "vien-tuong"
+                },
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1461181",
+                "season": null,
+                "vote_average": 5.658,
+                "vote_count": 19
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-12T21:46:19.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T16:07:11.000Z"
+              },
+              "_id": "5558e56d737512c66be1e01ecf091b54",
+              "name": "Hierarchy",
+              "slug": "hierarchy",
+              "origin_name": "Hierarchy",
+              "type": "single",
+              "poster_url": "upload/vod/20260312-1/39d79ed6897a9f69afa1fa60c752d937.jpg",
+              "thumb_url": "upload/vod/20260312-1/f16f868e436651086babb3d17ecfee53.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "97 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1293167",
+                "season": null,
+                "vote_average": 4.8,
+                "vote_count": 8
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-12T21:55:22.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T16:06:18.000Z"
+              },
+              "_id": "31882dbf700c4b88a999f391ec520665",
+              "name": "Lối Thoát",
+              "slug": "loi-thoat-2025",
+              "origin_name": "Exit Protocol",
+              "type": "single",
+              "poster_url": "upload/vod/20260312-1/45113283dd0dd3a3b24af27e2e075c96.jpg",
+              "thumb_url": "upload/vod/20260312-1/6a90b5489d4c5f902d329d60be1ec8c4.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "84 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                },
+                {
+                  "id": "932bbaca386ee0436ad0159117eabae4",
+                  "name": "Anh",
+                  "slug": "anh"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1262547",
+                "season": null,
+                "vote_average": 6,
+                "vote_count": 2
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-12T21:26:55.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T16:05:14.000Z"
+              },
+              "_id": "5981b0f78d15e748a9b0c43202461be2",
+              "name": "Subedaar",
+              "slug": "subedaar",
+              "origin_name": "Subedaar",
+              "type": "single",
+              "poster_url": "upload/vod/20260312-1/e429dd1bd533069c8c4143ea4d32ae13.jpg",
+              "thumb_url": "upload/vod/20260312-1/0a2797e34269753542b93f4af024533f.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "142 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                }
+              ],
+              "country": [
+                {
+                  "id": "aadd510492662beef1a980624b26c685",
+                  "name": "Ấn Độ",
+                  "slug": "an-do"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1439594",
+                "season": null,
+                "vote_average": 6.1,
+                "vote_count": 6
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-12T22:17:07.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T16:01:03.000Z"
+              },
+              "_id": "393a0f103dfdc3798cf1cfc2e7bdbc1f",
+              "name": "Chatha Pacha: The Ring of Rowdies",
+              "slug": "chatha-pacha-the-ring-of-rowdies",
+              "origin_name": "Chatha Pacha: The Ring of Rowdies",
+              "type": "single",
+              "poster_url": "upload/vod/20260312-1/207bfe8920a85ee89a4e25bd341b84f0.jpg",
+              "thumb_url": "upload/vod/20260312-1/8ce1a3796d8a2ba938137fa74e2814cd.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "134 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                }
+              ],
+              "country": [
+                {
+                  "id": "aadd510492662beef1a980624b26c685",
+                  "name": "Ấn Độ",
+                  "slug": "an-do"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1088434",
+                "season": null,
+                "vote_average": 6.915,
+                "vote_count": 53
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-12T22:18:29.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T16:00:50.000Z"
+              },
+              "_id": "cf76c4cd2c8f67fea31b8c15d16ca3bc",
+              "name": "Lửa Địa Ngục",
+              "slug": "lua-dia-nguc",
+              "origin_name": "Hellfire",
+              "type": "single",
+              "poster_url": "upload/vod/20260312-1/ebab572d6a98d76f2ceb57437687ede7.jpg",
+              "thumb_url": "upload/vod/20260312-1/8626309c3062bd5c823fe6e21ff18545.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "94 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1270041",
+                "season": null,
+                "vote_average": 3.5,
+                "vote_count": 1
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-12T22:23:50.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T15:59:42.000Z"
+              },
+              "_id": "0c71f0a8c36a3212e6569e6186febd41",
+              "name": "Áp dụng luật pháp",
+              "slug": "ap-dung-luat-phap",
+              "origin_name": "Bring the Law",
+              "type": "single",
+              "poster_url": "upload/vod/20260312-1/01eb12072a764b2d73dbf33aa9272b94.jpg",
+              "thumb_url": "upload/vod/20260312-1/43a45350dc23ad2d4d81a75814cec0c7.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "95 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1449400",
+                "season": null,
+                "vote_average": 6.389,
+                "vote_count": 9
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-12T22:24:28.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T15:59:26.000Z"
+              },
+              "_id": "70bf777cc83dea60cec264b23ad4d34a",
+              "name": "Liều lĩnh",
+              "slug": "lieu-linh-2026",
+              "origin_name": "Reckless",
+              "type": "single",
+              "poster_url": "upload/vod/20260312-1/7a7a661e51f85097c9e67398dbf4547a.jpg",
+              "thumb_url": "upload/vod/20260312-1/6d930e3ae8acde795a8daeb2db3f5454.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "91 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "ba6fd52e5a3aca80eaaf1a3b50a182db",
+                  "name": "Hài Hước",
+                  "slug": "hai-huoc"
+                },
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1454405",
+                "season": null,
+                "vote_average": 5.5,
+                "vote_count": 2
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-16T16:30:19.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T15:59:15.000Z"
+              },
+              "_id": "f06110ef2e1e1ae119cbacf71dd17732",
+              "name": "Akaal: The Unconquered",
+              "slug": "akaal-the-unconquered",
+              "origin_name": "Akaal: The Unconquered",
+              "type": "single",
+              "poster_url": "upload/vod/20260316-1/6c96ef47ba75412ea893da88af2848d0.jpg",
+              "thumb_url": "",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "137 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "f8ec3e9b77c509fdf64f0c387119b916",
+                  "name": "Lịch Sử",
+                  "slug": "lich-su"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                }
+              ],
+              "country": [
+                {
+                  "id": "aadd510492662beef1a980624b26c685",
+                  "name": "Ấn Độ",
+                  "slug": "an-do"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1196067",
+                "season": null,
+                "vote_average": 6,
+                "vote_count": 96
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-16T16:35:39.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T15:58:18.000Z"
+              },
+              "_id": "7711010121e869ead8a928fa035b48df",
+              "name": "Kẻ Phá Vỡ Thế Giới",
+              "slug": "ke-pha-vo-the-gioi",
+              "origin_name": "Worldbreaker",
+              "type": "single",
+              "poster_url": "upload/vod/20260316-1/9cf24ab5f8e10b940c0ba16211021369.jpg",
+              "thumb_url": "upload/vod/20260316-1/85e84b6817e47f33c9f7875160c50257.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "95 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "0bcf4077916678de9b48c89221fcf8ae",
+                  "name": "Khoa Học",
+                  "slug": "khoa-hoc"
+                },
+                {
+                  "id": "68564911f00849030f9c9c144ea1b931",
+                  "name": "Viễn Tưởng",
+                  "slug": "vien-tuong"
+                },
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "4db8d7d4b9873981e3eeb76d02997d58",
+                  "name": "Kinh Dị",
+                  "slug": "kinh-di"
+                }
+              ],
+              "country": [
+                {
+                  "id": "932bbaca386ee0436ad0159117eabae4",
+                  "name": "Anh",
+                  "slug": "anh"
+                },
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1465038",
+                "season": null,
+                "vote_average": 6.3,
+                "vote_count": 19
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-16T16:38:55.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T15:57:07.000Z"
+              },
+              "_id": "29ac0835a14c551405ff79715374bd05",
+              "name": "Cuộc Đấu Súng Cuối Cùng",
+              "slug": "cuoc-dau-sung-cuoi-cung",
+              "origin_name": "The Last GunFight",
+              "type": "single",
+              "poster_url": "upload/vod/20260316-1/f1a26d6c55a412c5210ccfb28cf4c769.jpg",
+              "thumb_url": "upload/vod/20260316-1/b9a994a2e00778e7f0d1b2f174a8dd47.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "98 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1636891",
+                "season": null,
+                "vote_average": 4,
+                "vote_count": 2
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-16T16:41:22.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T15:56:27.000Z"
+              },
+              "_id": "1d3b870a10ac880f27c0b5b69756e749",
+              "name": "Lính Đánh Thuê",
+              "slug": "linh-danh-thue-2026",
+              "origin_name": "Mexicali",
+              "type": "single",
+              "poster_url": "upload/vod/20260316-1/933077262e822d354c132750030d4676.jpg",
+              "thumb_url": "upload/vod/20260316-1/9f0d896cdbbf36f0d284226645c7ae01.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "99 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                }
+              ],
+              "country": [
+                {
+                  "id": "af5c50bf625c1da71838678a5cf37189",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1592032",
+                "season": null,
+                "vote_average": 5.5,
+                "vote_count": 2
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-18T16:40:24.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T15:53:54.000Z"
+              },
+              "_id": "21b0c70a1e91a5eb8f3d772cc0e64967",
+              "name": "Cuồng Nộ Tập Kích",
+              "slug": "cuong-no-tap-kich",
+              "origin_name": "Furious Attack",
+              "type": "single",
+              "poster_url": "upload/vod/20260318-1/9e999832286a22480a46b220fc47d6df.jpg",
+              "thumb_url": "upload/vod/20260318-1/349ce62589e7864e25cbc4884a63727a.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "1 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Thuyết Minh",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "92aa3c93de523a414a520399bb6a4304",
+                  "name": "Trung Quốc",
+                  "slug": "trung-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "9053",
+                "season": null,
+                "vote_average": 5.253,
+                "vote_count": 898
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2023-11-08T22:28:41.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T15:53:01.000Z"
+              },
+              "_id": "1713a23c14b5033adb074b5464fb6c66",
+              "name": "DOA: Sống hoặc Chết",
+              "slug": "doa-song-hoac-chet",
+              "origin_name": "DOA: Dead or Alive",
+              "type": "single",
+              "poster_url": "upload/vod/20260318-1/a1c2392cb613e90be2c937cb7beeca71.jpg",
+              "thumb_url": "upload/vod/20260318-1/791c86d67a9a93e2e5241cb65426bfd3.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "87 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2006,
+              "category": [
+                {
+                  "id": "66c78b23908113d478d8d85390a244b4",
+                  "name": "Phiêu Lưu",
+                  "slug": "phieu-luu"
+                },
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1255649",
+                "season": null,
+                "vote_average": 6,
+                "vote_count": 6
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-18T18:58:25.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T15:50:42.000Z"
+              },
+              "_id": "aea5525e5aa202e1efd5895c330110bd",
+              "name": "Vàng",
+              "slug": "vang",
+              "origin_name": "Golden",
+              "type": "single",
+              "poster_url": "upload/vod/20260318-1/111fad7552beb9b28f3b6e6fc8c62282.jpg",
+              "thumb_url": "upload/vod/20260318-1/626d69c693ac096538d749b3279aa607.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "94 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                },
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "846049",
+                "season": null,
+                "vote_average": 6,
+                "vote_count": 1
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-18T19:01:36.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T15:50:20.000Z"
+              },
+              "_id": "13e28b82b739928c070be77afbc668ea",
+              "name": "Mặt trời Dresden",
+              "slug": "mat-troi-dresden",
+              "origin_name": "The Dresden Sun",
+              "type": "single",
+              "poster_url": "upload/vod/20260318-1/ffba0de68c8e815349fc4f163ec55282.jpg",
+              "thumb_url": "upload/vod/20260318-1/1bad79c07cb0eecc0c090c9bdd03f242.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "129 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "0bcf4077916678de9b48c89221fcf8ae",
+                  "name": "Khoa Học",
+                  "slug": "khoa-hoc"
+                },
+                {
+                  "id": "68564911f00849030f9c9c144ea1b931",
+                  "name": "Viễn Tưởng",
+                  "slug": "vien-tuong"
+                },
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1598494",
+                "season": null,
+                "vote_average": 0,
+                "vote_count": 0
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-20T20:42:47.000Z"
+              },
+              "modified": {
+                "time": "2026-03-20T20:53:51.000Z"
+              },
+              "_id": "7b81c4f46d031aa280f8293efa226a9b",
+              "name": "Thiên Đường Máu",
+              "slug": "thien-duong-mau",
+              "origin_name": "Bloody Haven",
+              "type": "single",
+              "poster_url": "upload/vod/20260320-1/c68d804cbd9fbd4026e3c387d7736095.jpg",
+              "thumb_url": "upload/vod/20260320-1/e7ef2b7b1b6b0b235f8c8999b98a7d8a.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "99 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "f6ce1ae8b39af9d38d653b8a0890adb8",
+                  "name": "Việt Nam",
+                  "slug": "viet-nam"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1523476",
+                "season": null,
+                "vote_average": 0,
+                "vote_count": 0
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-20T12:07:31.000Z"
+              },
+              "modified": {
+                "time": "2026-03-20T12:07:31.000Z"
+              },
+              "_id": "371f5bb6b80541e62f0ecf7341293e2d",
+              "name": "Tuyệt Địa Phi Hành",
+              "slug": "tuyet-dia-phi-hanh",
+              "origin_name": "The Simulator",
+              "type": "single",
+              "poster_url": "upload/vod/20260320-1/ededd91ac877b576db8c30d6930f3df5.jpg",
+              "thumb_url": "upload/vod/20260320-1/03b3a8f307ecf82c8a97c32e6b466bd9.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "100 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2024,
+              "category": [
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                },
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                }
+              ],
+              "country": [
+                {
+                  "id": "92aa3c93de523a414a520399bb6a4304",
+                  "name": "Trung Quốc",
+                  "slug": "trung-quoc"
+                }
+              ]
+            }
+          ],
+          "cachedMovieListSavedAt": "2026-03-22T14:58:31.962Z"
         },
         {
           "id": "b1a2c3d4-1111-4aaa-bbbb-111111111111",
@@ -50,8 +2020,1445 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
-          "displayType": "poster-list"
+          "savedMovies": [],
+          "displayType": "poster-list",
+          "cachedMovieList": [
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "276472",
+                "season": 1,
+                "vote_average": 7,
+                "vote_count": 1
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-08T15:18:22.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T10:49:49.000Z"
+              },
+              "_id": "dbc6904b9ae5239ad74f90306daae0ad",
+              "name": "Ánh Sáng Của Đôi Ta",
+              "slug": "anh-sang-cua-doi-ta",
+              "origin_name": "Still Shining",
+              "type": "series",
+              "poster_url": "upload/vod/20260308-1/83b52571c8e2905ed342cfc933d9d804.jpg",
+              "thumb_url": "upload/vod/20260308-1/9bf7cbc67110bac394d8243f087ffdcc.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "64 phút/tập",
+              "episode_current": "Tập 6",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "314073",
+                "season": 1,
+                "vote_average": 0,
+                "vote_count": 0
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-21T14:14:00.000Z"
+              },
+              "modified": {
+                "time": "2026-03-21T14:14:00.000Z"
+              },
+              "_id": "9ad07f2a37ad05f4ce6c53e0af0bc0e3",
+              "name": "Đừng Quên Kẻ Thù",
+              "slug": "dung-quen-ke-thu",
+              "origin_name": "Never Forget Your Enemy",
+              "type": "series",
+              "poster_url": "upload/vod/20260321-1/844e5a3b8fb51a3cf7aab038822dc097.jpg",
+              "thumb_url": "upload/vod/20260321-1/014b4d5234072df4117b77b916e99cba.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "31 phút/tập",
+              "episode_current": "Tập 2",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "cefbf1640a17bad1e13c2f6f2a811a2d",
+                  "name": "Thái Lan",
+                  "slug": "thai-lan"
+                },
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "303693",
+                "season": 2,
+                "vote_average": 5.4,
+                "vote_count": 9
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-02-06T06:09:52.000Z"
+              },
+              "modified": {
+                "time": "2026-03-19T15:58:45.000Z"
+              },
+              "_id": "58be01aa723db6569480940d2c1fde3d",
+              "name": "Thủy Triều Tình Yêu (Phần 2)",
+              "slug": "thuy-trieu-tinh-yeu-phan-2",
+              "origin_name": "Tide Of Love (Season 2)",
+              "type": "series",
+              "poster_url": "upload/vod/20260206-1/f38225ffd928c85e486a044f88b6ad6e.jpg",
+              "thumb_url": "upload/vod/20260206-1/5cd5415aa2775e52755f9aaca107e931.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "33 phút/tập",
+              "episode_current": "Tập 7",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "287344",
+                "season": 1,
+                "vote_average": 6,
+                "vote_count": 1
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-04T21:43:22.000Z"
+              },
+              "modified": {
+                "time": "2026-03-19T02:49:07.000Z"
+              },
+              "_id": "dc871d2aea75fc5b3ef9693f42464147",
+              "name": "Cẩm Nang Yêu",
+              "slug": "cam-nang-yeu",
+              "origin_name": "The Practical Guide To Love",
+              "type": "series",
+              "poster_url": "upload/vod/20260304-1/251f3e72d214418826f7ef6a3a96ce64.jpg",
+              "thumb_url": "upload/vod/20260304-1/b182828b69f44336ac50740710ae57a8.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "66 phút/tập",
+              "episode_current": "Tập 6",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "ba6fd52e5a3aca80eaaf1a3b50a182db",
+                  "name": "Hài Hước",
+                  "slug": "hai-huoc"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "233833",
+                "season": 1,
+                "vote_average": 8,
+                "vote_count": 2
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-02-23T14:41:48.000Z"
+              },
+              "modified": {
+                "time": "2026-03-18T08:15:36.000Z"
+              },
+              "_id": "9b0bb812b40cb63d352715c0040dbfba",
+              "name": "Mùa Rực Rỡ Của Em (Mùa Em Rực Rỡ)",
+              "slug": "mua-ruc-ro-cua-em-mua-em-ruc-ro",
+              "origin_name": "In Your Radiant Season",
+              "type": "series",
+              "poster_url": "upload/vod/20260223-1/8a44c515d71551459012656dfccf6e31.jpg",
+              "thumb_url": "upload/vod/20260223-1/62667ee973537d0636ed2105c1d16dcc.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "70 phút/tập",
+              "episode_current": "Tập 7",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "2fb53017b3be83cd754a08adab3e916c",
+                  "name": "Bí Ẩn",
+                  "slug": "bi-an"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "a2492d6cbc4d58f115406ca14e5ec7b6",
+                  "name": "Gia Đình",
+                  "slug": "gia-dinh"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "289690",
+                "season": 1,
+                "vote_average": 6,
+                "vote_count": 1
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-02-28T09:55:30.000Z"
+              },
+              "modified": {
+                "time": "2026-03-15T22:25:13.000Z"
+              },
+              "_id": "546ba6ad0ece03a14523470c72264e09",
+              "name": "Hội Chứng Sợ Yêu",
+              "slug": "hoi-chung-so-yeu",
+              "origin_name": "Love Phobia",
+              "type": "series",
+              "poster_url": "upload/vod/20260228-1/61331adaf8959d15b132eaf69d7987d2.jpg",
+              "thumb_url": "upload/vod/20260228-1/ad4d28e4f4cc791f56b3666b8cbbf6ab.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "47 phút/tập",
+              "episode_current": "Hoàn Tất (8/8)",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                },
+                {
+                  "id": "ba6fd52e5a3aca80eaaf1a3b50a182db",
+                  "name": "Hài Hước",
+                  "slug": "hai-huoc"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "293608",
+                "season": 1,
+                "vote_average": 0,
+                "vote_count": 0
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-01-17T22:28:48.000Z"
+              },
+              "modified": {
+                "time": "2026-03-09T17:36:42.000Z"
+              },
+              "_id": "efa41f347fb5bfa798ab738ead1d2045",
+              "name": "Điều Tra Viên Hong",
+              "slug": "dieu-tra-vien-hong",
+              "origin_name": "Undercover Miss Hong",
+              "type": "series",
+              "poster_url": "upload/vod/20260117-1/22756a81f9eb77a599c5d6205b4b96d0.jpg",
+              "thumb_url": "upload/vod/20260117-1/89df54b69f60d33e976af3dc4e5d1595.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "74 phút/tập",
+              "episode_current": "Hoàn Tất (16/16)",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                },
+                {
+                  "id": "ba6fd52e5a3aca80eaaf1a3b50a182db",
+                  "name": "Hài Hước",
+                  "slug": "hai-huoc"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "152512",
+                "season": 1,
+                "vote_average": 7.6,
+                "vote_count": 40
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2024-04-08T23:40:09.000Z"
+              },
+              "modified": {
+                "time": "2026-03-08T13:44:16.000Z"
+              },
+              "_id": "05a0eed59f4254eb0a5103e13fdba02b",
+              "name": "Chạy Đến Bên Em Với Vận Tốc 493Km",
+              "slug": "chay-den-ben-em-voi-van-toc-493km",
+              "origin_name": "Love All Play",
+              "type": "series",
+              "poster_url": "upload/vod/20260308-1/f0d84b5054b0a7dba0742afb0f186419.jpg",
+              "thumb_url": "upload/vod/20260308-1/81b639680c6ad3a04c6b25cb398e5cca.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "63 phút/tập",
+              "episode_current": "Hoàn Tất (16/16)",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2022,
+              "category": [
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "280948",
+                "season": 1,
+                "vote_average": 8,
+                "vote_count": 3
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-01-06T18:08:34.000Z"
+              },
+              "modified": {
+                "time": "2026-03-02T16:23:18.000Z"
+              },
+              "_id": "4825f2b20fb569c346c060a2f8c31c18",
+              "name": "Cơn Say Mùa Xuân",
+              "slug": "con-say-mua-xuan",
+              "origin_name": "Spring Fever",
+              "type": "series",
+              "poster_url": "upload/vod/20260106-1/deeaf96194e9eb72cc990cb4747536e6.jpg",
+              "thumb_url": "upload/vod/20260106-1/d5e890dcb880d197c872605fd6aad150.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "61 phút/tập",
+              "episode_current": "Hoàn Tất (12/12)",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "ba6fd52e5a3aca80eaaf1a3b50a182db",
+                  "name": "Hài Hước",
+                  "slug": "hai-huoc"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "66433",
+                "season": 1,
+                "vote_average": 8.508,
+                "vote_count": 548
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2024-11-04T08:00:26.000Z"
+              },
+              "modified": {
+                "time": "2026-02-15T09:38:19.000Z"
+              },
+              "_id": "48fb20ee25f8ec60949e66e5ebb46600",
+              "name": "Người Tình Ánh Trăng",
+              "slug": "nguoi-tinh-anh-trang",
+              "origin_name": "Scarlet Heart: Ryeo (Moon Lovers)",
+              "type": "series",
+              "poster_url": "upload/vod/20250907-1/d0395e8cd4b62b13d60dd939ab043890.jpg",
+              "thumb_url": "upload/vod/20250907-1/4338e288f9272c710bed96421319e02f.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "60 phút/tập",
+              "episode_current": "Hoàn Tất (20/20)",
+              "quality": "FHD",
+              "lang": "Vietsub + Lồng Tiếng",
+              "year": 2016,
+              "category": [
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "3a17c7283b71fa84e5a8d76fb790ed3e",
+                  "name": "Cổ Trang",
+                  "slug": "co-trang"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                },
+                {
+                  "id": "66c78b23908113d478d8d85390a244b4",
+                  "name": "Phiêu Lưu",
+                  "slug": "phieu-luu"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "5381",
+                "season": 1,
+                "vote_average": 8.495,
+                "vote_count": 190
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-02-15T08:50:16.000Z"
+              },
+              "modified": {
+                "time": "2026-02-15T08:50:16.000Z"
+              },
+              "_id": "5831e536b6f7828e911b47c0f2525161",
+              "name": "Tên Tôi Là Kim Sam Soon",
+              "slug": "ten-toi-la-kim-sam-soon",
+              "origin_name": "My Lovely Sam Soon",
+              "type": "series",
+              "poster_url": "upload/vod/20260215-1/777149ece2a671254448d0a709faef28.jpg",
+              "thumb_url": "upload/vod/20260215-1/9d5b1e7a0d045c41091e8992f8e55e93.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "60 phút/tập",
+              "episode_current": "Hoàn Tất (16/16)",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2005,
+              "category": [
+                {
+                  "id": "ba6fd52e5a3aca80eaaf1a3b50a182db",
+                  "name": "Hài Hước",
+                  "slug": "hai-huoc"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": null,
+                "id": null,
+                "season": null,
+                "vote_average": 0,
+                "vote_count": 0
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-02-06T05:42:46.000Z"
+              },
+              "modified": {
+                "time": "2026-02-06T12:38:26.000Z"
+              },
+              "_id": "d6cb41a908909feead800375f0e96b04",
+              "name": "Kiêu Hãnh Và Định Kiến",
+              "slug": "kieu-hanh-va-dinh-kien-2014",
+              "origin_name": "Pride And Prejudice",
+              "type": "series",
+              "poster_url": "upload/vod/20260206-1/1b8108b1c69328bb74bb74bab2e666c5.jpg",
+              "thumb_url": "upload/vod/20260206-1/7d2ca9138bbe67ecdd1ae043996d1b9a.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "60 phút/tập",
+              "episode_current": "Hoàn Tất (42/42)",
+              "quality": "FHD",
+              "lang": "Lồng Tiếng",
+              "year": 2014,
+              "category": [
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "303693",
+                "season": 1,
+                "vote_average": 0,
+                "vote_count": 0
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2025-11-17T17:20:19.000Z"
+              },
+              "modified": {
+                "time": "2026-02-06T06:07:05.000Z"
+              },
+              "_id": "9ef76737dc71b2cf44533b32fb344419",
+              "name": "Thủy Triều Tình Yêu (Phần 1)",
+              "slug": "thuy-trieu-tinh-yeu-phan-1",
+              "origin_name": "Tide Of Love (Season 1)",
+              "type": "series",
+              "poster_url": "upload/vod/20251117-1/efc234e8d5dbf8fa3002a61d6815792a.jpg",
+              "thumb_url": "upload/vod/20251117-1/39ea5e9d11c66d9ceaa5e806446d300f.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "10 phút/tập",
+              "episode_current": "Hoàn Tất (10/10)",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "275989",
+                "season": 1,
+                "vote_average": 0,
+                "vote_count": 0
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2025-12-21T00:39:15.000Z"
+              },
+              "modified": {
+                "time": "2026-01-27T10:19:17.000Z"
+              },
+              "_id": "6d8470222cb0e9ca1519ab84406ef2b2",
+              "name": "Bước Vào Tim Em",
+              "slug": "buoc-vao-tim-em",
+              "origin_name": "Love Me",
+              "type": "series",
+              "poster_url": "upload/vod/20251221-1/11352defef012cabcfc2a7e6161f7348.jpg",
+              "thumb_url": "upload/vod/20251221-1/d0773e4142c7f245cdc32ce80fd7bc9c.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "62 phút/tập",
+              "episode_current": "Hoàn Tất (12/12)",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                },
+                {
+                  "id": "4234d1794dd33c1b6ed975eab5148040",
+                  "name": "Comoros",
+                  "slug": "comoros"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "297659",
+                "season": 1,
+                "vote_average": 7.5,
+                "vote_count": 2
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2025-10-02T18:23:10.000Z"
+              },
+              "modified": {
+                "time": "2026-01-26T16:22:52.000Z"
+              },
+              "_id": "3742c14e798d9b4f79773e8d97e2bccd",
+              "name": "Mật Ngọt Chết Ruồi",
+              "slug": "mat-ngot-chet-ruoi",
+              "origin_name": "A Graceful Liar",
+              "type": "series",
+              "poster_url": "upload/vod/20251002-1/7a26d994bb2583fb46a085d6bcca9292.jpg",
+              "thumb_url": "upload/vod/20251002-1/3a4bd37f9a52221e5573a52eacaaae56.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "35 phút/tập",
+              "episode_current": "Tập 80",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "3880",
+                "season": 1,
+                "vote_average": 0,
+                "vote_count": 0
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-01-24T09:35:53.000Z"
+              },
+              "modified": {
+                "time": "2026-01-24T09:35:53.000Z"
+              },
+              "_id": "d2a83dc418ee9d6209d8356fca703f13",
+              "name": "Chiếc Bánh Ngọt Ngào",
+              "slug": "chiec-banh-ngot-ngao",
+              "origin_name": "Sweet Buns",
+              "type": "series",
+              "poster_url": "upload/vod/20260124-1/fb055d62d534fdd7bc1e2e4b548d1a2f.jpg",
+              "thumb_url": "upload/vod/20260124-1/0678b2b780a4304443a5d216a76a17df.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "60 phút/tập",
+              "episode_current": "Hoàn Tất (26/26)",
+              "quality": "FHD",
+              "lang": "Thuyết Minh",
+              "year": 2004,
+              "category": [
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                },
+                {
+                  "id": "ba6fd52e5a3aca80eaaf1a3b50a182db",
+                  "name": "Hài Hước",
+                  "slug": "hai-huoc"
+                }
+              ],
+              "country": [
+                {
+                  "id": "b28b3d249312674db6cc7533cbbc2936",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "281005",
+                "season": 1,
+                "vote_average": 0,
+                "vote_count": 0
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2025-12-08T12:04:34.000Z"
+              },
+              "modified": {
+                "time": "2026-01-20T02:01:48.000Z"
+              },
+              "_id": "388a513a9cf7a2873844b2d60d57eb8d",
+              "name": "Mong Ngày Mai Đến",
+              "slug": "mong-ngay-mai-den",
+              "origin_name": "Surely Tomorrow",
+              "type": "series",
+              "poster_url": "upload/vod/20251208-1/806c8c249b84e258572f5af1d74d5c48.jpg",
+              "thumb_url": "upload/vod/20251208-1/3add9ad63b7d4032f62ff48b533cbc55.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "67 phút/tập",
+              "episode_current": "Hoàn Tất (12/12)",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "ba6fd52e5a3aca80eaaf1a3b50a182db",
+                  "name": "Hài Hước",
+                  "slug": "hai-huoc"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "229891",
+                "season": 1,
+                "vote_average": 8,
+                "vote_count": 1
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-01-16T15:53:34.000Z"
+              },
+              "modified": {
+                "time": "2026-01-16T17:11:18.000Z"
+              },
+              "_id": "e082709f3e06a243b4722c670f8edcdf",
+              "name": "Tiếng Yêu Này, Anh Dịch Được Không?",
+              "slug": "tieng-yeu-nay-anh-dich-duoc-khong",
+              "origin_name": "Can This Love Be Translated?",
+              "type": "series",
+              "poster_url": "upload/vod/20260116-1/8b1201713adc08736e33e45ab1c1f2e4.jpg",
+              "thumb_url": "upload/vod/20260116-1/92ad3288f61736574a2a2dd3c4ee5df1.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "62 phút/tập",
+              "episode_current": "Hoàn Tất (12/12)",
+              "quality": "FHD",
+              "lang": "Vietsub + Lồng Tiếng",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "ba6fd52e5a3aca80eaaf1a3b50a182db",
+                  "name": "Hài Hước",
+                  "slug": "hai-huoc"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "309271",
+                "season": 1,
+                "vote_average": 0,
+                "vote_count": 0
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-01-05T02:43:50.000Z"
+              },
+              "modified": {
+                "time": "2026-01-08T21:29:44.000Z"
+              },
+              "_id": "6ce9f61e2ff2bc4b922aeda874e96d5b",
+              "name": "Mãi Mãi Tuổi Thanh Xuân",
+              "slug": "mai-mai-tuoi-thanh-xuan-2025",
+              "origin_name": "Forever Young",
+              "type": "series",
+              "poster_url": "upload/vod/20260105-1/6628cb785ae3ddf531f4f576e73ddd69.jpg",
+              "thumb_url": "upload/vod/20260105-1/568426bcb1a802e59ca08a70cf7aa204.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "34 phút/tập",
+              "episode_current": "Hoàn Tất (2/2)",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "308290",
+                "season": 1,
+                "vote_average": 0,
+                "vote_count": 0
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2025-12-20T06:19:39.000Z"
+              },
+              "modified": {
+                "time": "2026-01-05T16:36:35.000Z"
+              },
+              "_id": "0065827f588a93273fc4573b432622cf",
+              "name": "Những Bản Nhạc Tình",
+              "slug": "nhung-ban-nhac-tinh",
+              "origin_name": "Love: Track",
+              "type": "series",
+              "poster_url": "upload/vod/20251220-1/8369375682e9a38d51df2448315aeb4d.jpg",
+              "thumb_url": "upload/vod/20251220-1/716a48f3dec22e7d0d1d7f1f5b42d171.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "32 phút/tập",
+              "episode_current": "Hoàn Tất (10/10)",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "285770",
+                "season": 1,
+                "vote_average": 6,
+                "vote_count": 1
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2025-11-04T20:10:38.000Z"
+              },
+              "modified": {
+                "time": "2026-01-05T16:34:33.000Z"
+              },
+              "_id": "235a4b01cca43ead1a2435ec19c04bab",
+              "name": "Lọt Hố Gã Khó Ưa (Rất Vui Không Gặp Em)",
+              "slug": "lot-ho-ga-kho-ua-rat-vui-khong-gap-em",
+              "origin_name": "Nice To Not Meet You",
+              "type": "series",
+              "poster_url": "upload/vod/20251104-1/5776a34237e13a5a511f0f173f83eafc.jpg",
+              "thumb_url": "upload/vod/20251104-1/acc7db76002681a566587f1a73931a3c.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "60 phút/tập",
+              "episode_current": "Hoàn Tất (16/16)",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "ba6fd52e5a3aca80eaaf1a3b50a182db",
+                  "name": "Hài Hước",
+                  "slug": "hai-huoc"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "307674",
+                "season": 1,
+                "vote_average": 8,
+                "vote_count": 1
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2025-12-22T16:17:03.000Z"
+              },
+              "modified": {
+                "time": "2026-01-05T16:34:10.000Z"
+              },
+              "_id": "3f54e27d6a63e1397fe94938013a9161",
+              "name": "Người Quản Lý của Tôi Ơi",
+              "slug": "nguoi-quan-ly-cua-toi-oi",
+              "origin_name": "Will You Be My Manager?",
+              "type": "series",
+              "poster_url": "upload/vod/20251222-1/14ec019b823dcdce1b293d13fd5f2570.jpg",
+              "thumb_url": "upload/vod/20251222-1/86f5a33442071cfeaa2960c7080caa88.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "25 phút/tập",
+              "episode_current": "Hoàn Tất (6/6)",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "b28b3d249312674db6cc7533cbbc2936",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "77593",
+                "season": 1,
+                "vote_average": 4,
+                "vote_count": 3
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-01-04T16:54:03.000Z"
+              },
+              "modified": {
+                "time": "2026-01-04T16:54:03.000Z"
+              },
+              "_id": "ec25d36848f1c8eed1c6729bb73fc7f9",
+              "name": "Ôm Em Thật Chặt",
+              "slug": "om-em-that-chat-2018",
+              "origin_name": "Hold Me Tight",
+              "type": "series",
+              "poster_url": "upload/vod/20260104-1/c225a0843b17b1628888f4f2ab15c1b3.jpg",
+              "thumb_url": "upload/vod/20260104-1/0fdd41177497a748c2c1d5d1494879dd.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "35 phút/tập",
+              "episode_current": "Hoàn Tất (23/23)",
+              "quality": "FHD",
+              "lang": "Lồng Tiếng",
+              "year": 2018,
+              "category": [
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "a2492d6cbc4d58f115406ca14e5ec7b6",
+                  "name": "Gia Đình",
+                  "slug": "gia-dinh"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "tv",
+                "id": "281013",
+                "season": 1,
+                "vote_average": 5,
+                "vote_count": 1
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2025-11-13T22:03:38.000Z"
+              },
+              "modified": {
+                "time": "2025-12-31T15:09:45.000Z"
+              },
+              "_id": "aa59dfe9cea81f87553c5d9f1046a84f",
+              "name": "Nụ Hôn Bùng Nổ",
+              "slug": "nu-hon-bung-no",
+              "origin_name": "Dynamite Kiss",
+              "type": "series",
+              "poster_url": "upload/vod/20251113-1/e1f3ffbc9759bc3bfaa1add317a477ce.jpg",
+              "thumb_url": "upload/vod/20251113-1/c3a672d7afbcdb18b2e42300bd773890.jpg",
+              "sub_docquyen": false,
+              "chieurap": false,
+              "time": "68 phút/tập",
+              "episode_current": "Hoàn Tất (14/14)",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "ba6fd52e5a3aca80eaaf1a3b50a182db",
+                  "name": "Hài Hước",
+                  "slug": "hai-huoc"
+                },
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            }
+          ],
+          "cachedMovieListSavedAt": "2026-03-22T14:58:44.243Z"
         },
         {
           "id": "864047de-db7c-49f3-9b21-274bdd5d3323",
@@ -65,8 +3472,1395 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
-          "displayType": "thumb-list"
+          "savedMovies": [],
+          "displayType": "thumb-list",
+          "cachedMovieList": [
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1316092",
+                "season": null,
+                "vote_average": 6.4,
+                "vote_count": 501
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-15T20:40:12.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T16:11:44.000Z"
+              },
+              "_id": "8301854f418d355675f6366dc08573f6",
+              "name": "Đồi Gió Hú",
+              "slug": "doi-gio-hu-2026",
+              "origin_name": "Wuthering Heights",
+              "type": "single",
+              "poster_url": "upload/vod/20260315-1/acb91621df63910c25e0ebac8cb2019a.jpg",
+              "thumb_url": "upload/vod/20260315-1/6ee95a5ca97e71e679306585b716fe44.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "136 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                },
+                {
+                  "id": "932bbaca386ee0436ad0159117eabae4",
+                  "name": "Anh",
+                  "slug": "anh"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1137179",
+                "season": null,
+                "vote_average": 7.5,
+                "vote_count": 2
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2025-05-21T13:52:13.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T16:11:27.000Z"
+              },
+              "_id": "94a69f0a7d3171579ee7d8e089ad900b",
+              "name": "Yadang: Ba Mặt Lật Kèo",
+              "slug": "yadang-ba-mat-lat-keo",
+              "origin_name": "Yadang: The Snitch",
+              "type": "single",
+              "poster_url": "upload/vod/20250521-1/540a1f1974e8cd349856482e6322e969.jpg",
+              "thumb_url": "upload/vod/20250521-1/85b3235b9cf393959f5c58ef3980976f.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "123 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1427833",
+                "season": null,
+                "vote_average": 6.5,
+                "vote_count": 11
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-12T22:12:26.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T16:03:16.000Z"
+              },
+              "_id": "65bc6b569d41780546eeb0d5b63626f2",
+              "name": "Mắc Bẫy Lũ Tí Quậy",
+              "slug": "mac-bay-lu-ti-quay",
+              "origin_name": "A Mouse Hunt for Christmas",
+              "type": "single",
+              "poster_url": "upload/vod/20260312-1/976b5a69171b6c1859d336551437faa2.jpg",
+              "thumb_url": "upload/vod/20260312-1/2aefc20213339549ba08670bc05907fc.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "80 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "a2492d6cbc4d58f115406ca14e5ec7b6",
+                  "name": "Gia Đình",
+                  "slug": "gia-dinh"
+                },
+                {
+                  "id": "ba6fd52e5a3aca80eaaf1a3b50a182db",
+                  "name": "Hài Hước",
+                  "slug": "hai-huoc"
+                }
+              ],
+              "country": [
+                {
+                  "id": "638f494a6d33cf5760f6e95c8beb612a",
+                  "name": "Na Uy",
+                  "slug": "na-uy"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1401542",
+                "season": null,
+                "vote_average": 5.818,
+                "vote_count": 11
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-18T16:41:22.000Z"
+              },
+              "modified": {
+                "time": "2026-03-22T15:53:37.000Z"
+              },
+              "_id": "b7a06751be7509743d8d3ead1e63423d",
+              "name": "Project Y: Gái Ngoan Đổi Đời",
+              "slug": "project-y-gai-ngoan-doi-doi",
+              "origin_name": "Project Y",
+              "type": "single",
+              "poster_url": "upload/vod/20260318-1/8545339897a3469172ad61ba0a43ee75.jpg",
+              "thumb_url": "upload/vod/20260318-1/ed2843ccbd0785dc0d55d9b85c27c636.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "109 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Thuyết Minh",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1159559",
+                "season": null,
+                "vote_average": 5.911,
+                "vote_count": 366
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-20T21:00:34.000Z"
+              },
+              "modified": {
+                "time": "2026-03-20T21:27:42.000Z"
+              },
+              "_id": "47e3711856579ea4c53625d15fcc306d",
+              "name": "Tiếng Thét 7",
+              "slug": "tieng-thet-7",
+              "origin_name": "Scream 7",
+              "type": "single",
+              "poster_url": "upload/vod/20260320-1/47c0a38e4b50f086e788286cc4758e15.jpg",
+              "thumb_url": "upload/vod/20260320-1/02357f6d4016248c8f7551004471f943.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "114 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "4db8d7d4b9873981e3eeb76d02997d58",
+                  "name": "Kinh Dị",
+                  "slug": "kinh-di"
+                },
+                {
+                  "id": "2fb53017b3be83cd754a08adab3e916c",
+                  "name": "Bí Ẩn",
+                  "slug": "bi-an"
+                },
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1598494",
+                "season": null,
+                "vote_average": 0,
+                "vote_count": 0
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-20T20:42:47.000Z"
+              },
+              "modified": {
+                "time": "2026-03-20T20:53:51.000Z"
+              },
+              "_id": "7b81c4f46d031aa280f8293efa226a9b",
+              "name": "Thiên Đường Máu",
+              "slug": "thien-duong-mau",
+              "origin_name": "Bloody Haven",
+              "type": "single",
+              "poster_url": "upload/vod/20260320-1/c68d804cbd9fbd4026e3c387d7736095.jpg",
+              "thumb_url": "upload/vod/20260320-1/e7ef2b7b1b6b0b235f8c8999b98a7d8a.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "99 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "f6ce1ae8b39af9d38d653b8a0890adb8",
+                  "name": "Việt Nam",
+                  "slug": "viet-nam"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1466131",
+                "season": null,
+                "vote_average": 7,
+                "vote_count": 1
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-20T15:47:24.000Z"
+              },
+              "modified": {
+                "time": "2026-03-20T15:47:24.000Z"
+              },
+              "_id": "59ab1a1d1f2c0ebde93ec1634e28a102",
+              "name": "Út Lan: Oán Linh Giữ Của",
+              "slug": "ut-lan-oan-linh-giu-cua",
+              "origin_name": "The Guardian Demon / Ut Lan: The Vengeful Guardian Spirit",
+              "type": "single",
+              "poster_url": "upload/vod/20260320-1/8da22e7ddd10639ab76bba823b7a743b.jpg",
+              "thumb_url": "upload/vod/20260320-1/fd56a886f27d89df210415dd33f2ab6e.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "111 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "4db8d7d4b9873981e3eeb76d02997d58",
+                  "name": "Kinh Dị",
+                  "slug": "kinh-di"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "f6ce1ae8b39af9d38d653b8a0890adb8",
+                  "name": "Việt Nam",
+                  "slug": "viet-nam"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1233413",
+                "season": null,
+                "vote_average": 7.566,
+                "vote_count": 752
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2025-05-23T10:58:09.000Z"
+              },
+              "modified": {
+                "time": "2026-03-16T10:19:44.000Z"
+              },
+              "_id": "99e54f99035fe00a5b02e468dedeb7fe",
+              "name": "Tội Đồ",
+              "slug": "toi-do",
+              "origin_name": "Sinners",
+              "type": "single",
+              "poster_url": "upload/vod/20250523-1/5f533e666aec0d3bf6d24a01d8ea768b.jpg",
+              "thumb_url": "upload/vod/20250523-1/4ed523ad53195fa971abc84a9c3a9177.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "138 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "4db8d7d4b9873981e3eeb76d02997d58",
+                  "name": "Kinh Dị",
+                  "slug": "kinh-di"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1171145",
+                "season": null,
+                "vote_average": 7.051,
+                "vote_count": 167
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-15T20:09:27.000Z"
+              },
+              "modified": {
+                "time": "2026-03-15T20:09:27.000Z"
+              },
+              "_id": "35c86d11621ca9f4cc9276c307397c6d",
+              "name": "Tội Phạm 101",
+              "slug": "toi-pham-101",
+              "origin_name": "Crime 101",
+              "type": "single",
+              "poster_url": "upload/vod/20260315-1/2977a8030c437759cb7f9b493d3e9cf2.jpg",
+              "thumb_url": "upload/vod/20260315-1/2138140c11fca88230f350e2238d11f2.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "141 phút",
+              "episode_current": "Full",
+              "quality": "CAM",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "932bbaca386ee0436ad0159117eabae4",
+                  "name": "Anh",
+                  "slug": "anh"
+                },
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1418302",
+                "season": null,
+                "vote_average": 4,
+                "vote_count": 3
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-07T15:39:13.000Z"
+              },
+              "modified": {
+                "time": "2026-03-07T17:57:17.000Z"
+              },
+              "_id": "1bc967477f11983ba1d41e2167ae575b",
+              "name": "Bé Ghệ Ma Cưng",
+              "slug": "be-ghe-ma-cung",
+              "origin_name": "My Boo 2",
+              "type": "single",
+              "poster_url": "upload/vod/20260307-1/f57a7c5f0ba19967a920749a1c72f3d5.jpg",
+              "thumb_url": "upload/vod/20260307-1/305c10bf355ea15dec5300283524b3f6.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "117 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "ba6fd52e5a3aca80eaaf1a3b50a182db",
+                  "name": "Hài Hước",
+                  "slug": "hai-huoc"
+                },
+                {
+                  "id": "4db8d7d4b9873981e3eeb76d02997d58",
+                  "name": "Kinh Dị",
+                  "slug": "kinh-di"
+                }
+              ],
+              "country": [
+                {
+                  "id": "cefbf1640a17bad1e13c2f6f2a811a2d",
+                  "name": "Thái Lan",
+                  "slug": "thai-lan"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "329981",
+                "season": null,
+                "vote_average": 5.297,
+                "vote_count": 723
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2023-11-20T16:35:26.000Z"
+              },
+              "modified": {
+                "time": "2026-03-07T17:55:03.000Z"
+              },
+              "_id": "653c579e3f9ba5c03f2f2f8cf4512b39",
+              "name": "Giam Cầm Quỷ Dữ",
+              "slug": "giam-cam-quy-du",
+              "origin_name": "Shut In",
+              "type": "single",
+              "poster_url": "upload/vod/20260307-1/0fd0f8439df77f5c8f057ea97cc4fa66.jpg",
+              "thumb_url": "upload/vod/20260307-1/3189033d31830c0a40bc24c9cde56e49.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "91 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2016,
+              "category": [
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1404777",
+                "season": null,
+                "vote_average": 7.7,
+                "vote_count": 3
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-03-05T11:53:16.000Z"
+              },
+              "modified": {
+                "time": "2026-03-06T11:01:41.000Z"
+              },
+              "_id": "c13753e71ee41c5b63cbe6a790ade138",
+              "name": "Nụ Hôn Bạc Tỷ",
+              "slug": "nu-hon-bac-ty",
+              "origin_name": "Money Kisses",
+              "type": "single",
+              "poster_url": "upload/vod/20260305-1/277fff3f8a3f09efd03218b2ba176e5e.jpg",
+              "thumb_url": "upload/vod/20260305-1/edeff022ca9b19a349f3b899467df1f5.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "100 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "bb2b4b030608ca5984c8dd0770f5b40b",
+                  "name": "Tình Cảm",
+                  "slug": "tinh-cam"
+                },
+                {
+                  "id": "ba6fd52e5a3aca80eaaf1a3b50a182db",
+                  "name": "Hài Hước",
+                  "slug": "hai-huoc"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "f6ce1ae8b39af9d38d653b8a0890adb8",
+                  "name": "Việt Nam",
+                  "slug": "viet-nam"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "83533",
+                "season": null,
+                "vote_average": 7.165,
+                "vote_count": 261
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2025-12-21T05:38:15.000Z"
+              },
+              "modified": {
+                "time": "2026-03-03T17:16:14.000Z"
+              },
+              "_id": "176a2693ce60b898b32a74e53acd02c5",
+              "name": "Avatar: Lửa và Tro Tàn",
+              "slug": "avatar-lua-va-tro-tan",
+              "origin_name": "Avatar: Fire and Ash",
+              "type": "single",
+              "poster_url": "upload/vod/20251221-1/687373bb9894616507f27c74c0eaa598.jpg",
+              "thumb_url": "upload/vod/20251221-1/6ac9fcafbe963ce8fbae6aaffb3d642e.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "198 phút",
+              "episode_current": "Full",
+              "quality": "CAM",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "0bcf4077916678de9b48c89221fcf8ae",
+                  "name": "Khoa Học",
+                  "slug": "khoa-hoc"
+                },
+                {
+                  "id": "68564911f00849030f9c9c144ea1b931",
+                  "name": "Viễn Tưởng",
+                  "slug": "vien-tuong"
+                },
+                {
+                  "id": "66c78b23908113d478d8d85390a244b4",
+                  "name": "Phiêu Lưu",
+                  "slug": "phieu-luu"
+                },
+                {
+                  "id": "68564911f00849030f9c9c144ea1b931",
+                  "name": "Viễn Tưởng",
+                  "slug": "vien-tuong"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "650524",
+                "season": null,
+                "vote_average": 6.4,
+                "vote_count": 13
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-02-24T13:49:06.000Z"
+              },
+              "modified": {
+                "time": "2026-02-27T23:16:29.000Z"
+              },
+              "_id": "adfacb714c53751aee5b8fefeb8426ce",
+              "name": "Tầm Tần Ký",
+              "slug": "tam-tan-ky-2025",
+              "origin_name": "Back To The Past",
+              "type": "single",
+              "poster_url": "upload/vod/20260224-1/5cc9d98eda5f989e06eb0fe1f6a2f64c.jpg",
+              "thumb_url": "upload/vod/20260224-1/4ea4fdf8207637bc536915f13b873475.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "107 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2025,
+              "category": [
+                {
+                  "id": "0bcf4077916678de9b48c89221fcf8ae",
+                  "name": "Khoa Học",
+                  "slug": "khoa-hoc"
+                },
+                {
+                  "id": "68564911f00849030f9c9c144ea1b931",
+                  "name": "Viễn Tưởng",
+                  "slug": "vien-tuong"
+                },
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "ba6fd52e5a3aca80eaaf1a3b50a182db",
+                  "name": "Hài Hước",
+                  "slug": "hai-huoc"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "a0cd53c9875b96640ac264ca81996f9f",
+                  "name": "Hồng Kông",
+                  "slug": "hong-kong"
+                },
+                {
+                  "id": "3e075636c731fe0f889c69e0bf82c083",
+                  "name": "Trung Quốc",
+                  "slug": "trung-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1411577",
+                "season": null,
+                "vote_average": 0,
+                "vote_count": 0
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-02-27T08:43:45.000Z"
+              },
+              "modified": {
+                "time": "2026-02-27T08:43:45.000Z"
+              },
+              "_id": "127eeffce3105803c5cbd2aa9428ef5c",
+              "name": "Đếm Ngày Xa Mẹ",
+              "slug": "dem-ngay-xa-me",
+              "origin_name": "Number One",
+              "type": "single",
+              "poster_url": "upload/vod/20260227-1/5f60e239ce59d59bfc842da562d6cfc4.jpg",
+              "thumb_url": "upload/vod/20260227-1/388f27b93c3074c6c703e634ce37acd4.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "105 phút",
+              "episode_current": "Trailer",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "68564911f00849030f9c9c144ea1b931",
+                  "name": "Viễn Tưởng",
+                  "slug": "vien-tuong"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                }
+              ],
+              "country": [
+                {
+                  "id": "05de95be5fc404da9680bbb3dd8262e6",
+                  "name": "Hàn Quốc",
+                  "slug": "han-quoc"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "1290821",
+                "season": null,
+                "vote_average": 7.3,
+                "vote_count": 73
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2026-02-25T12:18:46.000Z"
+              },
+              "modified": {
+                "time": "2026-02-26T04:08:03.000Z"
+              },
+              "_id": "dc14e10c0ecf8029a86d27e74d140539",
+              "name": "Kẻ Ẩn Dật",
+              "slug": "ke-an-dat",
+              "origin_name": "Shelter",
+              "type": "single",
+              "poster_url": "upload/vod/20260225-1/32b51c917dc2063444851e999c86e6d7.jpg",
+              "thumb_url": "upload/vod/20260225-1/dd7e9f8cd0896dd30e241bdd6dce9301.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "108 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2026,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                },
+                {
+                  "id": "932bbaca386ee0436ad0159117eabae4",
+                  "name": "Anh",
+                  "slug": "anh"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "385687",
+                "season": null,
+                "vote_average": 7.003,
+                "vote_count": 6208
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2023-09-20T20:37:36.000Z"
+              },
+              "modified": {
+                "time": "2026-02-26T01:30:05.000Z"
+              },
+              "_id": "d9fc5b73a8d78fad3d6dffe419384e70",
+              "name": "Quá Nhanh Quá Nguy Hiểm 10",
+              "slug": "qua-nhanh-qua-nguy-hiem-10",
+              "origin_name": "Fast X",
+              "type": "single",
+              "poster_url": "upload/vod/20260225-1/fe32027413025d47d5655dc2e3ea2ef1.jpg",
+              "thumb_url": "upload/vod/20260225-1/235754f80b216fd1914ee8603469a3b6.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "142 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2023,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "385128",
+                "season": null,
+                "vote_average": 7.018,
+                "vote_count": 7599
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2024-02-19T02:19:07.000Z"
+              },
+              "modified": {
+                "time": "2026-02-26T01:29:51.000Z"
+              },
+              "_id": "b39f604b83278f4b3dfa16efc9670fbf",
+              "name": "Quá Nhanh Quá Nguy Hiểm 9: Huyền Thoại Tốc Độ",
+              "slug": "qua-nhanh-qua-nguy-hiem-9-huyen-thoai-toc-do",
+              "origin_name": "F9",
+              "type": "single",
+              "poster_url": "upload/vod/20260225-1/cfc631fe4ab8b37e3087754330dad200.jpg",
+              "thumb_url": "upload/vod/20260225-1/6df6a7af01f23dd1b6348e1aeba802a9.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "143 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2021,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "66c78b23908113d478d8d85390a244b4",
+                  "name": "Phiêu Lưu",
+                  "slug": "phieu-luu"
+                },
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "337339",
+                "season": null,
+                "vote_average": 6.857,
+                "vote_count": 10703
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2023-10-19T19:25:02.000Z"
+              },
+              "modified": {
+                "time": "2026-02-26T01:29:35.000Z"
+              },
+              "_id": "04ad5632029cbfbed8e136e5f6f7ddfa",
+              "name": "Quá Nhanh Quá Nguy Hiểm 8",
+              "slug": "qua-nhanh-qua-nguy-hiem-8",
+              "origin_name": "The Fate of the Furious",
+              "type": "single",
+              "poster_url": "upload/vod/20260225-1/cfef26e59931dda42e93e2f1e0b09352.jpg",
+              "thumb_url": "upload/vod/20260225-1/1cd666d0b6d7c7149b394cec033aff52.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "136 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2017,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "168259",
+                "season": null,
+                "vote_average": 7.219,
+                "vote_count": 11149
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2023-10-18T22:46:27.000Z"
+              },
+              "modified": {
+                "time": "2026-02-26T01:29:18.000Z"
+              },
+              "_id": "00a03ec6533ca7f5c644d198d815329c",
+              "name": "Quá Nhanh Quá Nguy Hiểm 7",
+              "slug": "qua-nhanh-qua-nguy-hiem-7",
+              "origin_name": "Furious 7",
+              "type": "single",
+              "poster_url": "upload/vod/20260225-1/e094a5a61ce3a8aa6e30526daacea01b.jpg",
+              "thumb_url": "upload/vod/20260225-1/fcd3765abe00b239089f2a8f82db6036.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "139 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2015,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "51497",
+                "season": null,
+                "vote_average": 7.24,
+                "vote_count": 8719
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2024-08-28T00:21:52.000Z"
+              },
+              "modified": {
+                "time": "2026-02-26T01:28:58.000Z"
+              },
+              "_id": "58a293c4c86b4c0000b0e683c77432a8",
+              "name": "Quá Nhanh Quá Nguy Hiểm 5: Phi vụ Rio",
+              "slug": "qua-nhanh-qua-nguy-hiem-5-phi-vu-rio",
+              "origin_name": "Fast Five",
+              "type": "single",
+              "poster_url": "upload/vod/20260225-1/0295b1008f36cfd1c71f309bb8f9bfa3.jpg",
+              "thumb_url": "upload/vod/20260225-1/205435e2bc9a19b20a3f9cf6512599a7.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "131 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2011,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                },
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "13804",
+                "season": null,
+                "vote_average": 6.689,
+                "vote_count": 7691
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2023-11-29T04:44:51.000Z"
+              },
+              "modified": {
+                "time": "2026-02-26T01:28:41.000Z"
+              },
+              "_id": "dcae59eb2aed882ae1452bf903cb8263",
+              "name": "Quá Nhanh Quá Nguy Hiểm 4",
+              "slug": "qua-nhanh-qua-nguy-hiem-4",
+              "origin_name": "Fast & Furious",
+              "type": "single",
+              "poster_url": "upload/vod/20260225-1/e670a7fb37cde2c81e952ebc5a088291.jpg",
+              "thumb_url": "upload/vod/20260225-1/c70cb97dcb9ff7b77e6fcc41e4b48ee1.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "107 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub + Thuyết Minh",
+              "year": 2009,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "7a035ac0b37f5854f0f6979260899c90",
+                  "name": "Hình Sự",
+                  "slug": "hinh-su"
+                },
+                {
+                  "id": "37a7b38b6184a5ebd3c43015aa20709d",
+                  "name": "Chính Kịch",
+                  "slug": "chinh-kich"
+                },
+                {
+                  "id": "a7b065b92ad356387ef2e075dee66529",
+                  "name": "Tâm Lý",
+                  "slug": "tam-ly"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "335988",
+                "season": null,
+                "vote_average": 6.052,
+                "vote_count": 6607
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2023-10-20T00:16:00.000Z"
+              },
+              "modified": {
+                "time": "2026-02-26T01:27:27.000Z"
+              },
+              "_id": "619205da514e83f869515c782a328d3c",
+              "name": "Transformers: Chiến Binh Cuối Cùng",
+              "slug": "transformers-chien-binh-cuoi-cung",
+              "origin_name": "Transformers: The Last Knight",
+              "type": "single",
+              "poster_url": "upload/vod/20260225-1/21f12ba86c2810b77468aac0441eab36.jpg",
+              "thumb_url": "upload/vod/20260225-1/4b5053fa44451797bf75b6cb7a898305.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "154 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2017,
+              "category": [
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "66c78b23908113d478d8d85390a244b4",
+                  "name": "Phiêu Lưu",
+                  "slug": "phieu-luu"
+                },
+                {
+                  "id": "0bcf4077916678de9b48c89221fcf8ae",
+                  "name": "Khoa Học",
+                  "slug": "khoa-hoc"
+                },
+                {
+                  "id": "68564911f00849030f9c9c144ea1b931",
+                  "name": "Viễn Tưởng",
+                  "slug": "vien-tuong"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            },
+            {
+              "tmdb": {
+                "type": "movie",
+                "id": "91314",
+                "season": null,
+                "vote_average": 5.957,
+                "vote_count": 8621
+              },
+              "imdb": {
+                "id": null
+              },
+              "created": {
+                "time": "2023-10-19T21:10:55.000Z"
+              },
+              "modified": {
+                "time": "2026-02-26T01:27:17.000Z"
+              },
+              "_id": "c3614206a443012045cfd75d2600af2d",
+              "name": "Transformers: Kỷ Nguyên Hủy Diệt",
+              "slug": "transformers-ky-nguyen-huy-diet",
+              "origin_name": "Transformers: Age of Extinction",
+              "type": "single",
+              "poster_url": "upload/vod/20260225-1/881241118d52a2b017188b47e8d2823e.jpg",
+              "thumb_url": "upload/vod/20260225-1/681e6d9b0430374841cdd5170606a465.jpg",
+              "sub_docquyen": false,
+              "chieurap": true,
+              "time": "167 phút",
+              "episode_current": "Full",
+              "quality": "FHD",
+              "lang": "Vietsub",
+              "year": 2014,
+              "category": [
+                {
+                  "id": "0bcf4077916678de9b48c89221fcf8ae",
+                  "name": "Khoa Học",
+                  "slug": "khoa-hoc"
+                },
+                {
+                  "id": "68564911f00849030f9c9c144ea1b931",
+                  "name": "Viễn Tưởng",
+                  "slug": "vien-tuong"
+                },
+                {
+                  "id": "9822be111d2ccc29c7172c78b8af8ff5",
+                  "name": "Hành Động",
+                  "slug": "hanh-dong"
+                },
+                {
+                  "id": "66c78b23908113d478d8d85390a244b4",
+                  "name": "Phiêu Lưu",
+                  "slug": "phieu-luu"
+                }
+              ],
+              "country": [
+                {
+                  "id": "74d9fa92f4dea9ecea8fc2233dc7921a",
+                  "name": "Âu Mỹ",
+                  "slug": "au-my"
+                }
+              ]
+            }
+          ],
+          "cachedMovieListSavedAt": "2026-03-22T12:38:22.102Z"
         },
         {
           "id": "fc0de575-3279-4f9e-a1e7-9251fd7c52b5",
@@ -78,9 +4872,10 @@
             "page": 1,
             "limit": 10,
             "sortField": "modified.time",
-            "sortType": "desc"
+            "sortType": "desc",
+            "category": "chien-tranh"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "top-list"
         },
         {
@@ -96,7 +4891,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "poster-list"
         },
         {
@@ -112,7 +4907,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "poster-list"
         },
         {
@@ -129,7 +4924,7 @@
             "sortField": "_id",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "thumb-list"
         },
         {
@@ -145,7 +4940,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "poster-list"
         },
         {
@@ -161,7 +4956,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "thumb-list"
         },
         {
@@ -178,7 +4973,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "poster-list"
         },
         {
@@ -194,7 +4989,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "thumb-list"
         },
         {
@@ -211,7 +5006,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "poster-list"
         },
         {
@@ -227,7 +5022,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "poster-list"
         },
         {
@@ -244,7 +5039,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "poster-list"
         },
         {
@@ -259,14 +5054,14 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "top-list"
         },
         {
           "id": "b1a2c3d4-cccc-4aaa-bbbb-cccccccccccc",
           "order": 16,
           "title": "Phiêu Lưu Mạo Hiểm - Khám Phá Thế Giới",
-          "type": "movie-list",
+          "type": "pinned",
           "filter": {
             "typeList": "phim-le",
             "page": 1,
@@ -275,7 +5070,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "thumb-list"
         },
         {
@@ -291,7 +5086,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "poster-list"
         },
         {
@@ -307,7 +5102,7 @@
             "sortField": "_id",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "poster-list"
         },
         {
@@ -323,7 +5118,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "thumb-list"
         },
         {
@@ -339,7 +5134,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "poster-list"
         },
         {
@@ -355,7 +5150,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "thumb-list"
         },
         {
@@ -371,7 +5166,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "poster-list"
         },
         {
@@ -387,7 +5182,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "thumb-list"
         },
         {
@@ -403,7 +5198,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "poster-list"
         },
         {
@@ -418,7 +5213,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "thumb-list"
         },
         {
@@ -434,7 +5229,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "thumb-list"
         }
       ]
@@ -447,7 +5242,7 @@
         "page": 1,
         "limit": 24
       },
-      "savedMovieIds": [],
+      "savedMovies": [],
       "sections": [
         {
           "id": "f45464e1-ff24-416c-a1e5-2a0913a153b4",
@@ -461,7 +5256,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "banner"
         },
         {
@@ -476,7 +5271,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "thumb-list"
         },
         {
@@ -491,7 +5286,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "grid-list"
         }
       ]
@@ -504,7 +5299,7 @@
         "page": 1,
         "limit": 24
       },
-      "savedMovieIds": [],
+      "savedMovies": [],
       "sections": [
         {
           "id": "60f74cd7-8031-436d-91d9-e816b459ee21",
@@ -518,7 +5313,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "banner"
         },
         {
@@ -533,7 +5328,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "thumb-list"
         },
         {
@@ -548,7 +5343,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "grid-list"
         }
       ]
@@ -561,7 +5356,7 @@
         "page": 1,
         "limit": 24
       },
-      "savedMovieIds": [],
+      "savedMovies": [],
       "sections": [
         {
           "id": "aa7ace6f-9097-402c-a593-ad8f8729f248",
@@ -575,7 +5370,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "banner"
         },
         {
@@ -590,7 +5385,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "thumb-list"
         },
         {
@@ -605,7 +5400,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "grid-list"
         }
       ]
@@ -618,7 +5413,7 @@
         "page": 1,
         "limit": 24
       },
-      "savedMovieIds": [],
+      "savedMovies": [],
       "sections": [
         {
           "id": "91d7cb28-5c3c-4661-90c0-c5ffdead8245",
@@ -632,7 +5427,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "banner"
         },
         {
@@ -647,7 +5442,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "thumb-list"
         },
         {
@@ -662,7 +5457,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "grid-list"
         }
       ]
@@ -675,7 +5470,7 @@
         "page": 1,
         "limit": 24
       },
-      "savedMovieIds": [],
+      "savedMovies": [],
       "sections": [
         {
           "id": "pn-001-banner",
@@ -690,7 +5485,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "banner"
         },
         {
@@ -706,7 +5501,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "thumb-list"
         },
         {
@@ -722,7 +5517,7 @@
             "sortField": "modified.time",
             "sortType": "desc"
           },
-          "savedMovieIds": [],
+          "savedMovies": [],
           "displayType": "grid-list"
         }
       ]
@@ -735,7 +5530,7 @@
         "page": 1,
         "limit": 24
       },
-      "savedMovieIds": [],
+      "savedMovies": [],
       "sections": []
     },
     "phim-thuyet-minh": {
@@ -746,7 +5541,7 @@
         "page": 1,
         "limit": 24
       },
-      "savedMovieIds": [],
+      "savedMovies": [],
       "sections": []
     },
     "phim-long-tieng": {
@@ -757,7 +5552,7 @@
         "page": 1,
         "limit": 24
       },
-      "savedMovieIds": [],
+      "savedMovies": [],
       "sections": []
     },
     "tv-shows": {
@@ -768,7 +5563,7 @@
         "page": 1,
         "limit": 24
       },
-      "savedMovieIds": [],
+      "savedMovies": [],
       "sections": []
     }
   },

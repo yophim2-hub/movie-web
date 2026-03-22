@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
   Table,
@@ -10,7 +11,20 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { PageConfigEditor } from "@/modules/admin-pages";
+const PageConfigEditor = dynamic(
+  () =>
+    import("@/modules/admin-pages/components/page-config-editor").then((m) => ({
+      default: m.PageConfigEditor,
+    })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex justify-center py-16 text-[13px] text-[var(--foreground-muted)]">
+        Đang tải trình soạn cấu hình…
+      </div>
+    ),
+  }
+);
 
 export function AdminManagementContent() {
   return (
